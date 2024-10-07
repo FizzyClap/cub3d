@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:11:41 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 12:06:19 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:51:55 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,31 +113,6 @@ static int	path_texture(t_texture *texture, char *line)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: color for %s is missing\n", line);
 		return (FAILURE);
-	}
-	return (SUCCESS);
-}
-
-static int	fill_path(t_texture *texture, char *line)
-{
-	if (ft_strcmp(texture->id, "NO") == 0)
-		texture->no_path = ft_strdup(line);
-	else if (ft_strcmp(texture->id, "SO") == 0)
-		texture->so_path = ft_strdup(line);
-	else if (ft_strcmp(texture->id, "WE") == 0)
-		texture->we_path = ft_strdup(line);
-	else if (ft_strcmp(texture->id, "EA") == 0)
-		texture->ea_path = ft_strdup(line);
-	else if (ft_strcmp(texture->id, "F") == 0)
-	{
-		if (color_format(texture->id, line) == FAILURE)
-			return (FAILURE);
-		texture->floor_color = ft_strdup(line);
-	}
-	else if (ft_strcmp(texture->id, "C") == 0)
-	{
-		if (color_format(texture->id, line) == FAILURE)
-			return (FAILURE);
-		texture->ceiling_color = ft_strdup(line);
 	}
 	return (SUCCESS);
 }

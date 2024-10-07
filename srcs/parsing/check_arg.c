@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 11:52:01 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/05 22:34:24 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:51:07 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,4 @@ static void	file_format(char *file)
 	else
 		return ;
 	exit(EXIT_FAILURE);
-}
-
-int	open_file(char *file)
-{
-	int	fd;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: %s : ", file);
-		perror("");
-		exit(EXIT_FAILURE);
-	}
-	return (fd);
 }

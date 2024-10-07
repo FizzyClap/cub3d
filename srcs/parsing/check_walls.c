@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:34:36 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 11:31:01 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 13:25:13 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int	check_walls(t_map *map, int y, int x)
 
 static int	is_wall(t_map *map, int y, int x)
 {
-	return (!ft_char_iswhitespace(map->lines[y]->content[x]) && \
-			map->lines[y]->content[x] == '1');
+	if (map->lines[y]->content[x] == '1')
+		return (SUCCESS);
+	return (FAILURE);
 }
 
 static int	check_map_boundaries(t_map *map, int y, int x)
