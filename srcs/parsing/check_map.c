@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 20:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 11:44:29 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:06:06 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	get_size(t_map *map, int fd);
 static void	create_line(t_map *map, char *line, int y, int fd);
 static int	map_is_valid(t_map *map);
-static int	check_content(t_map *map, int y, int x);
 
 int	read_map(t_map *map, int fd)
 {
@@ -90,19 +89,14 @@ static int	map_is_valid(t_map *map)
 	{
 		x = -1;
 		while (++x < map->lines[y]->x)
-			if (check_content(map, y, x) == FAILURE)
+		{
+			if (char_is_valid(map->lines[y]->content[x]) == FAILURE)
 				return (FAILURE);
+			if (nb_start_pos(map, y, x) == FAILURE)
+				return (FAILURE);
+			if (check_walls(map, y, x) == FAILURE)
+				return (FAILURE);
+		}
 	}
-	return (SUCCESS);
-}
-
-static int	check_content(t_map *map, int y, int x)
-{
-	if (char_is_valid(map->lines[y]->content[x]) == FAILURE)
-		return (FAILURE);
-	if (nb_start_pos(map, y, x) == FAILURE)
-		return (FAILURE);
-	if (check_walls(map, y, x) == FAILURE)
-		return (FAILURE);
 	return (SUCCESS);
 }

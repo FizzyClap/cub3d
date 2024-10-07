@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:11:41 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 14:51:55 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	get_texture(t_texture *texture, char *line);
 static int	right_order(t_texture *texture);
 static int	path_texture(t_texture *texture, char *line);
 static int	fill_path(t_texture *texture, char *line);
-static int	color_format(char *id, char *line);
 
 int	read_textures(t_texture *texture, char *file)
 {
@@ -117,30 +116,27 @@ static int	path_texture(t_texture *texture, char *line)
 	return (SUCCESS);
 }
 
-static int	color_format(char *id, char *line)
+static int	fill_path(t_texture *texture, char *line)
 {
-	int	i;
-	int	count_comma;
-
-	i = -1;
-	count_comma = 0;
-	while (line[++i])
+	if (ft_strcmp(texture->id, "NO") == 0)
+		texture->north_path = ft_strdup(line);
+	else if (ft_strcmp(texture->id, "SO") == 0)
+		texture->south_path = ft_strdup(line);
+	else if (ft_strcmp(texture->id, "WE") == 0)
+		texture->west_path = ft_strdup(line);
+	else if (ft_strcmp(texture->id, "EA") == 0)
+		texture->east_path = ft_strdup(line);
+	else if (ft_strcmp(texture->id, "F") == 0)
 	{
-		if (line[i] == ',' && i == 0)
-			return (ft_fprintf(2, "Error: %s color bad format\n", id), FAILURE);
-		if (ft_atoi(line + i) > 255)
-			return (ft_fprintf(2, "Error: %s color bad format\n", id), FAILURE);
-		while (line[i] && (line[i] >= '0' && line[i] <= '9'))
-			i++;
-		if (line[i] == ',')
-		{
-			count_comma++;
-			if (count_comma == 3)
-			{
-				ft_fprintf(STDERR_FILENO, "Error: %s color bad format\n", id);
-				return (FAILURE);
-			}
-		}
+		if (color_format(texture->id, line) == FAILURE)
+			return (FAILURE);
+		texture->floor_color = ft_strdup(line);
+	}
+	else if (ft_strcmp(texture->id, "C") == 0)
+	{
+		if (color_format(texture->id, line) == FAILURE)
+			return (FAILURE);
+		texture->ceiling_color = ft_strdup(line);
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 11:50:03 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 11:58:56 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:18:57 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int argc, char **argv)
 	init_map(map, argv[1]);
 	if (read_map(map, fd) == FAILURE)
 		return (free_texture(texture), free_map(map), FAILURE);
+	print_map(map);
+	print_texture(texture);
 	free_texture(texture);
 	free_map(map);
 }

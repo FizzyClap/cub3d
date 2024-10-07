@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 11:39:08 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/05 22:27:43 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ typedef enum e_order
 typedef struct s_texture
 {
 	char	*id;
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
+	char	*north_path;
+	char	*south_path;
+	char	*west_path;
+	char	*east_path;
 	char	*floor_color;
 	char	*ceiling_color;
 	t_order	order;

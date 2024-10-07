@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 21:08:15 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 11:58:36 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	init_map(t_map *map, char *file)
 void	init_texture(t_texture *texture)
 {
 	texture->id = NULL;
-	texture->no_path = NULL;
-	texture->so_path = NULL;
-	texture->we_path = NULL;
-	texture->ea_path = NULL;
+	texture->north_path = NULL;
+	texture->south_path = NULL;
+	texture->west_path = NULL;
+	texture->east_path = NULL;
 	texture->floor_color = NULL;
 	texture->ceiling_color = NULL;
 }
