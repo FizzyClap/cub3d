@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 20:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:06:06 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:31:33 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void	create_line(t_map *map, char *line, int y, int fd)
 		line = get_next_line(fd);
 	map->lines[y] = malloc(sizeof(t_line));
 	map->lines[y]->content = ft_strdup(line);
+	map->lines[y]->copy = ft_strdup(line);
 	map->lines[y]->x = ft_strlen(line) - 1;
 	free(line);
 }
@@ -94,9 +95,9 @@ static int	map_is_valid(t_map *map)
 				return (FAILURE);
 			if (nb_start_pos(map, y, x) == FAILURE)
 				return (FAILURE);
-			if (check_walls(map, y, x) == FAILURE)
-				return (FAILURE);
 		}
 	}
+	if (check_walls(map) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }

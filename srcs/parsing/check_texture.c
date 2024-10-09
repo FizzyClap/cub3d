@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:11:41 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:55:18 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static int	path_texture(t_texture *texture, char *line)
 	if (texture->order != C_ORDER && texture->order != DONE)
 	{
 		len -= ft_iswhitespace(line + 2);
-		if (len <= 2)
+		if (len == 2)
 		{
 			ft_fprintf(STDERR_FILENO, "Error: path for %s is missing\n", line);
 			return (FAILURE);
@@ -108,7 +108,7 @@ static int	path_texture(t_texture *texture, char *line)
 		return (SUCCESS);
 	}
 	len -= ft_iswhitespace(line + 1);
-	if (len <= 1)
+	if (len == 1)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: color for %s is missing\n", line);
 		return (FAILURE);

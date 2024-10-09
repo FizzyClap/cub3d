@@ -6,20 +6,29 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:13:53 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:48:04 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-void	print_map(t_map *map)
+void	print_map(t_map *map, bool copy)
 {
 	int	i;
 
 	i = -1;
-	printf("MAP :\n");
-	while (++i < map->y)
-		printf("%s", map->lines[i]->content);
+	if (copy == true)
+	{
+		printf("MAP COPY :\n");
+		while (++i < map->y)
+			printf("%s", map->lines[i]->copy);
+	}
+	else
+	{
+		printf("MAP :\n");
+		while (++i < map->y)
+			printf("%s", map->lines[i]->content);
+	}
 	printf("\n");
 }
 

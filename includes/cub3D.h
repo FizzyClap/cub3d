@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 11:37:18 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:18:41 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/09 08:29:18 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
 //DEBUG/PRINT
-void	print_map(t_map *map);
+void	print_map(t_map *map, bool copy);
 void	print_texture(t_texture *texture);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
@@ -40,7 +40,7 @@ int		read_map(t_map *map, int fd);
 //PARSING/CHECK_TEXTURE
 int		read_textures(t_texture *texture, char *file);
 //PARSING/CHECK_WALLS
-int		check_walls(t_map *map, int y, int x);
+int		check_walls(t_map *map);
 //PARSING/PARSING_UTILS
 int		open_file(char *file);
 int		color_format(char *id, char *line);

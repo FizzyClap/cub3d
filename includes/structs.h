@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 11:39:08 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/09 07:26:06 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct s_line
 {
 	char	*content;
+	char	*copy;
 	int		x;
 }	t_line;
 
