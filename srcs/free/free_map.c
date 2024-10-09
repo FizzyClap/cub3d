@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 21:20:38 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/09 07:43:47 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:51:00 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	free_map(t_map *map)
 		while (++y < map->y)
 		{
 			free(map->lines[y]->content);
-			free(map->lines[y]->copy);
 			free(map->lines[y]);
 		}
 		free(map->lines);

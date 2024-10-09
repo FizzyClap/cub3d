@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:50:54 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/09 08:44:22 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/09 16:23:20 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	color_format(char *id, char *line)
 			return (ft_fprintf(2, "Error: %s color bad format\n", id), FAILURE);
 		while (ft_char_iswhitespace(line[i]))
 			i++;
-		if (ft_atoi(line + i) > 255 || !ft_isdigit(line[i]))
+		if (ft_atoi(line + i) > 255 || !ft_strisnum(line + i))
 			return (ft_fprintf(2, "Error: %s color bad format\n", id), FAILURE);
 		while (line[i] && (line[i] >= '0' && line[i] <= '9'))
 			i++;
@@ -63,11 +63,16 @@ int	nb_start_pos(t_map *map, int y, int x)
 		map->count_start_pos++;
 		if (map->count_start_pos == 2)
 		{
-			ft_fprintf(2, "Error: there is too much start position\n");
+			ft_fprintf(2, "Error: There is too much start position\n");
 			return (FAILURE);
 		}
 		map->start_x = x;
 		map->start_y = y;
+	}
+	if (y == map->y - 1 && x == map->lines[y]->x - 1 && !map->count_start_pos)
+	{
+		ft_fprintf(STDERR_FILENO, "Error: there is no start position\n");
+		return (FAILURE);
 	}
 	return (SUCCESS);
 }
