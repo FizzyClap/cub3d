@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 11:37:18 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 08:27:16 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 08:56:48 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
 //DEBUG/PRINT
-void	print_map(t_map *map);
-void	print_texture(t_texture *texture);
+void	print_map(t_map *map, int fd);
+void	print_texture(t_texture *texture, int fd);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
 //FREE/FREE_TEXTURE

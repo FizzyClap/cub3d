@@ -6,29 +6,29 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:13:53 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 08:56:39 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-void	print_map(t_map *map)
+void	print_map(t_map *map, int fd)
 {
 	int	i;
 
 	i = -1;
-	printf("MAP :\n");
+	ft_fprintf(fd, "MAP :\n");
 	while (++i < map->y)
-		printf("%s", map->lines[i]->content);
-	printf("\n");
+		ft_fprintf(fd, "%s", map->lines[i]->content);
+	ft_fprintf(fd, "\n");
 }
 
-void	print_texture(t_texture *texture)
+void	print_texture(t_texture *texture, int fd)
 {
-	printf("texture->north_path = %s\n", texture->north_path);
-	printf("texture->south_path = %s\n", texture->south_path);
-	printf("texture->west_path = %s\n", texture->west_path);
-	printf("texture->east_path = %s\n", texture->east_path);
-	printf("texture->floor_color = %s\n", texture->floor_color);
-	printf("texture->ceiling_color = %s\n", texture->ceiling_color);
+	ft_fprintf(fd, "texture->north_path = %s\n", texture->north_path);
+	ft_fprintf(fd, "texture->south_path = %s\n", texture->south_path);
+	ft_fprintf(fd, "texture->west_path = %s\n", texture->west_path);
+	ft_fprintf(fd, "texture->east_path = %s\n", texture->east_path);
+	ft_fprintf(fd, "texture->floor_color = %s\n", texture->floor_color);
+	ft_fprintf(fd, "texture->ceiling_color = %s\n", texture->ceiling_color);
 }
