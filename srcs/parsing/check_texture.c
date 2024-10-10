@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:11:41 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 08:35:32 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:54:26 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static int	get_texture(t_texture *texture, char *line)
 	i = 0;
 	while (ft_iswhitespace(line + i))
 		i++;
+	line += i;
+	i = 0;
 	while (!ft_iswhitespace(line + i))
 		i++;
 	texture->id = ft_strdnup(line, i);
