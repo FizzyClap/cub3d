@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 11:39:08 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 08:11:46 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 09:02:17 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_line
 typedef struct s_map
 {
 	bool	start_read;
+	bool	end_read;
 	char	*first_line;
 	char	*file;
 	t_line	**lines;

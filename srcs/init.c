@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 21:08:15 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 09:02:26 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_map(t_map *map, char *file)
 	map->lines = NULL;
 	map->first_line = NULL;
 	map->start_read = false;
+	map->end_read = false;
 	map->y = 0;
 	map->start_x = 0;
 	map->start_y = 0;

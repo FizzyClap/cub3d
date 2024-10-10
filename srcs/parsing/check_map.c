@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 20:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 08:35:18 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 09:06:26 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ static int	get_size(t_map *map, int fd)
 		{
 			free(line);
 			if (map->start_read == true)
-			{
-				ft_fprintf(STDERR_FILENO, "Error: line is empty\n");
-				return (FAILURE);
-			}
+				map->end_read = true;
 			continue ;
 		}
+		if (map->end_read == true)
+				return (ft_fprintf(2, "Error: line is empty\n"), FAILURE);
 		if (map->start_read == false)
 			map->first_line = ft_strdup(line);
 		map->start_read = true;
