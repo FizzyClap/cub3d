@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 20:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:06:06 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 08:35:18 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	read_map(t_map *map, int fd)
 
 	if (get_size(map, fd) == FAILURE)
 		return (FAILURE);
-	fd = open_file(map->file);
+	fd = open_map(map->file);
 	line = get_next_line(fd);
 	while (ft_strcmp(map->first_line, line) != 0)
 	{

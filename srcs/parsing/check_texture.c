@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:11:41 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 15:20:14 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/10 08:35:32 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	read_textures(t_texture *texture, char *file)
 	int		fd;
 	int		count_line;
 
-	fd = open_file(file);
+	fd = open_map(file);
 	count_line = 0;
 	texture->order = NO_ORDER;
 	while (1)
@@ -93,26 +93,24 @@ static int	path_texture(t_texture *texture, char *line)
 	int	len;
 
 	len = ft_strlen(line) - 1;
-	line[len] = '\0';
+	while (len >= 0 && ft_char_iswhitespace(line[len]))
+	{
+		line[len] = '\0';
+		len--;
+	}
 	if (texture->order != C_ORDER && texture->order != DONE)
 	{
 		len -= ft_iswhitespace(line + 2);
-		if (len <= 2)
-		{
-			ft_fprintf(STDERR_FILENO, "Error: path for %s is missing\n", line);
+		if (check_len(len, 2, line) == FAILURE)
 			return (FAILURE);
-		}
 		line += 2 + ft_iswhitespace(line + 2);
-		if (open_file(line) == -1)
+		if (path_exist(line) == FAILURE)
 			return (FAILURE);
 		return (SUCCESS);
 	}
 	len -= ft_iswhitespace(line + 1);
-	if (len <= 1)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: color for %s is missing\n", line);
+	if (check_len(len, 1, line) == FAILURE)
 		return (FAILURE);
-	}
 	return (SUCCESS);
 }
 
