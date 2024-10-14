@@ -1,19 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 11:39:08 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 09:02:17 by roespici         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef STRUCTS_H
 # define STRUCTS_H
-
-# include <stdbool.h>
 
 typedef struct s_line
 {
@@ -56,5 +42,18 @@ typedef struct s_texture
 	char	*ceiling_color;
 	t_order	order;
 }	t_texture;
+
+//typedef struct s_img
+//{
+//}	t_img;
+
+typedef struct s_game
+{
+	void		*mlx;
+	void		*win;
+	//t_img		*img;
+	t_map		*map;
+	t_texture	*texture;
+}	t_game;
 
 #endif

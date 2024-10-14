@@ -1,21 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 11:37:18 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 08:56:48 by roespici         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <stdbool.h>
 # include "structs.h"
 # include "../libft/include/libft.h"
 # include "../libft/printf/printf.h"
+# include "../mlx/mlx.h"
+# include "../mlx/mlx_int.h"
 # include "define.h"
 # include <unistd.h>
 # include <fcntl.h>
@@ -29,6 +20,8 @@ void	init_texture(t_texture *texture);
 //DEBUG/PRINT
 void	print_map(t_map *map, int fd);
 void	print_texture(t_texture *texture, int fd);
+//FREE/FREE_GAME
+int		close_game(t_game *game);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
 //FREE/FREE_TEXTURE

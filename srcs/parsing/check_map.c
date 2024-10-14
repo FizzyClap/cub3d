@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 20:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/14 08:52:04 by roespici         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3D.h"
 
 static int	get_size(t_map *map, int fd);
@@ -57,7 +45,7 @@ static int	get_size(t_map *map, int fd)
 			continue ;
 		}
 		if (map->end_read == true)
-			return (ft_fprintf(2, "Error: line is empty\n"), FAILURE);
+			return (free(line), ft_fprintf(2, "Error: line is empty\n"), 0);
 		if (map->start_read == false)
 			map->first_line = ft_strdup(line);
 		map->start_read = true;

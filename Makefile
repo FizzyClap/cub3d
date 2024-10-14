@@ -4,7 +4,9 @@ FLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
-LDFLAGS = $(LIBFT_FLAGS)
+MLX_PATH = ./mlx
+MLX_FLAGS = -L$(MLX_PATH) -lmlx -lbsd -lXext -lX11 -lm
+LDFLAGS = $(LIBFT_FLAGS) $(MLX_FLAGS)
 INCLUDES = -I./includes -I$(LIBFT_PATH)/includes
 RM = rm -rf
 GREEN = \033[0;32m
@@ -19,6 +21,7 @@ SRCS =	srcs/main.c\
 		srcs/parsing/check_map.c\
 		srcs/parsing/check_walls.c\
 		srcs/parsing/parsing_utils.c\
+		srcs/free/free_game.c\
 		srcs/free/free_texture.c\
 		srcs/free/free_map.c\
 		srcs/debug/print.c\
@@ -54,6 +57,13 @@ all: $(NAME)
 $(LIBFT):
 	@make -s -C $(LIBFT_PATH)
 
+mlx:
+	@git clone https://github.com/42Paris/minilibx-linux mlx
+	@cd mlx && make -s
+	@echo "$(NC)┌─────mlx──────────────────────────────────────┐"
+	@echo "│$(GREEN) Compilation of mlx completed ✓ $(NC)	       │"
+	@echo "└──────────────────────────────────────────────┘"
+
 clean:
 	@echo "$(NC)┌─────clean $(NAME)──────────────────────────────┐"
 	@echo "│$(BLUE) Cleaning $(NAME) objects in progress... ⌛$(NC)     │"
@@ -86,4 +96,4 @@ norme:
 	fi
 	@$(RM) norme.tmp
 
-.PHONY: all clean fclean re norme
+.PHONY: all mlx clean fclean re norme
