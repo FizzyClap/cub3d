@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:34:36 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 08:34:01 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:18:24 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,15 @@ static int	check_neighbors(t_map *map, int y, int x)
 		ft_char_iswhitespace(map->lines[y]->content[x + 1]) || \
 		ft_char_iswhitespace(map->lines[y]->content[x - 1]) || \
 		ft_char_iswhitespace(map->lines[y + 1]->content[x]) || \
-		ft_char_iswhitespace(map->lines[y - 1]->content[x])))
+		ft_char_iswhitespace(map->lines[y - 1]->content[x]) || \
+		ft_char_iswhitespace(map->lines[y + 1]->content[x + 1]) || \
+		ft_char_iswhitespace(map->lines[y - 1]->content[x + 1]) || \
+		ft_char_iswhitespace(map->lines[y + 1]->content[x - 1]) || \
+		ft_char_iswhitespace(map->lines[y - 1]->content[x - 1]) || \
+		ft_char_iswhitespace(map->lines[y + 1]->content[x - 1]) || \
+		ft_char_iswhitespace(map->lines[y + 1]->content[x + 1]) || \
+		ft_char_iswhitespace(map->lines[y - 1]->content[x + 1]) || \
+		ft_char_iswhitespace(map->lines[y - 1]->content[x - 1])))
 		return (FAILURE);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:11:41 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/10 10:54:26 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/14 07:33:29 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int	read_textures(t_texture *texture, char *file)
 {
 	char	*line;
 	int		fd;
-	int		count_line;
 
 	fd = open_map(file);
-	count_line = 0;
 	texture->order = NO_ORDER;
 	while (1)
 	{
