@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:50:54 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/14 08:35:12 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:38:34 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	nb_start_pos(t_map *map, int y, int x)
 		map->start_x = x;
 		map->start_y = y;
 	}
-	if (y == map->y - 1 && x == map->lines[y]->x - 1 && !map->count_start_pos)
+	if (LAST_LINE && LAST_CHAR && !map->count_start_pos)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: there is no start position\n");
 		return (FAILURE);

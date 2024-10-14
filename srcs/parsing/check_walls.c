@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:34:36 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/14 08:32:56 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:38:02 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_map_boundaries(t_map *map, int y, int x)
 {
 	if (!is_wall(map, y, 0) && !ft_char_iswhitespace(map->lines[y]->content[0]))
 		return (FAILURE);
-	if ((y == 0 || y == map->y - 1) && !is_wall(map, y, x) && \
+	if ((FIRST_LINE || LAST_LINE) && !is_wall(map, y, x) && \
 		!ft_char_iswhitespace(map->lines[y]->content[x]))
 		return (FAILURE);
 	return (SUCCESS);
