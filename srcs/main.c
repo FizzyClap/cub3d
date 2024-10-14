@@ -11,9 +11,12 @@ int	main(int argc, char **argv)
 	if (parsing(&texture, &map, argc, argv) == FAILURE)
 		return (1);
 	game = malloc(sizeof(t_game));
+	game->texture = texture;
+	game->map = map;
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, 1920, 1080, "cub3D LOTR");
 	//mlx_hook(game->win, 2, 1L << 0, keycode, game);
+	minimap(game);
 	mlx_hook(game->win, 17, 0, close_game, game);
 	mlx_loop(game->mlx);
 	close_game(game);

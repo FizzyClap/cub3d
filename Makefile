@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -24,6 +24,7 @@ SRCS =	srcs/main.c\
 		srcs/free/free_game.c\
 		srcs/free/free_texture.c\
 		srcs/free/free_map.c\
+		srcs/minimap/minimap.c\
 		srcs/debug/print.c\
 
 OBJS = $(SRCS:.c=.o)
@@ -83,7 +84,7 @@ fclean: clean
 	@$(RM) $(NAME)
 	@echo "│$(GREEN) Cleaning of $(NAME) completed ✓ $(NC)	       │"
 	@echo "└──────────────────────────────────────────────┘"
-	@make -s -C $(LIBFT_PATH) fclean
+#	@make -s -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
