@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 20:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/14 08:33:36 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:52:04 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	read_map(t_map *map, int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	map->lines = ft_calloc(sizeof(char *), (map->y + 1));
+	map->lines = ft_calloc(sizeof(char *), map->y);
 	y = 0;
 	create_line(map, line, y, fd);
 	while (++y < map->y)
