@@ -6,15 +6,15 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 10:34:36 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/14 08:24:16 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:32:56 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-static int	is_wall(t_map *map, int y, int x);
 static int	check_map_boundaries(t_map *map, int y, int x);
 static int	check_neighbors(t_map *map, int y, int x);
+static int	is_wall(t_map *map, int y, int x);
 
 int	check_walls(t_map *map, int y, int x)
 {
@@ -24,13 +24,6 @@ int	check_walls(t_map *map, int y, int x)
 		return (FAILURE);
 	}
 	return (SUCCESS);
-}
-
-static int	is_wall(t_map *map, int y, int x)
-{
-	if (map->lines[y]->content[x] == '1')
-		return (SUCCESS);
-	return (FAILURE);
 }
 
 static int	check_map_boundaries(t_map *map, int y, int x)
@@ -57,4 +50,11 @@ static int	check_neighbors(t_map *map, int y, int x)
 		ft_char_iswhitespace(map->lines[y - 1]->content[x - 1])))
 		return (FAILURE);
 	return (SUCCESS);
+}
+
+static int	is_wall(t_map *map, int y, int x)
+{
+	if (map->lines[y]->content[x] == '1')
+		return (SUCCESS);
+	return (FAILURE);
 }
