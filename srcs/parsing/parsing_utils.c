@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 14:50:54 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/14 08:30:17 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/14 08:35:12 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ int	nb_start_pos(t_map *map, int y, int x)
 {
 	if (ft_strchr("NSWE", map->lines[y]->content[x]))
 	{
-		map->count_start_pos++;
-		if (map->count_start_pos == 2)
+		if (++map->count_start_pos == 2)
 		{
-			ft_fprintf(2, "Error: There is too much start position\n");
+			ft_fprintf(2, "Error: there is too much start position\n");
 			return (FAILURE);
 		}
 		map->start_x = x;
