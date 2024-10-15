@@ -16,6 +16,11 @@ NC = \033[0m
 
 SRCS =	srcs/main.c\
 		srcs/init.c\
+		srcs/debug/print.c\
+		srcs/free/free_game.c\
+		srcs/free/free_texture.c\
+		srcs/free/free_map.c\
+		srcs/game/controls.c\
 		srcs/parsing/check_arg.c\
 		srcs/parsing/check_texture.c\
 		srcs/parsing/check_map.c\
