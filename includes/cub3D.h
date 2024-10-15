@@ -17,6 +17,7 @@
 
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
+void	init_game(t_game **game, t_texture *texture, t_map *map);
 //DEBUG/PRINT
 void	print_map(t_map *map, int fd);
 void	print_texture(t_texture *texture, int fd);
@@ -26,6 +27,8 @@ int		close_game(t_game *game);
 void	free_map(t_map *map);
 //FREE/FREE_TEXTURE
 void	free_texture(t_texture *texture);
+//GAME/CONTROLS
+int		keycode(int keycode, t_game *game);
 //PARSING/CHECK_ARG
 int		check_arg(int argc, char **argv);
 int		open_map(char *file);

@@ -17,6 +17,7 @@ typedef struct s_map
 	int		start_x;
 	int		start_y;
 	int		y;
+	int		x_max;
 	int		count_start_pos;
 }	t_map;
 
@@ -46,6 +47,11 @@ typedef struct s_texture
 //typedef struct s_img
 //{
 //}	t_img;
+
+typedef struct s_ray
+{
+	
+}	t_ray;
 
 typedef struct s_game
 {

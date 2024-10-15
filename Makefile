@@ -16,15 +16,16 @@ NC = \033[0m
 
 SRCS =	srcs/main.c\
 		srcs/init.c\
+		srcs/debug/print.c\
+		srcs/free/free_game.c\
+		srcs/free/free_texture.c\
+		srcs/free/free_map.c\
+		srcs/game/controls.c\
 		srcs/parsing/check_arg.c\
 		srcs/parsing/check_texture.c\
 		srcs/parsing/check_map.c\
 		srcs/parsing/check_walls.c\
 		srcs/parsing/parsing_utils.c\
-		srcs/free/free_game.c\
-		srcs/free/free_texture.c\
-		srcs/free/free_map.c\
-		srcs/debug/print.c\
 
 OBJS = $(SRCS:.c=.o)
 
@@ -83,7 +84,7 @@ fclean: clean
 	@$(RM) $(NAME)
 	@echo "│$(GREEN) Cleaning of $(NAME) completed ✓ $(NC)	       │"
 	@echo "└──────────────────────────────────────────────┘"
-	@make -s -C $(LIBFT_PATH) fclean
+#@make -s -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
