@@ -13,6 +13,7 @@ int	main(int argc, char **argv)
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, 1920, 1080, "cub3D LOTR");
+	minimap(game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_loop(game->mlx);

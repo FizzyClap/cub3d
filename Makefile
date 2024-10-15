@@ -26,11 +26,7 @@ SRCS =	srcs/main.c\
 		srcs/parsing/check_map.c\
 		srcs/parsing/check_walls.c\
 		srcs/parsing/parsing_utils.c\
-		srcs/free/free_game.c\
-		srcs/free/free_texture.c\
-		srcs/free/free_map.c\
 		srcs/minimap/minimap.c\
-		srcs/debug/print.c\
 
 OBJS = $(SRCS:.c=.o)
 

@@ -1,6 +1,12 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
 typedef struct s_line
 {
 	char	*content;
@@ -44,14 +50,14 @@ typedef struct s_texture
 	t_order	order;
 }	t_texture;
 
-// typedef struct s_img
-// {
-// 	void	*img;
-// 	char	*addr;
-// 	int		bpp;
-// 	int		line_len;
-// 	int		endian;
-// }	t_img;
+typedef struct s_image
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_image;
 
 typedef struct s_ray
 {
