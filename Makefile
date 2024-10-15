@@ -27,6 +27,7 @@ SRCS =	srcs/main.c\
 		srcs/parsing/check_walls.c\
 		srcs/parsing/parsing_utils.c\
 		srcs/minimap/minimap.c\
+		srcs/minimap/character.c\
 
 OBJS = $(SRCS:.c=.o)
 

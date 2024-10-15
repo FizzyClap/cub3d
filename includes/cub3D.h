@@ -25,9 +25,10 @@ void	print_texture(t_texture *texture, int fd);
 int		close_game(t_game *game);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
-//MINIMAP//MINIMAP
-void	my_mlx_pixel_put(t_image img, int x, int y, int color);
+//MINIMAP/MINIMAP
 void	minimap(t_game *game);
+//MINIMAP/CHARACTER
+void	get_char_pos(t_game *game, t_coord tile, t_image charac);
 //FREE/FREE_TEXTURE
 void	free_texture(t_texture *texture);
 //GAME/CONTROLS
