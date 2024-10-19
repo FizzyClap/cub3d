@@ -25,6 +25,8 @@ typedef struct s_map
 	int		y;
 	int		x_max;
 	int		count_start_pos;
+	int		tile_x;
+	int		tile_y;
 }	t_map;
 
 typedef enum e_order
@@ -59,18 +61,23 @@ typedef struct s_image
 	int		endian;
 }	t_image;
 
-typedef struct s_ray
+typedef struct s_player
 {
-	
-}	t_ray;
+	float	x;
+	float	y;
+	float	speed;
+	double	angle;
+	t_image	cursor;
+}	t_player;
 
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	//t_img		*img;
 	t_map		*map;
+	t_image		minimap;
 	t_texture	*texture;
+	t_player	player;
 }	t_game;
 
 #endif

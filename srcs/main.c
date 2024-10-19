@@ -1,6 +1,7 @@
 #include "../includes/cub3D.h"
 
 static int	parsing(t_texture **texture, t_map **map, int argc, char **argv);
+static int	loop(t_game *game);
 
 int	main(int argc, char **argv)
 {
@@ -14,10 +15,19 @@ int	main(int argc, char **argv)
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, 1920, 1080, "cub3D LOTR");
 	minimap(game);
+	player_init(game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
+	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
 	close_game(game);
+}
+
+static int	loop(t_game *game)
+{
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, game->player.x, game->player.y);
+	return (1);
 }
 
 static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)

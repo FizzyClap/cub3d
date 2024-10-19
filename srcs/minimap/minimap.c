@@ -1,80 +1,52 @@
 #include "../includes/cub3D.h"
 
-static void	my_mlx_pixel_put(t_image img, int x, int y, int color)
+void	my_mlx_pixel_put(t_image img, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
 	*(unsigned int*)dst = color;
 }
-static void	draw_tile(t_image img, int tile_x, int tile_y, char c)
-{
-	int	x;
-	int	y;
 
-	x = -1;
-	while (++x < tile_x)
+static void	draw_tile(t_game *game, t_coord pos, t_image minimap, char c)
+{
+	t_coord pixel;
+
+	pixel.x = -1;
+	while (++pixel.x < game->map->tile_x - 1)
 	{
-		y = -1;
-		while (++y < tile_y)
+		pixel.y = -1;
+		while (++pixel.y < game->map->tile_y - 1)
 		{
-			if (c == 'c')
-				my_mlx_pixel_put(img, x, y, RED);
-			if (c == 'w')
-				my_mlx_pixel_put(img, x, y, BLUE);
-			if (c == 'f')
-				my_mlx_pixel_put(img, x, y, WHITE);
+			if (c == '1')
+				my_mlx_pixel_put(minimap, pixel.x + (game->map->tile_x * pos.x), pixel.y + (game->map->tile_y * pos.y), BLUE);
+			else if (ft_strchr("0NSEW", c))
+				my_mlx_pixel_put(minimap, pixel.x + (game->map->tile_x * pos.x), pixel.y + (game->map->tile_y * pos.y), WHITE);
 		}
 	}
 }
 
-static void	put_minimap(t_game *game, t_image wall, t_image floor, t_coord tile)
+static void	draw_minimap(t_game *game, t_image minimap)
 {
-	t_coord	coord;
-	int		x;
-	int		y;
+	t_coord	pos;
 
-	coord.y = 0;
-	y = -1;
-	while (++y < game->map->y)
+	pos.y = -1;
+	while (++pos.y < game->map->y)
 	{
-		coord.x = 0;
-		x = -1;
-		while (++x < game->map->lines[y]->x)
-		{
-			if (game->map->lines[y]->content[x] == '1')
-				mlx_put_image_to_window(game->mlx, game->win, wall.img, coord.x + x, coord.y + y);
-			else if (game->map->lines[y]->content[x] != ' ')
-				mlx_put_image_to_window(game->mlx, game->win, floor.img, coord.x + x, coord.y + y);
-			coord.x += tile.x;
-		}
-		coord.y += tile.y;
+		pos.x = -1;
+		while (++pos.x < game->map->lines[pos.y]->x)
+			draw_tile(game, pos, minimap, game->map->lines[pos.y]->content[pos.x]);
 	}
 }
 
 void	minimap(t_game *game)
 {
-	t_image	wall;
-	t_image	floor;
-	t_image charac;
-	t_coord	tile;
-
-	tile.x = MML / game->map->x_max;
-	tile.y = MMH / game->map->y;
-	wall.img = mlx_new_image(game->mlx, tile.x, tile.y);
-	charac.img = mlx_new_image(game->mlx, tile.x / 10, tile.y / 10);
-	wall.addr = mlx_get_data_addr(wall.img, &wall.bpp, &wall.line_len, &wall.endian);
-	charac.addr = mlx_get_data_addr(charac.img, &charac.bpp, &charac.line_len, &charac.endian);
-	floor.img = mlx_new_image(game->mlx, tile.x, tile.y);
-	floor.addr = mlx_get_data_addr(floor.img, &floor.bpp, &floor.line_len, &floor.endian);
-	draw_tile(wall, tile.x, tile.y, 'w');
-	draw_tile(charac, tile.x / 10, tile.y / 10, 'c');
-	draw_tile(floor, tile.x, tile.y, 'f');
-	put_minimap(game, wall, floor, tile);
-	get_char_pos(game, tile, charac);
-	mlx_destroy_image(game->mlx, wall.img);
-	mlx_destroy_image(game->mlx, floor.img);
-	mlx_destroy_image(game->mlx, charac.img);
+	game->map->tile_x = MML / game->map->x_max;
+	game->map->tile_y = MMH / game->map->y;
+	game->minimap.img = mlx_new_image(game->mlx, MML, MMH);
+	game->minimap.addr = mlx_get_data_addr(game->minimap.img, &game->minimap.bpp, &game->minimap.line_len, &game->minimap.endian);
+	draw_minimap(game, game->minimap);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
 	//faire les mouvements
 	//les associer au personnage
 	//les faire bouger de tile/10 ou 20 selo la vitesse

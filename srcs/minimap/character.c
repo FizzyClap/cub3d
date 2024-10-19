@@ -1,26 +1,19 @@
 #include "../includes/cub3D.h"
 
-void	get_char_pos(t_game *game, t_coord tile, t_image charac)
+void	player_init(t_game *game)
 {
-	t_coord	coord;
-	float	x;
-	float	y;
+	t_coord	paint;
 
-	coord.y = -1;
-	y = 0;
-	while (++coord.y < game->map->y)
+	game->player.cursor.img = mlx_new_image(game->mlx, 5, 5);
+	game->player.cursor.addr = mlx_get_data_addr(game->player.cursor.img, \
+	&game->player.cursor.bpp, &game->player.cursor.line_len, &game->player.cursor.endian);
+	paint.x = -1;
+	while (++paint.x < 5)
 	{
-		coord.x = -1;
-		x = 0;
-		while (++coord.x < game->map->lines[coord.y]->x)
-		{
-			if (ft_strchr("NSEW", game->map->lines[coord.y]->content[coord.x]))
-			{
-				mlx_put_image_to_window(game->mlx, game->win, charac.img, \
-				x + ((float)tile.x + coord.x) / 2, y + ((float)tile.y + coord.y) / 2);
-			}
-			x += tile.x;
-		}
-		y += tile.y;
+		paint.y = -1;
+		while (++paint.y < 5)
+			my_mlx_pixel_put(game->player.cursor, paint.x, paint.y, RED);
 	}
+	game->player.x = game->map->start_x * game->map->tile_x;
+	game->player.y = game->map->start_y * game->map->tile_y;
 }

@@ -19,8 +19,7 @@
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define WHITE 0x00FFFFFF
-# define MML 384
-# define MMH 216
-// # define MMS 864
+# define MML 1780
+# define MMH 780
 
 #endif
