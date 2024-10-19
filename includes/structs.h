@@ -1,6 +1,12 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_coord
+{
+	int	x;
+	int	y;
+}	t_coord;
+
 typedef struct s_line
 {
 	char	*content;
@@ -19,6 +25,8 @@ typedef struct s_map
 	int		y;
 	int		x_max;
 	int		count_start_pos;
+	int		tile_x;
+	int		tile_y;
 }	t_map;
 
 typedef enum e_order
@@ -44,22 +52,51 @@ typedef struct s_texture
 	t_order	order;
 }	t_texture;
 
-//typedef struct s_img
-//{
-//}	t_img;
+typedef struct s_image
+{
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_image;
+
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	speed;
+	t_image	cursor;
+}	t_player;
 
 typedef struct s_ray
 {
-	
+	double	pos_x;
+	double	pos_y;
+	double	plane_x;
+	double	plane_y;
+	double	dir_x;
+	double	dir_y;
+	int		step_x;
+	int		step_y;
+	double	delta_x;
+	double	delta_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		side;
+	double	wall_dist;
+	double	angle;
 }	t_ray;
 
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	//t_img		*img;
+	t_image		minimap;
+	t_image		raycast;
 	t_map		*map;
 	t_texture	*texture;
+	t_player	player;
 }	t_game;
 
 #endif

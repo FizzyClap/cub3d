@@ -1,22 +1,30 @@
 #include "../includes/cub3D.h"
 
 static int	parsing(t_texture **texture, t_map **map, int argc, char **argv);
+static int	loop(t_game *game);
 
 int	main(int argc, char **argv)
 {
 	t_texture	*texture;
 	t_map		*map;
 	t_game		*game;
+	//t_ray		*ray = NULL;
 
 	if (parsing(&texture, &map, argc, argv) == FAILURE)
 		return (1);
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, 1920, 1080, "cub3D LOTR");
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	minimap(game);
+	player_init(game);
+	//game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//game->raycast.addr = mlx_get_data_addr(game->raycast.img, &game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
+	//mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
+	//raycasting(ray, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
+	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
-	close_game(game);
 }
 
 static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
@@ -35,4 +43,11 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	if (read_map(*map, fd) == FAILURE)
 		return (free_texture(*texture), free_map(*map), FAILURE);
 	return (SUCCESS);
+}
+
+static int	loop(t_game *game)
+{
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, game->player.x, game->player.y);
+	return (1);
 }

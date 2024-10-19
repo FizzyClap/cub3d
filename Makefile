@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -21,6 +21,9 @@ SRCS =	srcs/main.c\
 		srcs/free/free_texture.c\
 		srcs/free/free_map.c\
 		srcs/game/controls.c\
+		srcs/game/character.c\
+		srcs/game/minimap.c\
+		srcs/game/raycasting.c\
 		srcs/parsing/check_arg.c\
 		srcs/parsing/check_texture.c\
 		srcs/parsing/check_map.c\
