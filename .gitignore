@@ -1,0 +1,6 @@
+*.o
+mlx/*
+mlx
+cub3D
+.mandatory
+libft/libft.a
