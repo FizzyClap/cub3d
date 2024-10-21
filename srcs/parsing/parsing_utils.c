@@ -54,6 +54,7 @@ int	nb_start_pos(t_map *map, int y, int x)
 		}
 		map->start_x = x;
 		map->start_y = y;
+		map->orientation = map->lines[y]->content[x];
 	}
 	if (LAST_LINE && LAST_CHAR && !map->count_start_pos)
 	{

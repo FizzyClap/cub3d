@@ -11,6 +11,11 @@ int	read_map(t_map *map, int fd)
 
 	if (get_size(map, fd) == FAILURE)
 		return (FAILURE);
+	if (map->start_read == false)
+	{
+		ft_fprintf(STDERR_FILENO, "Error: map is missing\n");
+		return (FAILURE);
+	}
 	fd = open_map(map->file);
 	line = get_next_line(fd);
 	while (ft_strcmp(map->first_line, line) != 0)
