@@ -17,7 +17,7 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->delta_y = fabs(1 / ray->dir_y);
 	ray->side_dist_x = 0;
 	ray->side_dist_y = 0;
-	ray->angle = 0;
+	ray->angle = angle;
 }
 
 
@@ -116,6 +116,7 @@ void	draw_wall(int x, t_ray *ray, t_game *game)
 void	raycasting(t_ray *ray, t_game *game)
 {
 	int		x;
+	double	ca;
 	double	ray_angle;
 
 	x = -1;
@@ -123,10 +124,19 @@ void	raycasting(t_ray *ray, t_game *game)
 	while (++x < SCREEN_WIDTH)
 	{
 		ray_angle = (game->player.angle * 180 / PI) - FOV / 2 + FOV * (x / (double)SCREEN_WIDTH);
+		printf("ray angle = %f\n", (double)(ray_angle * PI / 180));
+		printf("player angle = %f\n", (double)(game->player.angle));
 		init_ray(ray, game, ray_angle);
 		calculate_steps(ray);
 		perform_dda(ray, game);
 		calculate_wall_distance(ray);
+		ca = game->player.angle - (ray->angle * PI / 180);
+		if (ca < 0)
+			ca += 2 * PI;
+		if (ca > 2 * PI)
+			ca -= 2 * PI;
+		ray->wall_dist = ray->wall_dist * cos(ca);
 		draw_wall(x, ray, game);
 	}
+	free(ray);
 }

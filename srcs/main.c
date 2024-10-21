@@ -60,8 +60,8 @@ static int	loop(t_game *game, t_ray *ray)
 	}
 	raycasting(ray, game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
-	// mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
-	// mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, game->player.x, game->player.y);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, game->player.x, game->player.y);
 	return (1);
 }
 

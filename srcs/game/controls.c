@@ -1,44 +1,63 @@
 #include "../../includes/cub3D.h"
 
+static void	move_up(t_game *game);
+static void	move_left(t_game *game);
+static void	move_down(t_game *game);
+static void	move_right(t_game *game);
+
 int	keycode(int keycode, t_game *game)
 {
 	if (keycode == ESC)
 		close_game(game);
 	if (keycode == W || keycode == UP)
-	{
-		if (game->map->lines[(int)game->player.y + (int)game->player.d_y]->content[(int)game->player.x + (int)game->player.x] == '1')
-			return (SUCCESS);
-		game->player.x += game->player.d_x * game->player.speed;
-		game->player.y += game->player.d_y * game->player.speed;
-	}
+		move_up(game);
 	if (keycode == A || keycode == LEFT)
-	{
-		game->player.angle -= 0.05;
-		if (game->player.angle < 0)
-			game->player.angle += 2 * PI;
-		game->player.d_x = cos(game->player.angle) * 5;
-		game->player.d_y = sin(game->player.angle) * 5;
-	}
+		move_left(game);
 	if (keycode == S || keycode == DOWN)
-	{
-		if (game->map->lines[(int)game->player.y + (int)game->player.y]->content[(int)game->player.x + (int)game->player.x] == '1')
-			return (SUCCESS);
-		game->player.x -= game->player.d_x * game->player.speed;
-		game->player.y -= game->player.d_y * game->player.speed;
-	}
+		move_down(game);
 	if (keycode == D || keycode == RIGHT)
-	{
-		game->player.angle += 0.05;
-		if (game->player.angle > 2 * PI)
-			game->player.angle -= 2 * PI;
-		game->player.d_x = cos(game->player.angle) * 5;
-		game->player.d_y = sin(game->player.angle) * 5;
-	}
+		move_right(game);
 	printf("player angle = %f\n", game->player.angle);
 	return (SUCCESS);
 }
 
 static void	move_up(t_game *game)
 {
-	
+	int	x;
+	int y;
+	x = (game->player.x + game->player.d_x * game->player.speed) / game->map->tile_x;
+	y = (game->player.y + game->player.d_y * game->player.speed) / game->map->tile_y;
+	if (game->map->lines[y]->content[x] == '1')
+		return ;
+	game->player.x += game->player.d_x * game->player.speed;
+	game->player.y += game->player.d_y * game->player.speed;
+}
+static void	move_left(t_game *game)
+{
+	game->player.angle -= 0.05;
+	if (game->player.angle < 0)
+		game->player.angle += 2 * PI;
+	game->player.d_x = cos(game->player.angle) * 5;
+	game->player.d_y = sin(game->player.angle) * 5;
+}
+
+static void	move_down(t_game *game)
+{
+	int	x;
+	int y;
+	x = (game->player.x - game->player.d_x * game->player.speed) / game->map->tile_x;
+	y = (game->player.y - game->player.d_y * game->player.speed) / game->map->tile_y;
+	if (game->map->lines[y]->content[x] == '1')
+		return ;
+	game->player.x -= game->player.d_x * game->player.speed;
+	game->player.y -= game->player.d_y * game->player.speed;
+}
+
+static void	move_right(t_game *game)
+{
+	game->player.angle += 0.05;
+	if (game->player.angle > 2 * PI)
+		game->player.angle -= 2 * PI;
+	game->player.d_x = cos(game->player.angle) * 5;
+	game->player.d_y = sin(game->player.angle) * 5;
 }
