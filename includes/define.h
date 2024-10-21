@@ -25,5 +25,11 @@
 # define FIRST_LINE y == 0
 # define LAST_LINE y == map->y - 1
 # define LAST_CHAR x == map->lines[y]->x - 1
+# define BLUE 0x000000FF
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+# define WHITE 0x00FFFFFF
+# define MML 1780
+# define MMH 780
 
 #endif

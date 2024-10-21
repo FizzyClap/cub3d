@@ -3,11 +3,11 @@
 
 # include <stdbool.h>
 # include "structs.h"
+# include "define.h"
 # include "../libft/include/libft.h"
 # include "../libft/printf/printf.h"
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
-# include "define.h"
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -25,6 +25,11 @@ void	print_texture(t_texture *texture, int fd);
 int		close_game(t_game *game);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
+//MINIMAP/MINIMAP
+void	my_mlx_pixel_put(t_image img, int x, int y, int color);
+void	minimap(t_game *game);
+//MINIMAP/CHARACTER
+void	player_init(t_game *game);
 //FREE/FREE_TEXTURE
 void	free_texture(t_texture *texture);
 //GAME/CONTROLS

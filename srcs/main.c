@@ -24,6 +24,7 @@ int	main(int argc, char **argv)
 	printf("player angle = %f\n", game->player.angle);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_loop_hook(game->mlx, loop, game);
+	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
 }
 
