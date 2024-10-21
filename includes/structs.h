@@ -7,12 +7,6 @@ typedef struct s_coord
 	int	y;
 }	t_coord;
 
-typedef struct s_coord
-{
-	int	x;
-	int	y;
-}	t_coord;
-
 typedef struct s_line
 {
 	char	*content;
@@ -70,14 +64,16 @@ typedef struct s_image
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
-	float	speed;
+	double	x;
+	double	y;
+	double	d_x;
+	double	d_y;
+	double	speed;
 	double	angle;
 	t_image	cursor;
 }	t_player;
 
-typedef struct s_player
+typedef struct s_ray
 {
 	double	pos_x;
 	double	pos_y;
@@ -103,9 +99,7 @@ typedef struct s_game
 	t_image		minimap;
 	t_image		raycast;
 	t_map		*map;
-	t_image		minimap;
 	t_texture	*texture;
-	t_player	player;
 	t_player	player;
 }	t_game;
 

@@ -17,11 +17,14 @@ void	player_init(t_game *game)
 	game->player.x = game->map->start_x * game->map->tile_x;
 	game->player.y = game->map->start_y * game->map->tile_y;
 	if (game->map->orientation == 'N')
-		game->player.angle = 90;
+		game->player.angle = PI / 2;
 	else if (game->map->orientation == 'S')
-		game->player.angle = 270;
+		game->player.angle = 3 * PI / 2;
 	else if (game->map->orientation == 'E')
-		game->player.angle = 0;
+		game->player.angle = PI;
 	else if (game->map->orientation == 'W')
-		game->player.angle = 180;
+		game->player.angle = 0;
+	game->player.d_x = cos(game->player.angle) * 5;
+	game->player.d_y = sin(game->player.angle) * 5;
+	game->player.speed = 0.5;
 }
