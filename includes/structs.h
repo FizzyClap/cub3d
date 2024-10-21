@@ -27,6 +27,7 @@ typedef struct s_map
 	int		count_start_pos;
 	int		tile_x;
 	int		tile_y;
+	char	orientation;
 }	t_map;
 
 typedef enum e_order
@@ -66,6 +67,7 @@ typedef struct s_player
 	float	x;
 	float	y;
 	float	speed;
+	double	angle;
 	t_image	cursor;
 }	t_player;
 

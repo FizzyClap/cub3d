@@ -32,7 +32,8 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color);
 int		keycode(int keycode, t_game *game);
 void	get_char_pos(t_game *game, t_coord tile, t_image charac);
 void	minimap(t_game *game);
-void	raycasting(t_ray *ray, t_game *game);
+double	deg_to_rad(double degrees);
+void	raycasting(t_ray **ray, t_game *game);
 //MINIMAP/CHARACTER
 void	player_init(t_game *game);
 //PARSING/CHECK_ARG

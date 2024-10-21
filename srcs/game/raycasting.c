@@ -112,20 +112,19 @@ void	draw_wall(int x, t_ray *ray, t_game *game)
 	draw_vertical_line(game, x, draw_start, draw_end, color);
 }
 
-void	raycasting(t_ray *ray, t_game *game)
+void	raycasting(t_ray **ray, t_game *game)
 {
 	int		x;
-	//double ray_angle;
+	double	ray_angle;
 
 	x = -1;
-	ray = malloc(sizeof(t_ray));
 	while (++x < SCREEN_WIDTH)
 	{
-		//ray_angle = game->player.angle - FOV / 2 + FOV * (x / (double)SCREEN_WIDTH);
-		//init_ray(ray, game, ray_angle);
-		calculate_steps(ray);
-		perform_dda(ray, game);
-		calculate_wall_distance(ray);
-		draw_wall(x, ray, game);
+		ray_angle = game->player.angle - FOV / 2 + FOV * (x / (double)SCREEN_WIDTH);
+		init_ray(*ray, game, ray_angle);
+		calculate_steps(*ray);
+		perform_dda(*ray, game);
+		calculate_wall_distance(*ray);
+		draw_wall(x, *ray, game);
 	}
 }

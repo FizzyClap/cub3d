@@ -16,4 +16,12 @@ void	player_init(t_game *game)
 	}
 	game->player.x = game->map->start_x * game->map->tile_x;
 	game->player.y = game->map->start_y * game->map->tile_y;
+	if (game->map->orientation == 'N')
+		game->player.angle = 90;
+	else if (game->map->orientation == 'S')
+		game->player.angle = 270;
+	else if (game->map->orientation == 'E')
+		game->player.angle = 0;
+	else if (game->map->orientation == 'W')
+		game->player.angle = 180;
 }
