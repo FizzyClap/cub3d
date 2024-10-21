@@ -17,9 +17,9 @@ int	main(int argc, char **argv)
 	minimap(game);
 	player_init(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	game->raycast.addr = mlx_get_data_addr(game->raycast.img, &game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
+	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
+	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
-	// printf("player angle = %f\n", game->player.angle);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
@@ -49,7 +49,6 @@ static int	loop(t_game *game, t_ray *ray)
 	int		pixels;
 	int		i;
 
-
 	image_data = (int *)game->raycast.addr;
 	pixels = SCREEN_WIDTH * SCREEN_HEIGHT;
 	i = 0;
@@ -61,7 +60,7 @@ static int	loop(t_game *game, t_ray *ray)
 	raycasting(ray, game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, game->player.x, game->player.y);
+	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img,\
+	 game->player.x, game->player.y);
 	return (1);
 }
-

@@ -20,7 +20,6 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->angle = angle;
 }
 
-
 void	calculate_steps(t_ray *ray)
 {
 	if (ray->dir_x < 0)
@@ -33,7 +32,6 @@ void	calculate_steps(t_ray *ray)
 		ray->step_x = 1;
 		ray->side_dist_x = (floor(ray->pos_x + 1) - ray->pos_x) * ray->delta_x;
 	}
-
 	if (ray->dir_y < 0)
 	{
 		ray->step_y = -1;
@@ -42,14 +40,13 @@ void	calculate_steps(t_ray *ray)
 	else
 	{
 		ray->step_y = 1;
-
 		ray->side_dist_y = (floor(ray->pos_y + 1) - ray->pos_y) * ray->delta_y;
 	}
 }
 
 void	perform_dda(t_ray *ray, t_game *game)
 {
-	int hit;
+	int	hit;
 
 	hit = 0;
 	while (!hit)
@@ -79,7 +76,7 @@ void	calculate_wall_distance(t_ray *ray)
 		ray->wall_dist = ray->side_dist_y - ray->delta_y;
 }
 
-void draw_vertical_line(t_game *game, int x, int start, int end, int color)
+void	draw_vertical_line(t_game *game, int x, int start, int end, int color)
 {
 	int	y;
 
@@ -94,10 +91,10 @@ void draw_vertical_line(t_game *game, int x, int start, int end, int color)
 
 void	draw_wall(int x, t_ray *ray, t_game *game)
 {
-	int line_height;
-	int draw_start;
-	int draw_end;
-	int color;
+	int	line_height;
+	int	draw_start;
+	int	draw_end;
+	int	color;
 
 	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
 	draw_start = -line_height / 2 + SCREEN_HEIGHT / 2;
@@ -124,8 +121,6 @@ void	raycasting(t_ray *ray, t_game *game)
 	while (++x < SCREEN_WIDTH)
 	{
 		ray_angle = (game->player.angle * 180 / PI) - FOV / 2 + FOV * (x / (double)SCREEN_WIDTH);
-		printf("ray angle = %f\n", (double)(ray_angle * PI / 180));
-		printf("player angle = %f\n", (double)(game->player.angle));
 		init_ray(ray, game, ray_angle);
 		calculate_steps(ray);
 		perform_dda(ray, game);

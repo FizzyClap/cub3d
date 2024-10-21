@@ -17,21 +17,24 @@ int	keycode(int keycode, t_game *game)
 		move_down(game);
 	if (keycode == D || keycode == RIGHT)
 		move_right(game);
-	printf("player angle = %f\n", game->player.angle);
 	return (SUCCESS);
 }
 
 static void	move_up(t_game *game)
 {
 	int	x;
-	int y;
-	x = (game->player.x + game->player.d_x * game->player.speed) / game->map->tile_x;
-	y = (game->player.y + game->player.d_y * game->player.speed) / game->map->tile_y;
+	int	y;
+
+	x = (game->player.x + game->player.d_x * game->player.speed) \
+	/ game->map->tile_x;
+	y = (game->player.y + game->player.d_y * game->player.speed) \
+	/ game->map->tile_y;
 	if (game->map->lines[y]->content[x] == '1')
 		return ;
 	game->player.x += game->player.d_x * game->player.speed;
 	game->player.y += game->player.d_y * game->player.speed;
 }
+
 static void	move_left(t_game *game)
 {
 	game->player.angle -= 0.05;
@@ -44,9 +47,12 @@ static void	move_left(t_game *game)
 static void	move_down(t_game *game)
 {
 	int	x;
-	int y;
-	x = (game->player.x - game->player.d_x * game->player.speed) / game->map->tile_x;
-	y = (game->player.y - game->player.d_y * game->player.speed) / game->map->tile_y;
+	int	y;
+
+	x = (game->player.x - game->player.d_x * game->player.speed) \
+	/ game->map->tile_x;
+	y = (game->player.y - game->player.d_y * game->player.speed) \
+	/ game->map->tile_y;
 	if (game->map->lines[y]->content[x] == '1')
 		return ;
 	game->player.x -= game->player.d_x * game->player.speed;
