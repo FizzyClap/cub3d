@@ -14,8 +14,8 @@ int	main(int argc, char **argv)
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
-	minimap(game);
 	player_init(game);
+	// minimap(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
@@ -57,10 +57,10 @@ static int	loop(t_game *game, t_ray *ray)
 		image_data[i] = 0x000000;
 		i++;
 	}
+	minimap(game);
 	raycasting(ray, game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img,\
-	 game->player.x, game->player.y);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
+	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, 105, 105);
 	return (1);
 }

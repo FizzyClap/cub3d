@@ -7,8 +7,8 @@ double	deg_to_rad(double degrees)
 
 void	init_ray(t_ray *ray, t_game *game, double angle)
 {
-	ray->pos_x = game->player.x / game->map->tile_x;
-	ray->pos_y = game->player.y / game->map->tile_y;
+	ray->pos_x = game->player.x;
+	ray->pos_y = game->player.y;
 	ray->dir_x = cos(deg_to_rad(angle));
 	ray->dir_y = sin(deg_to_rad(angle));
 	ray->plane_x = -ray->dir_y * FOV;

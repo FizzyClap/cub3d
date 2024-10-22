@@ -20,8 +20,8 @@ void	player_init(t_game *game)
 	&game->player.cursor.bpp, &game->player.cursor.line_len, &game->\
 	player.cursor.endian);
 	paint_cursor(game);
-	game->player.x = game->map->start_x * game->map->tile_x;
-	game->player.y = game->map->start_y * game->map->tile_y;
+	game->player.x = game->map->start_x + 0.5;
+	game->player.y = game->map->start_y + 0.5;
 	if (game->map->orientation == 'N')
 		game->player.angle = PI / 2;
 	else if (game->map->orientation == 'S')
@@ -32,5 +32,5 @@ void	player_init(t_game *game)
 		game->player.angle = 0;
 	game->player.d_x = cos(game->player.angle) * 5;
 	game->player.d_y = sin(game->player.angle) * 5;
-	game->player.speed = 0.5;
+	game->player.speed = 0.025;
 }

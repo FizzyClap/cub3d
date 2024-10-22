@@ -25,10 +25,8 @@ static void	move_up(t_game *game)
 	int	x;
 	int	y;
 
-	x = (game->player.x + game->player.d_x * game->player.speed) \
-	/ game->map->tile_x;
-	y = (game->player.y + game->player.d_y * game->player.speed) \
-	/ game->map->tile_y;
+	x = (game->player.x + game->player.d_x * game->player.speed);
+	y = (game->player.y + game->player.d_y * game->player.speed);
 	if (game->map->lines[y]->content[x] == '1')
 		return ;
 	game->player.x += game->player.d_x * game->player.speed;
@@ -49,10 +47,8 @@ static void	move_down(t_game *game)
 	int	x;
 	int	y;
 
-	x = (game->player.x - game->player.d_x * game->player.speed) \
-	/ game->map->tile_x;
-	y = (game->player.y - game->player.d_y * game->player.speed) \
-	/ game->map->tile_y;
+	x = (game->player.x - game->player.d_x * game->player.speed);
+	y = (game->player.y - game->player.d_y * game->player.speed);
 	if (game->map->lines[y]->content[x] == '1')
 		return ;
 	game->player.x -= game->player.d_x * game->player.speed;
