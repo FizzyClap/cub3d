@@ -8,6 +8,15 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color)
 	*(unsigned int *) dst = color;
 }
 
+static void	y_mlx_pixel_put(t_image img, int x, int y, int color)
+{
+	char	*dst;
+
+	printf("x = %d, y = %d\n", x, y);
+	dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
+	*(unsigned int *) dst = color;
+}
+
 // static void	draw_tile(t_game *game, t_coord loc, t_image minimap, char c, int offset_x, int offset_y)
 // {
 // 	t_coord	pixel;
@@ -19,9 +28,9 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color)
 // 		while (++pixel.y < offset_y - 1)
 // 		{
 // 			if (c == '1')
-// 				my_mlx_pixel_put(minimap, (pixel.x) + (offset_x * loc.x), (pixel.y) + (offset_y * loc.y), BLUE);
+// 				y_mlx_pixel_put(minimap, (pixel.x) + (offset_x * loc.x), (pixel.y) + (offset_y * loc.y), BLUE);
 // 			else if (ft_strchr("0NSEW", c))
-// 				my_mlx_pixel_put(minimap, (pixel.x) + (offset_x * loc.x), (pixel.y) + (offset_y * loc.y), WHITE);
+// 				y_mlx_pixel_put(minimap, (pixel.x) + (offset_x * loc.x), (pixel.y) + (offset_y * loc.y), WHITE);
 // 		}
 // 	}
 // }
@@ -66,7 +75,7 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color)
 // 	}
 // }
 
-static void	draw_tile(t_image image, t_coord pos, t_coord max, int color)
+static void	draw_tile(t_coord check, t_image image, t_coord max, int color)
 {
 	int	x;
 	int	y;
@@ -74,11 +83,11 @@ static void	draw_tile(t_image image, t_coord pos, t_coord max, int color)
 	if (color == 0)
 		return ;
 	x = -1;
-	while (++x < max.x || x < MML)
+	while (++x < max.x && x < MML)
 	{
 		y = -1;
-		while (++y < max.y || y < MMH)
-			my_mlx_pixel_put(image, x + (TILE * pos.x), y + (TILE * pos.y), color);
+		while (++y < max.y && y < MMH)
+			y_mlx_pixel_put(image, x + (TILE * check.x), y + (TILE * check.y), color);
 	}
 }
 
@@ -107,7 +116,6 @@ static t_coord	get_max(t_game *game, t_coord coord)
 		result.y = (game->player.y - floor(game->player.y)) * TILE;
 	else
 		result.y = TILE;
-	printf("x = %d, y = %d\n", result.x, result.y);
 	return (result);
 		
 }
@@ -116,28 +124,33 @@ static void draw_minimap(t_game *game, t_image minimap)
 {
 	t_coord	coord;
 	t_coord	pos;
+	t_coord	check;
 
 	pos.x = floor(game->player.x) - 4;
-	pos.y = floor(game->player.y) - 4;
+	check.x = 0;
 	coord.x = 0;
-	while (coord.x < MML + TILE)
+	while (check.x < 10)
 	{
+		pos.y = floor(game->player.y) - 4;
+		check.y = 0;
 		coord.y = 0;
-		while (coord.y < MMH + TILE)
+		while (check.y < 10)
 		{
 			// printf("x = %d, y = %d\n", coord.x, coord.y);
-			draw_tile(minimap, pos, get_max(game, coord), get_color(game, pos));
+			draw_tile(check, minimap, get_max(game, coord), get_color(game, pos));
 			if (coord.y == 0)
-				coord.y += (game->player.y - floor(game->player.y)) * TILE;
+				coord.y += (int)((game->player.y - floor(game->player.y)) * TILE);
 			else
 				coord.y += TILE;
 			pos.y++;
+			check.y++;
 		}
 		if (coord.x == 0)
-			coord.x += (game->player.x - floor(game->player.x)) * TILE;
+			coord.x += (int)((game->player.x - floor(game->player.x)) * TILE);
 		else
 			coord.x += TILE;
 		pos.x++;
+		check.x++;
 	}
 }
 
