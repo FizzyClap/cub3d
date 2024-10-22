@@ -16,10 +16,10 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 	if (color == 0)
 		return ;
 	x = -1;
-	while (++x < max.x && x < MML)
+	while (++x < max.x - 1 && (x + coord.x) < MML)
 	{
 		y = -1;
-		while (++y < max.y && y < MMH)
+		while (++y < max.y - 1 && (y + coord.y) < MMH)
 			my_mlx_pixel_put(image, x + coord.x, y + coord.y, color);
 	}
 }
@@ -42,11 +42,11 @@ static t_coord	get_max(t_game *game, t_coord coord)
 	t_coord	result;
 
 	if (coord.x == 0)
-		result.x = (game->player.x - (int)(game->player.x)) * TILE;
+		result.x = TILE - (int)(game->player.x - (int)(game->player.x)) * TILE;
 	else
-		result.x = TILE;	
+		result.x = TILE;
 	if (coord.y == 0)
-		result.y = (game->player.y - (int)(game->player.y)) * TILE;
+		result.y = TILE - (int)(game->player.y - (int)(game->player.y)) * TILE;
 	else
 		result.y = TILE;
 	return (result);
@@ -58,23 +58,23 @@ static void draw_minimap(t_game *game, t_image minimap)
 	t_coord	coord;
 	t_coord	pos;
 
-	pos.x = (int)(game->player.x) - 4;
+	pos.x = (int)(game->player.x) - 5;
 	coord.x = 0;
 	while (pos.x < (int)(game->player.x) + 5)
 	{
-		pos.y = (int)(game->player.y) - 4;
+		pos.y = (int)(game->player.y) - 5;
 		coord.y = 0;
 		while (pos.y < (int)(game->player.y) + 5)
 		{
 			draw_tile(coord, minimap, get_max(game, coord), get_color(game, pos));
 			if (coord.y == 0)
-				coord.y += (int)((game->player.y - (int)(game->player.y)) * TILE);
+				coord.y += TILE - (int)((game->player.y - (int)(game->player.y)) * TILE);
 			else
 				coord.y += TILE;
 			pos.y++;
 		}
 		if (coord.x == 0)
-			coord.x += (int)((game->player.x - (int)(game->player.x)) * TILE);
+			coord.x += TILE - (int)((game->player.x - (int)(game->player.x)) * TILE);
 		else
 			coord.x += TILE;
 		pos.x++;
