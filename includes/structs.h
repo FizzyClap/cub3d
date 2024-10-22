@@ -25,8 +25,6 @@ typedef struct s_map
 	int		y;
 	int		x_max;
 	int		count_start_pos;
-	int		tile_x;
-	int		tile_y;
 	char	orientation;
 }	t_map;
 

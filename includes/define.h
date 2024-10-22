@@ -25,5 +25,6 @@
 # define LAST_CHAR x == map->lines[y]->x - 1
 # define MML 180
 # define MMH 180
+# define TILE 20
 
 #endif
