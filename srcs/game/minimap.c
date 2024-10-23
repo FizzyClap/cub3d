@@ -53,7 +53,7 @@ static t_coord	get_max(t_game *game, t_coord coord)
 		
 }
 
-static void draw_minimap(t_game *game, t_image minimap)
+void draw_minimap(t_game *game, t_image minimap)
 {
 	t_coord	coord;
 	t_coord	pos;

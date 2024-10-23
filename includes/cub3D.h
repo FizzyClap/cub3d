@@ -10,6 +10,7 @@
 # include "../mlx/mlx_int.h"
 # include <unistd.h>
 # include <fcntl.h>
+# include <sys/time.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -25,18 +26,28 @@ void	print_texture(t_texture *texture, int fd);
 int		close_game(t_game *game);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
-//MINIMAP/CHARACTER
-void	player_init(t_game *game);
 //FREE/FREE_TEXTURE
 void	free_texture(t_texture *texture);
-//GAME/CONTROLS
-void	my_mlx_pixel_put(t_image img, int x, int y, int color);
-int		keycode(int keycode, t_game *game);
-void	minimap(t_game *game);
-double	deg_to_rad(double degrees);
-void	raycasting(t_ray *ray, t_game *game);
-//MINIMAP/CHARACTER
+//GAME/CHARACTER
 void	player_init(t_game *game);
+//GAME/MOUSE_CAM
+void	mouse_move(t_game *game);
+void	right_cam(t_game *game, int x);
+void	left_cam(t_game *game, int x);
+// void	wall_glide_up(t_game *game);
+//GAME/CONTROLS
+int		keycode(int keycode, t_game *game);
+void	move_up(t_game *game);
+void	move_down(t_game *game);
+//GAME/IMAGE
+int	load_textures(t_game *game);
+//GAME/MINIMAP
+void	draw_minimap(t_game *game, t_image minimap);
+void	minimap(t_game *game);
+void	my_mlx_pixel_put(t_image img, int x, int y, int color);
+//GAME/RAYCASTING
+void	raycasting(t_ray *ray, t_game *game);
+double	deg_to_rad(double degrees);
 //PARSING/CHECK_ARG
 int		check_arg(int argc, char **argv);
 int		open_map(char *file);
@@ -52,5 +63,6 @@ int		color_format(char *id, char *line);
 int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
+void	clear_image(char *address, int height, int width);
 
 #endif
