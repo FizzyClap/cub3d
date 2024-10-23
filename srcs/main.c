@@ -72,9 +72,9 @@ static int	loop(t_game *game, t_ray *ray)
 	frame = 1000000 / 60;
 	gettimeofday(&start, NULL);
 	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
+	raycasting(ray, game);
 	clear_image(game->minimap.addr, MMH, MML);
 	draw_minimap(game, game->minimap);
-	raycasting(ray, game);
 	mouse_move(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);

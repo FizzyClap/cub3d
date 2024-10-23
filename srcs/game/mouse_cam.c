@@ -8,9 +8,9 @@ void	mouse_move(t_game *game)
 	x = 960;
 	y = 540;
 	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
-	if (x < 950)
+	if (x < 960)
 		left_cam(game, x);
-	if (x > 970)
+	if (x > 960)
 		right_cam(game, x);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
 }
