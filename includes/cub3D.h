@@ -32,7 +32,7 @@ void	player_init(t_game *game);
 //GAME/CONTROLS
 int		keycode(int keycode, t_game *game);
 //GAME/IMAGE
-int	load_textures(t_game *game);
+int		load_textures(t_game *game);
 //GAME/MINIMAP
 void	draw_minimap(t_game *game, t_image minimap);
 void	minimap(t_game *game);

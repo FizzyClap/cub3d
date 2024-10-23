@@ -22,6 +22,7 @@ SRCS =	srcs/main.c\
 		srcs/free/free_map.c\
 		srcs/game/controls.c\
 		srcs/game/character.c\
+		srcs/game/image.c\
 		srcs/game/minimap.c\
 		srcs/game/raycasting.c\
 		srcs/parsing/check_arg.c\

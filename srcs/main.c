@@ -14,6 +14,8 @@ int	main(int argc, char **argv)
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	if (load_textures(game) == FAILURE)
+		return (ft_fprintf(STDERR_FILENO, "Error: textures can't be loaded\n"));
 	player_init(game);
 	minimap(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -62,7 +64,7 @@ void	clear_image(char *address, int height, int width)
 static int	loop(t_game *game, t_ray *ray)
 {
 	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
-	clear_image(game->minimap.addr, MMH, MML);
+	clear_image(game->minimap.addr, MMH, MMW);
 	draw_minimap(game, game->minimap);
 	raycasting(ray, game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);

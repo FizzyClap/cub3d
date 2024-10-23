@@ -116,6 +116,7 @@ void	raycasting(t_ray *ray, t_game *game)
 	double	ca;
 	double	ray_angle;
 
+	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
 	x = -1;
 	ray = malloc(sizeof(t_ray));
 	while (++x < SCREEN_WIDTH)

@@ -20,7 +20,7 @@
 # define WHITE 0x00FFFFFF
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
-# define MML 180
+# define MMW 180
 # define MMH 180
 # define TILE 20
 
