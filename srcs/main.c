@@ -8,22 +8,19 @@ int	main(int argc, char **argv)
 	t_texture	*texture;
 	t_map		*map;
 	t_game		*game;
-	t_ray		*ray;
 
 	if (parsing(&texture, &map, argc, argv) == FAILURE)
 		return (1);
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
-	minimap(game);
 	player_init(game);
-	ray = malloc(sizeof(t_ray));
+	minimap(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	game->raycast.addr = mlx_get_data_addr(game->raycast.img, &game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
+	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
+	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
-	printf("player angle = %f\n", game->player.angle);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
-	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
 }
@@ -46,25 +43,30 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	return (SUCCESS);
 }
 
-static int	loop(t_game *game, t_ray *ray)
+void	clear_image(char *address, int height, int width)
 {
 	int		*image_data;
 	int		pixels;
 	int		i;
 
-
-	image_data = (int *)game->raycast.addr;
-	pixels = SCREEN_WIDTH * SCREEN_HEIGHT;
+	image_data = (int *)address;
+	pixels = height * width;
 	i = 0;
 	while (i < pixels)
 	{
 		image_data[i] = 0x000000;
 		i++;
 	}
-	raycasting(&ray, game);
-	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, game->player.x, game->player.y);
-	return (1);
 }
 
+static int	loop(t_game *game, t_ray *ray)
+{
+	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
+	clear_image(game->minimap.addr, MMH, MML);
+	draw_minimap(game, game->minimap);
+	raycasting(ray, game);
+	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
+	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, 118, 118);
+	return (1);
+}

@@ -13,23 +13,15 @@
 # define D 100
 # define S 115
 # define PI 3.14159265358
-# define FOV 70
+# define FOV 60
 # define BLUE 0x000000FF
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define WHITE 0x00FFFFFF
-# define MML 384
-# define MMH 216
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
-# define FIRST_LINE y == 0
-# define LAST_LINE y == map->y - 1
-# define LAST_CHAR x == map->lines[y]->x - 1
-# define BLUE 0x000000FF
-# define RED 0x00FF0000
-# define GREEN 0x0000FF00
-# define WHITE 0x00FFFFFF
-# define MML 1780
-# define MMH 780
+# define MML 180
+# define MMH 180
+# define TILE 20
 
 #endif
