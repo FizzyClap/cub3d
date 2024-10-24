@@ -2,8 +2,8 @@
 
 void	mouse_move(t_game *game)
 {
-	int	x;
-	int	y;
+	int			x;
+	int			y;
 
 	x = 960;
 	y = 540;
@@ -25,14 +25,28 @@ static double	cam_sensibility(int x)
 
 void	left_cam(t_game *game, int x)
 {
+
 	game->player.angle -= cam_sensibility(x);
-	correct_angle(game);
+	if (game->player.angle < 0)
+		game->player.angle += 2 * PI;
 	refresh_position(game, DELTA, 0);
 }
 
 void	right_cam(t_game *game, int x)
 {
 	game->player.angle += cam_sensibility(x);
-	correct_angle(game);
+	if (game->player.angle > 2 * PI)
+		game->player.angle -= 2 * PI;
 	refresh_position(game, DELTA, 0);
+}
+
+int	check_backroom(t_game *game, int x, int y)
+{
+	if (game->map->lines[y]->content[x] == '1')
+		return (FAILURE);
+	if (y > game->player.y && game->map->lines[y - 1] && game->map->lines[y - 1]->content[x] == '1')
+		return (FAILURE);
+	if (x > game->player.x && game->map->lines[y]->content[x - 1] && game->map->lines[y]->content[x - 1] == '1')
+		return (FAILURE);
+	return (SUCCESS);
 }

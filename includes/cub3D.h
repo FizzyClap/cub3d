@@ -12,6 +12,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <sys/time.h>
 # include <stdlib.h>
 # include <string.h>
 # include <math.h>
@@ -30,6 +31,10 @@ void	free_map(t_map *map);
 void	free_texture(t_texture *texture);
 //GAME/CHARACTER
 void	player_init(t_game *game);
+//GAME/CONTROLS_UTILS
+void	correct_angle(t_game *game);
+void	refresh_position(t_game *game, int action, double speed);
+void	check_move(t_game *game);
 //GAME/CONTROLS
 int		keycode(int keycode, t_game *game);
 void	move_up(t_game *game);
@@ -41,6 +46,7 @@ void	draw_minimap(t_game *game, t_image minimap);
 void	minimap(t_game *game);
 void	my_mlx_pixel_put(t_image img, int x, int y, int color);
 //GAME/MOUSE
+int		check_backroom(t_game *game, int x, int y);
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
 void	right_cam(t_game *game, int x);

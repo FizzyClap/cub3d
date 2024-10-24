@@ -13,7 +13,7 @@
 # define D 100
 # define S 115
 # define PI 3.14159265358
-# define FOV 60
+# define FOV 70
 # define BLUE 0x000000FF
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
@@ -23,5 +23,8 @@
 # define MMW 180
 # define MMH 180
 # define TILE 20
+# define SPEED 0.01
+# define MOVE 1
+# define DELTA 2
 
 #endif
