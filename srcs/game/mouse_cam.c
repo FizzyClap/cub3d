@@ -39,3 +39,14 @@ void	right_cam(t_game *game, int x)
 		game->player.angle -= 2 * PI;
 	refresh_position(game, DELTA, 0);
 }
+
+int	check_backroom(t_game *game, int x, int y)
+{
+	if (game->map->lines[y]->content[x] == '1')
+		return (FAILURE);
+	if (y > game->player.y && game->map->lines[y - 1] && game->map->lines[y - 1]->content[x] == '1')
+		return (FAILURE);
+	if (x > game->player.x && game->map->lines[y]->content[x - 1] && game->map->lines[y]->content[x - 1] == '1')
+		return (FAILURE);
+	return (SUCCESS);
+}

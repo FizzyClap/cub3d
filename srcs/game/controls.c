@@ -27,14 +27,16 @@ void	move_up(t_game *game)
 	int	x;
 	int	y;
 
-	x = (game->player.x + game->player.d_x * (SPEED * 2));
-	y = (game->player.y + game->player.d_y * (SPEED * 2));
-	if (game->map->lines[y]->content[x] == '1')
+	x = (game->player.x + game->player.d_x * (game->player.speed * 2));
+	y = (game->player.y + game->player.d_y * (game->player.speed * 2));
+	if (check_backroom(game, x, y) == FAILURE)
 	{
 		check_move(game);
 		return ;
 	}
-		refresh_position(game, MOVE, SPEED);
+		refresh_position(game, MOVE, game->player.speed);
+		if (game->player.speed < 0.01)
+			game->player.speed += 0.0005;
 }
 
 void	move_down(t_game *game)
@@ -45,9 +47,9 @@ void	move_down(t_game *game)
 	game->player.angle -= PI;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * SPEED);
-	y = (game->player.y - game->player.d_y * SPEED);
-	if (game->map->lines[y]->content[x] == '1')
+	x = (game->player.x - game->player.d_x * game->player.speed);
+	y = (game->player.y - game->player.d_y * game->player.speed);
+	if (check_backroom(game, x, y) == FAILURE)
 		check_move(game);
 	move_up(game);
 	game->player.angle += PI;
@@ -63,9 +65,9 @@ static void	move_left(t_game *game)
 	game->player.angle -= (PI / 2);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * SPEED);
-	y = (game->player.y - game->player.d_y * SPEED);
-	if (game->map->lines[y]->content[x] == '1')
+	x = (game->player.x - game->player.d_x * game->player.speed);
+	y = (game->player.y - game->player.d_y * game->player.speed);
+	if (check_backroom(game, x, y) == FAILURE)
 		check_move(game);
 	move_up(game);
 	game->player.angle += (PI / 2);
@@ -81,9 +83,9 @@ static void	move_right(t_game *game)
 	game->player.angle += (PI / 2);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * SPEED);
-	y = (game->player.y - game->player.d_y * SPEED);
-	if (game->map->lines[y]->content[x] == '1')
+	x = (game->player.x - game->player.d_x * game->player.speed);
+	y = (game->player.y - game->player.d_y * game->player.speed);
+	if (check_backroom(game, x, y) == FAILURE)
 		check_move(game);
 	move_up(game);
 	game->player.angle -= (PI / 2);

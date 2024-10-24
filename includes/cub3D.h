@@ -45,6 +45,7 @@ void	draw_minimap(t_game *game, t_image minimap);
 void	minimap(t_game *game);
 void	my_mlx_pixel_put(t_image img, int x, int y, int color);
 //GAME/MOUSE
+int		check_backroom(t_game *game, int x, int y);
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
 void	right_cam(t_game *game, int x);
