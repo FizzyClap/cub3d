@@ -1,11 +1,19 @@
-NO 				textures/no_texture
-SO             textures/ea_texture
+NO 				textures/wall1.xpm
+SO             textures/wall1.xpm
 WE 				textures/we_texture
 EA    textures/ea_texture
 
 F 			12, 255, 255
    C		34, 23                  , 35
+F 			12, 255, 255
+   C		34, 23                  , 35
 
+111111111
+111111111
+111100001
+100000001
+1000000N1
+111111111
 111111111
 111111111
 111100001

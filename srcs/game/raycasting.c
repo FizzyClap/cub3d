@@ -95,58 +95,48 @@ void	draw_vertical_line(t_game *game, int x, int start, int end, int color)
 		my_mlx_pixel_put(game->raycast, x, y, color);
 }
 
-//void	draw_wall(int x, t_ray *ray, t_game *game)
-//{
-//	int		line_height;
-//	int		draw_start;
-//	int		draw_end;
-//	int		color;
-
-//	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist); //hauteur du mur
-//	draw_start = -line_height / 2 + SCREEN_HEIGHT / 2;
-//	if (draw_start < 0)
-//		draw_start = 0;
-//	draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
-//	if (draw_end >= SCREEN_HEIGHT)
-//		draw_end = SCREEN_HEIGHT - 1;
-//	if (ray->side == 0)
-//		color = 0xFF0000;
-//	else
-//		color = 0x00FF00;
-//	draw_vertical_line(game, x, draw_start, draw_end, color);
-//}
-
 void	draw_wall(int x, t_ray *ray, t_game *game)
 {
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-	int		color;
-	t_image	texture;
-	double	wall_x;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	int				color;
+	int				y;
+	t_texture_data	tex;
 
 	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist); //hauteur du mur
-	draw_start = -line_height / 2 + SCREEN_HEIGHT / 2;
+	draw_start = (SCREEN_HEIGHT - line_height) / 2;
 	if (draw_start < 0)
 		draw_start = 0;
-	draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
+	draw_end = (SCREEN_HEIGHT + line_height) / 2;
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
 	if (ray->side == 1 && ray->step_y < 0) //Mur nord
-		texture = game->texture->image[0];
+		tex = game->texture->image[0];
 	else if (ray->side == 1 && ray->step_y > 0) //Mur sud
-		texture = game->texture->image[1];
+		tex = game->texture->image[1];
 	else if (ray->side == 0 && ray->step_x < 0) //Mur ouest
-		texture = game->texture->image[2];
+		tex = game->texture->image[2];
 	else if (ray->side == 0 && ray->step_x > 0) //Mur est
-		texture = game->texture->image[3];
+		tex = game->texture->image[3];
 	if (ray->side == 0)
-		wall_x = ray->pos_y + ray->wall_dist * ray->dir_y;
+		tex.wall_x = ray->pos_y + ray->wall_dist * ray->dir_y;
 	else
-		wall_x = ray->pos_x + ray->wall_dist * ray->dir_x;
-	wall_x -= floor(wall_x);
-	color = *texture.color;
-	draw_vertical_line(game, x, draw_start, draw_end, color);
+		tex.wall_x = ray->pos_x + ray->wall_dist * ray->dir_x;
+	tex.wall_x -= floor(tex.wall_x);
+	tex.x = (int)(tex.wall_x * (double)tex.width);
+	if ((!ray->side && ray->dir_x > 0) || (ray->side && ray->dir_y < 0))
+		tex.x = tex.width - tex.x - 1;
+	tex.step = 1.0 * tex.height / line_height;
+	tex.pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * tex.step;
+	y = draw_start - 1;
+	while (++y < draw_end)
+	{
+		tex.y = (int)tex.pos % (tex.height - 1);
+		tex.pos += tex.step;
+		color = tex.color[tex.width * tex.y + tex.x];
+		draw_vertical_line(game, x, y, y + 1, color);
+	}
 }
 
 void	raycasting(t_ray *ray, t_game *game)

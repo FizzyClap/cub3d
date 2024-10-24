@@ -2,6 +2,8 @@
 
 static void	free_image(t_game *game);
 
+static void	free_image(t_game *game);
+
 int	close_game(t_game *game)
 {
 	free_image(game);
@@ -24,8 +26,12 @@ static void	free_image(t_game *game)
 
 	i = -1;
 	while (++i < 4)
-		mlx_destroy_image(game->mlx, game->texture->image[i].img);
-	mlx_destroy_image(game->mlx, game->raycast.img);
-	mlx_destroy_image(game->mlx, game->minimap.img);
-	mlx_destroy_image(game->mlx, game->player.cursor.img);
+		if (game->texture->image[i].img)
+			mlx_destroy_image(game->mlx, game->texture->image[i].img);
+	if (game->raycast.img)
+		mlx_destroy_image(game->mlx, game->raycast.img);
+	if (game->minimap.img)
+		mlx_destroy_image(game->mlx, game->minimap.img);
+	if (game->player.cursor.img)
+		mlx_destroy_image(game->mlx, game->player.cursor.img);
 }
