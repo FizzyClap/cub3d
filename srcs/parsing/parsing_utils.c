@@ -56,7 +56,7 @@ int	nb_start_pos(t_map *map, int y, int x)
 		map->start_y = y;
 		map->orientation = map->lines[y]->content[x];
 	}
-	if (LAST_LINE && LAST_CHAR && !map->count_start_pos)
+	if (y == map->y - 1 && x == map->lines[y]->x - 1 && !map->count_start_pos)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: there is no start position\n");
 		return (FAILURE);

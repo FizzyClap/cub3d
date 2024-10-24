@@ -14,16 +14,17 @@ int	main(int argc, char **argv)
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	if (load_textures(game) == FAILURE)
+		return (ft_fprintf(2, "Error: textures can't be loaded\n"), 1);
 	player_init(game);
 	minimap(game);
-
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_mouse_hide(game->mlx, game->win);
-	// mlx_mouse_hook(game->win, mouse_hook, NULL);
+	//mlx_mouse_hook(game->win, mouse_hook, NULL);
 	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
 }
@@ -73,7 +74,7 @@ static int	loop(t_game *game, t_ray *ray)
 	gettimeofday(&start, NULL);
 	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
 	raycasting(ray, game);
-	clear_image(game->minimap.addr, MMH, MML);
+	clear_image(game->minimap.addr, MMH, MMW);
 	draw_minimap(game, game->minimap);
 	mouse_move(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);

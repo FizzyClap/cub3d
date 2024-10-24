@@ -20,10 +20,7 @@
 # define WHITE 0x00FFFFFF
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
-# define FIRST_LINE y == 0
-# define LAST_LINE y == map->y - 1
-# define LAST_CHAR x == map->lines[y]->x - 1
-# define MML 180
+# define MMW 180
 # define MMH 180
 # define TILE 20
 

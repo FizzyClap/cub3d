@@ -16,7 +16,7 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 	if (color == 0)
 		return ;
 	x = -1;
-	while (++x < max.x - 1 && (x + coord.x) < MML)
+	while (++x < max.x - 1 && (x + coord.x) < MMW)
 	{
 		y = -1;
 		while (++y < max.y - 1 && (y + coord.y) < MMH)
@@ -50,7 +50,7 @@ static t_coord	get_max(t_game *game, t_coord coord)
 	else
 		result.y = TILE;
 	return (result);
-		
+
 }
 
 void draw_minimap(t_game *game, t_image minimap)
@@ -83,7 +83,7 @@ void draw_minimap(t_game *game, t_image minimap)
 
 void	minimap(t_game *game)
 {
-	game->minimap.img = mlx_new_image(game->mlx, MML, MMH);
+	game->minimap.img = mlx_new_image(game->mlx, MMW, MMH);
 	game->minimap.addr = mlx_get_data_addr(game->minimap.img, &game->\
 	minimap.bpp, &game->minimap.line_len, &game->minimap.endian);
 	draw_minimap(game, game->minimap);

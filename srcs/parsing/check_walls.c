@@ -18,7 +18,7 @@ static int	check_map_boundaries(t_map *map, int y, int x)
 {
 	if (!is_wall(map, y, 0) && !ft_char_iswhitespace(map->lines[y]->content[0]))
 		return (FAILURE);
-	if ((FIRST_LINE || LAST_LINE) && !is_wall(map, y, x) && \
+	if ((y == 0 || y == map->y - 1) && !is_wall(map, y, x) && \
 		!ft_char_iswhitespace(map->lines[y]->content[x]))
 		return (FAILURE);
 	return (SUCCESS);

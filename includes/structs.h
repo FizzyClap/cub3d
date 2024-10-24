@@ -39,6 +39,17 @@ typedef enum e_order
 	DONE
 }	t_order;
 
+
+typedef struct s_image
+{
+	void	*img;
+	char	*addr;
+	int		*color;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_image;
+
 typedef struct s_texture
 {
 	char	*id;
@@ -49,16 +60,8 @@ typedef struct s_texture
 	char	*floor_color;
 	char	*ceiling_color;
 	t_order	order;
+	t_image	image[4];
 }	t_texture;
-
-typedef struct s_image
-{
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_image;
 
 typedef struct s_player
 {
