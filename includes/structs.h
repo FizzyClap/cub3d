@@ -26,7 +26,6 @@ typedef struct s_map
 	int		x_max;
 	int		count_start_pos;
 	char	orientation;
-	char	orientation;
 }	t_map;
 
 typedef enum e_order
@@ -110,32 +109,11 @@ typedef struct s_ray
 	double	angle;
 }	t_ray;
 
-typedef struct s_ray
-{
-	double	pos_x;
-	double	pos_y;
-	double	plane_x;
-	double	plane_y;
-	double	dir_x;
-	double	dir_y;
-	int		step_x;
-	int		step_y;
-	double	delta_x;
-	double	delta_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	int		side;
-	double	wall_dist;
-	double	angle;
-}	t_ray;
-
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
 	t_image		minimap;
-	t_image		raycast;
-	t_map		*map;
 	t_image		raycast;
 	t_map		*map;
 	t_texture	*texture;

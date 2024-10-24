@@ -2,7 +2,6 @@
 
 static int	parsing(t_texture **texture, t_map **map, int argc, char **argv);
 static int	loop(t_game *game, t_ray *ray);
-static int	loop(t_game *game, t_ray *ray);
 
 int	main(int argc, char **argv)
 {
@@ -18,10 +17,6 @@ int	main(int argc, char **argv)
 	if (load_textures(game) == FAILURE)
 		return (ft_fprintf(2, "Error: textures can't be loaded\n"), close_game(game));
 	player_init(game);
-	minimap(game);
-	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
-	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
 	minimap(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
@@ -70,46 +65,6 @@ void	clear_image(char *address, int height, int width)
 	}
 }
 
-static int	loop(t_game *game, t_ray *ray)
-{
-	struct timeval		start;
-	struct timeval		end;
-	long long			frame;
-	long long			duration;
-
-	frame = 1000000 / 60;
-	gettimeofday(&start, NULL);
-	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
-	raycasting(ray, game);
-	clear_image(game->minimap.addr, MMH, MMW);
-	draw_minimap(game, game->minimap);
-	mouse_move(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
-	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, 118, 118);
-	gettimeofday(&end, NULL);
-	duration = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
-	frame -= duration;
-	if (frame > 0)
-		usleep(frame);
-	return (1);
-}
-
-void	clear_image(char *address, int height, int width)
-{
-	int		*image_data;
-	int		pixels;
-	int		i;
-
-	image_data = (int *)address;
-	pixels = height * width;
-	i = 0;
-	while (i < pixels)
-	{
-		image_data[i] = 0x000000;
-		i++;
-	}
-}
 
 static int	loop(t_game *game, t_ray *ray)
 {

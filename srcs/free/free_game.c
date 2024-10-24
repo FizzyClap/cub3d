@@ -7,7 +7,6 @@ static void	free_image(t_game *game);
 int	close_game(t_game *game)
 {
 	free_image(game);
-	free_image(game);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
