@@ -60,7 +60,7 @@ typedef struct s_texture
 	char	*floor_color;
 	char	*ceiling_color;
 	t_order	order;
-	t_image	image;
+	t_image	image[4];
 }	t_texture;
 
 typedef struct s_player

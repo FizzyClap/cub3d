@@ -1,7 +1,7 @@
 NO 				textures/wall1.xpm
-SO             textures/ea_texture
-WE 				textures/we_texture
-EA    textures/ea_texture
+SO             textures/wall1.xpm
+WE 				textures/wall2.xpm
+EA    textures/wall2.xpm
 
 F 			12, 255, 255
    C		34, 23                  , 35

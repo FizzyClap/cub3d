@@ -11,6 +11,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <sys/time.h>
 # include <stdlib.h>
 # include <string.h>
 # include <math.h>
@@ -31,12 +32,18 @@ void	free_texture(t_texture *texture);
 void	player_init(t_game *game);
 //GAME/CONTROLS
 int		keycode(int keycode, t_game *game);
+void	move_up(t_game *game);
+void	move_down(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP
 void	draw_minimap(t_game *game, t_image minimap);
 void	minimap(t_game *game);
 void	my_mlx_pixel_put(t_image img, int x, int y, int color);
+//GAME/MOUSE
+void	mouse_move(t_game *game);
+void	left_cam(t_game *game, int x);
+void	right_cam(t_game *game, int x);
 //GAME/RAYCASTING
 void	raycasting(t_ray *ray, t_game *game);
 double	deg_to_rad(double degrees);
