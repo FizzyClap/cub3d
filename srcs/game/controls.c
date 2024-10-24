@@ -27,15 +27,14 @@ void	move_up(t_game *game)
 	int	x;
 	int	y;
 
-	x = (game->player.x + game->player.d_x * game->player.speed);
-	y = (game->player.y + game->player.d_y * game->player.speed);
+	x = (game->player.x + game->player.d_x * (SPEED * 2));
+	y = (game->player.y + game->player.d_y * (SPEED * 2));
 	if (game->map->lines[y]->content[x] == '1')
 	{
-		move_down(game);
+		check_move(game);
 		return ;
 	}
-	game->player.x += game->player.d_x * game->player.speed;
-	game->player.y += game->player.d_y * game->player.speed;
+		refresh_position(game, MOVE, SPEED);
 }
 
 void	move_down(t_game *game)
@@ -43,15 +42,17 @@ void	move_down(t_game *game)
 	int	x;
 	int	y;
 
-	x = (game->player.x - game->player.d_x * game->player.speed);
-	y = (game->player.y - game->player.d_y * game->player.speed);
+	game->player.angle -= PI;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
+	x = (game->player.x - game->player.d_x * SPEED);
+	y = (game->player.y - game->player.d_y * SPEED);
 	if (game->map->lines[y]->content[x] == '1')
-	{
-		move_up(game);
-		return ;
-	}
-	game->player.x -= game->player.d_x * game->player.speed;
-	game->player.y -= game->player.d_y * game->player.speed;
+		check_move(game);
+	move_up(game);
+	game->player.angle += PI;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
 }
 
 static void	move_left(t_game *game)
@@ -60,27 +61,16 @@ static void	move_left(t_game *game)
 	int	y;
 
 	game->player.angle -= (PI / 2);
-	if (game->player.angle < 0)
-		game->player.angle += 2 * PI;
-	game->player.d_x = cos(game->player.angle) * 5;
-	game->player.d_y = sin(game->player.angle) * 5;
-	x = (game->player.x - game->player.d_x * game->player.speed);
-	y = (game->player.y - game->player.d_y * game->player.speed);
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
+	x = (game->player.x - game->player.d_x * SPEED);
+	y = (game->player.y - game->player.d_y * SPEED);
 	if (game->map->lines[y]->content[x] == '1')
-	{
-		game->player.angle += (PI / 2);
-		if (game->player.angle > 2 * PI)
-			game->player.angle -= 2 * PI;
-		game->player.d_x = cos(game->player.angle) * 5;
-		game->player.d_y = sin(game->player.angle) * 5;
-		return ;
-	}
+		check_move(game);
 	move_up(game);
 	game->player.angle += (PI / 2);
-	if (game->player.angle > 2 * PI)
-		game->player.angle -= 2 * PI;
-	game->player.d_x = cos(game->player.angle) * 5;
-	game->player.d_y = sin(game->player.angle) * 5;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
 }
 
 static void	move_right(t_game *game)
@@ -89,25 +79,14 @@ static void	move_right(t_game *game)
 	int	y;
 
 	game->player.angle += (PI / 2);
-	if (game->player.angle > 2 * PI)
-		game->player.angle -= 2 * PI;
-	game->player.d_x = cos(game->player.angle) * 5;
-	game->player.d_y = sin(game->player.angle) * 5;
-	x = (game->player.x - game->player.d_x * game->player.speed);
-	y = (game->player.y - game->player.d_y * game->player.speed);
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
+	x = (game->player.x - game->player.d_x * SPEED);
+	y = (game->player.y - game->player.d_y * SPEED);
 	if (game->map->lines[y]->content[x] == '1')
-	{
-		game->player.angle -= (PI / 2);
-		if (game->player.angle < 0)
-			game->player.angle += 2 * PI;
-		game->player.d_x = cos(game->player.angle) * 5;
-		game->player.d_y = sin(game->player.angle) * 5;
-		return ;
-	}
+		check_move(game);
 	move_up(game);
 	game->player.angle -= (PI / 2);
-	if (game->player.angle < 0)
-		game->player.angle += 2 * PI;
-	game->player.d_x = cos(game->player.angle) * 5;
-	game->player.d_y = sin(game->player.angle) * 5;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
 }

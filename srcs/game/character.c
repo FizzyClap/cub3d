@@ -32,5 +32,4 @@ void	player_init(t_game *game)
 		game->player.angle = 0;
 	game->player.d_x = cos(game->player.angle) * 5;
 	game->player.d_y = sin(game->player.angle) * 5;
-	game->player.speed = 0.015;
 }
