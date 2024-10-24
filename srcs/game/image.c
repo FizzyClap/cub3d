@@ -22,6 +22,8 @@ int	load_textures(t_game *game)
 			(int *)mlx_get_data_addr(game->texture->image[i].img, \
 			&game->texture->image[i].bpp, &game->texture->image[i].line_len, \
 			&game->texture->image[i].endian);
+		game->texture->image[i].width = width;
+		game->texture->image[i].height = height;
 	}
 	return (SUCCESS);
 }

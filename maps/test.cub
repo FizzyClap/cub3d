@@ -1,5 +1,5 @@
-NO 				textures/no_texture
-SO             textures/ea_texture
+NO 				textures/wall1.xpm
+SO             textures/wall1.xpm
 WE 				textures/we_texture
 EA    textures/ea_texture
 

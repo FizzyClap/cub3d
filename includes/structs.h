@@ -50,6 +50,22 @@ typedef struct s_image
 	int		endian;
 }	t_image;
 
+typedef struct s_texture_data
+{
+	void	*img;
+	int		*color;
+	int		width;
+	int		height;
+	int		x;
+	int		y;
+	int		bpp;
+	int		endian;
+	int		line_len;
+	double	wall_x;
+	double	step;
+	double	pos;
+}	t_texture_data;
+
 typedef struct s_texture
 {
 	char	*id;
@@ -60,7 +76,7 @@ typedef struct s_texture
 	char	*floor_color;
 	char	*ceiling_color;
 	t_order	order;
-	t_image	image[4];
+	t_texture_data	image[4];
 }	t_texture;
 
 typedef struct s_player

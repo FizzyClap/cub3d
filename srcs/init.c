@@ -27,7 +27,15 @@ void	init_texture(t_texture *texture)
 
 void	init_game(t_game **game, t_texture *texture, t_map *map)
 {
+	int	i;
+
 	*game = malloc(sizeof(t_game));
 	(*game)->texture = texture;
 	(*game)->map = map;
+	(*game)->raycast.img = NULL;
+	(*game)->minimap.img = NULL;
+	(*game)->player.cursor.img = NULL;
+	i = -1;
+	while (++i < 4)
+		(*game)->texture->image[i].img = NULL;
 }
