@@ -50,7 +50,7 @@ int	minimap_color(t_game *game, t_coord pos)
 		if (game->map->lines[pos.y]->content[pos.x] == '1')
 			return (BLUE);
 		else
-			return (WHITE);
+			return (game->floor.color);
 	}
 	else
 		return (0);

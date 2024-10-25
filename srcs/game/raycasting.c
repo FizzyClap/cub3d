@@ -9,13 +9,8 @@ void	raycasting(t_ray *ray, t_game *game)
 {
 	t_coord	loop;
 	double	ray_angle;
-	t_color	floor;
-	t_color	ceiling;
 
-	get_colors(game->texture, &floor, &ceiling);
-	ceiling.color = rgb_to_int(ceiling.r, ceiling.g, ceiling.b);
-	floor.color = rgb_to_int(floor.r, floor.g, floor.b);
-	draw_floor_ceiling(game, floor.color, ceiling.color);
+	draw_floor_ceiling(game, game->floor.color, game->ceiling.color);
 	ray = malloc(sizeof(t_ray));
 	loop.x = -1;
 	while (++loop.x < SCREEN_WIDTH)

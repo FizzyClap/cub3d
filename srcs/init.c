@@ -29,7 +29,7 @@ void	init_texture(t_texture *texture)
 
 void	init_game(t_game **game, t_texture *texture, t_map *map)
 {
-	int	i;
+	int		i;
 
 	*game = malloc(sizeof(t_game));
 	(*game)->texture = texture;
@@ -40,6 +40,11 @@ void	init_game(t_game **game, t_texture *texture, t_map *map)
 	i = -1;
 	while (++i < 4)
 		(*game)->texture->image[i].img = NULL;
+	get_colors((*game)->texture, &(*game)->floor, &(*game)->ceiling);
+	(*game)->ceiling.color = rgb_to_int((*game)->ceiling.r, \
+	(*game)->ceiling.g, (*game)->ceiling.b);
+	(*game)->floor.color = rgb_to_int((*game)->floor.r, \
+	(*game)->floor.g, (*game)->floor.b);
 }
 
 void	init_ray(t_ray *ray, t_game *game, double angle)

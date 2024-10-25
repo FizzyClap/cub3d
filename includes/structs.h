@@ -125,6 +125,8 @@ typedef struct s_game
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;
+	t_color		floor;
+	t_color		ceiling;
 }	t_game;
 
 #endif

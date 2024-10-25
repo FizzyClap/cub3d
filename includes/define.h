@@ -18,6 +18,7 @@
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define WHITE 0x00FFFFFF
+# define BLACK 0x00000000
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define MMW 180
