@@ -53,5 +53,5 @@ int	minimap_color(t_game *game, t_coord pos)
 			return (game->floor.color);
 	}
 	else
-		return (0);
+		return (game->ceiling.color);
 }

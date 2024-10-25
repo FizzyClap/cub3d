@@ -48,10 +48,10 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 	if (color == 0)
 		return ;
 	x = -1;
-	while (++x < max.x - 1 && (x + coord.x) < MMW)
+	while (++x < max.x && (x + coord.x) < MMW)
 	{
 		y = -1;
-		while (++y < max.y - 1 && (y + coord.y) < MMH)
+		while (++y < max.y && (y + coord.y) < MMH)
 			my_mlx_pixel_put(image, x + coord.x, y + coord.y, color);
 	}
 }
