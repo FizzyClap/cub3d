@@ -3,31 +3,31 @@
 static void	calculate_steps(t_ray *ray);
 static void	perform_dda(t_ray *ray, t_game *game);
 static void	calculate_wall_distance(t_ray *ray);
-static void	draw_wall(int x, t_ray *ray, t_game *game);
+static void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
 
 void	raycasting(t_ray *ray, t_game *game)
 {
-	int		x;
+	t_coord	loop;
 	double	ray_angle;
 	t_color	floor;
 	t_color	ceiling;
 
-	x = -1;
 	get_colors(game->texture, &floor, &ceiling);
 	ceiling.color = rgb_to_int(ceiling.r, ceiling.g, ceiling.b);
 	floor.color = rgb_to_int(floor.r, floor.g, floor.b);
 	draw_floor_ceiling(game, floor.color, ceiling.color);
 	ray = malloc(sizeof(t_ray));
-	while (++x < SCREEN_WIDTH)
+	loop.x = -1;
+	while (++loop.x < SCREEN_WIDTH)
 	{
 		ray_angle = (game->player.angle * 180 / PI) - FOV / 2 + \
-		FOV * (x / (double)SCREEN_WIDTH);
+		FOV * (loop.x / (double)SCREEN_WIDTH);
 		init_ray(ray, game, ray_angle);
 		calculate_steps(ray);
 		perform_dda(ray, game);
 		calculate_wall_distance(ray);
 		camera_angle_distortion(game, ray);
-		draw_wall(x, ray, game);
+		draw_wall(game, ray, loop);
 	}
 	free(ray);
 }
@@ -88,13 +88,12 @@ static void	calculate_wall_distance(t_ray *ray)
 		ray->wall_dist = ray->side_dist_y - ray->delta_y;
 }
 
-static void	draw_wall(int x, t_ray *ray, t_game *game)
+static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
 	int				line_height;
 	int				draw_start;
 	int				draw_end;
 	int				color;
-	int				y;
 	t_texture_data	*tex;
 
 	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
@@ -107,12 +106,12 @@ static void	draw_wall(int x, t_ray *ray, t_game *game)
 	select_wall_texture(game, ray, &tex);
 	tex->step = 1.0 * tex->height / line_height;
 	tex->pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * tex->step;
-	y = draw_start - 1;
-	while (++y < draw_end)
+	loop.y = draw_start - 1;
+	while (++loop.y < draw_end)
 	{
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
 		color = tex->color[tex->width * tex->y + tex->x];
-		draw_vertical_line(game, x, y, color);
+		draw_vertical_line(game, loop.x, loop.y, color);
 	}
 }
