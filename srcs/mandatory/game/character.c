@@ -22,6 +22,7 @@ void	player_init(t_game *game)
 	game->player.d_x = cos(game->player.angle) * 5;
 	game->player.d_y = sin(game->player.angle) * 5;
 	game->player.speed = 0.005;
+	game->player.z = 0;
 }
 
 static void	paint_cursor(t_game *game)

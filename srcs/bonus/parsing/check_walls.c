@@ -1,4 +1,4 @@
-#include "../../includes/cub3D.h"
+#include "../includes/cub3D.h"
 
 static int	check_map_boundaries(t_map *map, int y, int x);
 static int	check_neighbors(t_map *map, int y, int x);

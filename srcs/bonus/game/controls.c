@@ -1,4 +1,4 @@
-#include "../../includes/cub3D.h"
+#include "../includes/cub3D.h"
 
 static void	move_left(t_game *game);
 static void	move_right(t_game *game);
@@ -19,37 +19,16 @@ int	keycode(int keycode, t_game *game)
 		right_cam(game, 970);
 	if (keycode == LEFT)
 		left_cam(game, 950);
-	// if (keycode == SPACE)
-	// 	game->player.jump = ft_change_bool(game->player.jump);
-	// if (keycode == SHIFT)
-	// 	game->player.crouch = ft_change_bool(game->player.crouch);
 	return (SUCCESS);
 }
-
-// void	jump_and_crouch(t_game *game)
-// {
-// 	if (game->player.jump == true && game->player.z < 70)
-// 	{
-// 		game->player.crouch = false;
-// 		game->player.z += 10;
-// 	}
-// 	else if (game->player.jump == true && game->player.z == 70)
-// 		game->player.jump = false;
-// 	else if (game->player.z > 0 && game->player.jump == false)
-// 		game->player.z -= 10;
-// 	if (game->player.crouch == true && game->player.z > -70 && game->player.jump == false)
-// 		game->player.z -= 10;
-// 	else if (game->player.z < 0 && game->player.crouch == false)
-// 		game->player.z += 10;
-// }
 
 void	move_up(t_game *game)
 {
 	int	x;
 	int	y;
 
-	x = (game->player.x + game->player.d_x * (game->player.speed));
-	y = (game->player.y + game->player.d_y * (game->player.speed));
+	x = (game->player.x + game->player.d_x * (game->player.speed * 2));
+	y = (game->player.y + game->player.d_y * (game->player.speed * 2));
 	if (check_backroom(game, x, y) == FAILURE)
 	{
 		check_move(game);

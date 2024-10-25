@@ -1,7 +1,6 @@
-#include "../../includes/cub3D.h"
+#include "../includes/cub3D.h"
 
 static double	cam_sensibility(int x);
-static void 	z_cam(t_game *game, int y);
 
 void	mouse_move(t_game *game)
 {
@@ -15,19 +14,7 @@ void	mouse_move(t_game *game)
 		left_cam(game, x);
 	if (x > 960)
 		right_cam(game, x);
-	if (y != 540)
-		z_cam(game, y);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
-}
-
-static void z_cam(t_game *game, int y)
-{
-	int	z;
-
-	z = 540 - y;
-	printf("z = %i\n", game->player.z + z);
-	if ((game->player.z + z) < 1800 && (game->player.z + z) > -1800)
-	game->player.z += z;
 }
 
 void	left_cam(t_game *game, int x)

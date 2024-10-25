@@ -1,4 +1,4 @@
-#include "../../includes/cub3D.h"
+#include "../includes/cub3D.h"
 
 static int	get_size(t_map *map, int fd);
 static void	create_line(t_map *map, char *line, int y, int fd);

@@ -1,4 +1,4 @@
-#include "../../includes/cub3D.h"
+#include "../includes/cub3D.h"
 
 static int	try_move_left(t_game *game);
 static int	try_move_right(t_game *game);

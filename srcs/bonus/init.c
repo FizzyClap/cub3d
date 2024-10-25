@@ -32,6 +32,7 @@ void	init_game(t_game **game, t_texture *texture, t_map *map)
 	int		i;
 
 	*game = malloc(sizeof(t_game));
+	(*game)->win = NULL;
 	(*game)->texture = texture;
 	(*game)->map = map;
 	(*game)->raycast.img = NULL;
@@ -40,7 +41,8 @@ void	init_game(t_game **game, t_texture *texture, t_map *map)
 	i = -1;
 	while (++i < 4)
 		(*game)->texture->image[i].img = NULL;
-	get_colors((*game)->texture, &(*game)->floor, &(*game)->ceiling);
+	get_color(&(*game)->floor, (*game)->texture->floor_color);
+	get_color(&(*game)->ceiling, (*game)->texture->ceiling_color);
 	(*game)->ceiling.color = rgb_to_int((*game)->ceiling.r, \
 	(*game)->ceiling.g, (*game)->ceiling.b);
 	(*game)->floor.color = rgb_to_int((*game)->floor.r, \

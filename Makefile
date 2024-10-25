@@ -37,6 +37,25 @@ SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/parsing/parsing_utils.c\
 
 SRCS_BONUS =	srcs/bonus/main.c\
+				srcs/bonus/init.c\
+				srcs/bonus/debug/print.c\
+				srcs/bonus/free/free_game.c\
+				srcs/bonus/free/free_texture.c\
+				srcs/bonus/free/free_map.c\
+				srcs/bonus/game/character.c\
+				srcs/bonus/game/colors.c\
+				srcs/bonus/game/controls.c\
+				srcs/bonus/game/controls_utils.c\
+				srcs/bonus/game/image.c\
+				srcs/bonus/game/minimap.c\
+				srcs/bonus/game/mouse_cam.c\
+				srcs/bonus/game/raycasting_utils.c\
+				srcs/bonus/game/raycasting.c\
+				srcs/bonus/parsing/check_arg.c\
+				srcs/bonus/parsing/check_texture.c\
+				srcs/bonus/parsing/check_map.c\
+				srcs/bonus/parsing/check_walls.c\
+				srcs/bonus/parsing/parsing_utils.c\
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
@@ -69,6 +88,9 @@ all: $(NAME)
 
 $(LIBFT):
 	@make -s -C $(LIBFT_PATH)
+
+bonus: $(OBJS_BONUS)
+	$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(LDFLAGS) $(INCLUDES)
 
 mlx:
 	@git clone https://github.com/42Paris/minilibx-linux mlx

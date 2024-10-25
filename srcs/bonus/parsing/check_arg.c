@@ -1,4 +1,4 @@
-#include "../../includes/cub3D.h"
+#include "../includes/cub3D.h"
 
 static void	file_format(char *file);
 
@@ -9,7 +9,7 @@ int	check_arg(int argc, char **argv)
 		if (argc == 1)
 			ft_fprintf(STDERR_FILENO, "Error: there is 1 argument missing\n");
 		else if (argc == 3)
-			ft_fprintf(2, "Error: there is 1 argument more than expected\n");
+			ft_fprintf(STDERR_FILENO, ERR_ARG);
 		else
 			ft_fprintf(STDERR_FILENO, "Error: there are %d arguments" \
 			" more than expected\n", argc - 2);
@@ -48,14 +48,12 @@ int	open_map(char *file)
 		exit(EXIT_FAILURE);
 	}
 	bytes_read = read(fd, buffer, 1);
-	if (bytes_read == -1)
+	if (bytes_read <= 0)
 	{
-		ft_fprintf(STDERR_FILENO, "Error: %s : Is a directory\n", file);
-		exit(EXIT_FAILURE);
-	}
-	else if (bytes_read == 0)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: %s : Is empty\n", file);
+		if (bytes_read == -1)
+			ft_fprintf(STDERR_FILENO, "Error: %s : Is a directory\n", file);
+		else if (bytes_read == 0)
+			ft_fprintf(STDERR_FILENO, "Error: %s : Is empty\n", file);
 		exit(EXIT_FAILURE);
 	}
 	close(fd);

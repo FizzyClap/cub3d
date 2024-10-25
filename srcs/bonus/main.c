@@ -10,12 +10,15 @@ int	main(int argc, char **argv)
 	t_game		*game;
 
 	if (parsing(&texture, &map, argc, argv) == FAILURE)
-		return (1);
+		return (EXIT_FAILURE);
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	if (load_textures(game) == FAILURE)
-		return (ft_fprintf(STDERR_FILENO, ERR_LOAD), close_game(game));
+	{
+		ft_fprintf(STDERR_FILENO, "Error: textures can't be loaded\n");
+		close_game(game);
+	}
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	player_init(game);
 	minimap(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -24,7 +27,6 @@ int	main(int argc, char **argv)
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_mouse_hide(game->mlx, game->win);
-	//mlx_mouse_hook(game->win, mouse_hook, NULL);
 	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
 }
@@ -39,15 +41,22 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	init_texture(*texture);
 	fd = read_textures(*texture, argv[1]);
 	if (fd == FAILURE)
-		return (free_texture(*texture), FAILURE);
+	{
+		free_texture(*texture);
+		return (FAILURE);
+	}
 	*map = malloc(sizeof(t_map));
 	init_map(*map, argv[1]);
 	if (read_map(*map, fd) == FAILURE)
-		return (free_texture(*texture), free_map(*map), FAILURE);
+	{
+		free_texture(*texture);
+		free_map(*map);
+		return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
-void	clear_image(char *address, int height, int width)
+static void	clear_image(char *address, int height, int width)
 {
 	int		*image_data;
 	int		pixels;
@@ -70,7 +79,6 @@ static int	loop(t_game *game, t_ray *ray)
 	clear_image(game->minimap.addr, MMH, MMW);
 	draw_minimap(game, game->minimap);
 	mouse_move(game);
-	// jump_and_crouch(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
