@@ -21,7 +21,7 @@ void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color)
 	}
 }
 
-void	get_colors(t_color *type, char *path)
+void	get_color(t_color *type, char *path)
 {
 	char	**rgb;
 
