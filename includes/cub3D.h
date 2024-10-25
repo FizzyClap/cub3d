@@ -34,7 +34,7 @@ void	free_texture(t_texture *texture);
 //GAME/CHARACTER
 void	player_init(t_game *game);
 //GAME/COLORS
-void	get_colors(t_texture *texture, t_color *floor, t_color *ceiling);
+void	get_colors(t_color *type, char *path);
 int		rgb_to_int(int r, int g, int b);
 void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color);
 int		minimap_color(t_game *game, t_coord pos);

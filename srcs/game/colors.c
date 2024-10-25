@@ -21,19 +21,14 @@ void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color)
 	}
 }
 
-void	get_colors(t_texture *texture, t_color *floor, t_color *ceiling)
+void	get_colors(t_color *type, char *path)
 {
 	char	**rgb;
 
-	rgb = ft_split(texture->ceiling_color, ',');
-	ceiling->r = ft_atoi(rgb[0]);
-	ceiling->g = ft_atoi(rgb[1]);
-	ceiling->b = ft_atoi(rgb[2]);
-	ft_free_tab(rgb);
-	rgb = ft_split(texture->floor_color, ',');
-	floor->r = ft_atoi(rgb[0]);
-	floor->g = ft_atoi(rgb[1]);
-	floor->b = ft_atoi(rgb[2]);
+	rgb = ft_split(path, ',');
+	type->r = ft_atoi(rgb[0]);
+	type->g = ft_atoi(rgb[1]);
+	type->b = ft_atoi(rgb[2]);
 	ft_free_tab(rgb);
 }
 
