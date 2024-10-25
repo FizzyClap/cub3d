@@ -6,13 +6,13 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 16:30:21 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 08:45:02 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/25 10:35:13 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-char	*ft_strdnup(char *src, int n)
+char	*ft_strndup(char *src, int n)
 {
 	int		i;
 	int		src_len;

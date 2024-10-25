@@ -34,30 +34,29 @@ void	free_texture(t_texture *texture);
 //GAME/CHARACTER
 void	player_init(t_game *game);
 //GAME/COLORS
-void	get_colors(t_texture *texture, t_color *floor, t_color *ceiling);
+void	get_color(t_color *type, char *path);
 int		rgb_to_int(int r, int g, int b);
 void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color);
 int		minimap_color(t_game *game, t_coord pos);
 //GAME/CONTROLS_UTILS
+void	check_move(t_game *game);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
-void	check_move(t_game *game);
 //GAME/CONTROLS
 int		keycode(int keycode, t_game *game);
 void	move_up(t_game *game);
 void	move_down(t_game *game);
-void	jump_and_crouch(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP
-void	draw_minimap(t_game *game, t_image minimap);
 void	minimap(t_game *game);
+void	draw_minimap(t_game *game, t_image minimap);
 void	my_mlx_pixel_put(t_image img, int x, int y, int color);
 //GAME/MOUSE
-int		check_backroom(t_game *game, int x, int y);
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
 void	right_cam(t_game *game, int x);
+int		check_backroom(t_game *game, int x, int y);
 //GAME/RAYCASTING_UTILS
 void	draw_vertical_line(t_game *game, int x, int start, int color);
 void	camera_angle_distortion(t_game *game, t_ray *ray);
@@ -79,6 +78,5 @@ int		color_format(char *id, char *line);
 int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
-void	clear_image(char *address, int height, int width);
 
 #endif

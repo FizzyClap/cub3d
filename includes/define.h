@@ -12,8 +12,6 @@
 # define W 119
 # define D 100
 # define S 115
-# define SPACE 32
-# define SHIFT 65505
 # define PI 3.14159265358
 # define FOV 70
 # define BLUE 0x000000FF
@@ -33,7 +31,8 @@
 # define SOUTH 1
 # define WEST 2
 # define EAST 3
+# define ERR_ARG "Error: there is 1 argument more than expected\n"
 # define ERR_PLAYERS "Error: there is too much start position\n"
 # define ERR_EMPTY "Error: line is empty\n"
-# define ERR_LOAD "Error: textures can't be loaded\n"
+
 #endif
