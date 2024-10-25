@@ -18,4 +18,3 @@ void	free_texture(t_texture *texture)
 		free(texture->ceiling_color);
 	free(texture);
 }
-

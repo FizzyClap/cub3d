@@ -1,5 +1,37 @@
 #include "../../includes/cub3D.h"
 
+static int	try_move_left(t_game *game);
+static int	try_move_right(t_game *game);
+
+void	check_move(t_game *game)
+{
+	int	left;
+	int	right;
+
+	left = try_move_left(game);
+	right = try_move_right(game);
+	if (left < right)
+	{
+		game->player.angle -= (double)(left * 0.1);
+		correct_angle(game);
+		refresh_position(game, DELTA, 0);
+		refresh_position(game, MOVE, game->player.speed);
+		game->player.angle += (double)(left * 0.1);
+		correct_angle(game);
+		refresh_position(game, DELTA, 0);
+	}
+	else
+	{
+		game->player.angle += (double)(right * 0.1);
+		correct_angle(game);
+		refresh_position(game, DELTA, 0);
+		refresh_position(game, MOVE, game->player.speed);
+		game->player.angle -= (double)(right * 0.1);
+		correct_angle(game);
+		refresh_position(game, DELTA, 0);
+	}
+}
+
 void	correct_angle(t_game *game)
 {
 	if (game->player.angle < 0)
@@ -20,7 +52,6 @@ void	refresh_position(t_game *game, int action, double speed)
 		game->player.x += game->player.d_x * speed;
 		game->player.y += game->player.d_y * speed;
 	}
-
 }
 
 static int	try_move_left(t_game *game)
@@ -75,33 +106,4 @@ static int	try_move_right(t_game *game)
 	game->player.angle = tmp;
 	refresh_position(game, DELTA, 0);
 	return (i);
-}
-
-void	check_move(t_game *game)
-{
-	int	left;
-	int	right;
-
-	left = try_move_left(game);
-	right = try_move_right(game);
-	if (left < right)
-	{
-		game->player.angle -= (double)(left * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-		refresh_position(game, MOVE, game->player.speed);
-		game->player.angle += (double)(left * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-	}
-	else
-	{
-		game->player.angle += (double)(right * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-		refresh_position(game, MOVE, game->player.speed);
-		game->player.angle -= (double)(right * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-	}
 }

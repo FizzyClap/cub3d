@@ -1,5 +1,7 @@
 #include "../includes/cub3D.h"
 
+static double	deg_to_rad(double degrees);
+
 void	init_map(t_map *map, char *file)
 {
 	map->file = ft_strdup(file);
@@ -27,7 +29,7 @@ void	init_texture(t_texture *texture)
 
 void	init_game(t_game **game, t_texture *texture, t_map *map)
 {
-	int	i;
+	int		i;
 
 	*game = malloc(sizeof(t_game));
 	(*game)->texture = texture;
@@ -38,4 +40,29 @@ void	init_game(t_game **game, t_texture *texture, t_map *map)
 	i = -1;
 	while (++i < 4)
 		(*game)->texture->image[i].img = NULL;
+	get_colors((*game)->texture, &(*game)->floor, &(*game)->ceiling);
+	(*game)->ceiling.color = rgb_to_int((*game)->ceiling.r, \
+	(*game)->ceiling.g, (*game)->ceiling.b);
+	(*game)->floor.color = rgb_to_int((*game)->floor.r, \
+	(*game)->floor.g, (*game)->floor.b);
+}
+
+void	init_ray(t_ray *ray, t_game *game, double angle)
+{
+	ray->pos_x = game->player.x;
+	ray->pos_y = game->player.y;
+	ray->dir_x = cos(deg_to_rad(angle));
+	ray->dir_y = sin(deg_to_rad(angle));
+	ray->plane_x = -ray->dir_y * FOV;
+	ray->plane_y = ray->dir_x * FOV;
+	ray->delta_x = fabs(1 / ray->dir_x);
+	ray->delta_y = fabs(1 / ray->dir_y);
+	ray->side_dist_x = 0;
+	ray->side_dist_y = 0;
+	ray->angle = angle;
+}
+
+static double	deg_to_rad(double degrees)
+{
+	return (degrees * PI / 180);
 }

@@ -7,10 +7,10 @@ int	load_textures(t_game *game)
 	int		i;
 	char	*file[4];
 
-	file[0] = game->texture->north_path;
-	file[1] = game->texture->south_path;
-	file[2] = game->texture->west_path;
-	file[3] = game->texture->east_path;
+	file[NORTH] = game->texture->north_path;
+	file[SOUTH] = game->texture->south_path;
+	file[WEST] = game->texture->west_path;
+	file[EAST] = game->texture->east_path;
 	i = -1;
 	while (++i < 4)
 	{

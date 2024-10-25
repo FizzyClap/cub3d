@@ -18,6 +18,7 @@
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define WHITE 0x00FFFFFF
+# define BLACK 0x00000000
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define MMW 180
@@ -26,5 +27,11 @@
 # define SPEED 0.01
 # define MOVE 1
 # define DELTA 2
-
+# define NORTH 0
+# define SOUTH 1
+# define WEST 2
+# define EAST 3
+# define ERR_PLAYERS "Error: there is too much start position\n"
+# define ERR_EMPTY "Error: line is empty\n"
+# define ERR_LOAD "Error: textures can't be loaded\n"
 #endif
