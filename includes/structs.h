@@ -80,6 +80,7 @@ typedef struct s_texture
 
 typedef struct s_player
 {
+	int		z;
 	double	x;
 	double	y;
 	double	d_x;
