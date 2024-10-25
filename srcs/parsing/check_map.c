@@ -50,7 +50,7 @@ static int	get_size(t_map *map, int fd)
 			continue ;
 		}
 		if (map->end_read == true)
-			return (free(line), ft_fprintf(2, "Error: line is empty\n"), 0);
+			return (free(line), ft_fprintf(STDERR_FILENO, ERR_EMPTY), FAILURE);
 		if (map->start_read == false)
 			map->first_line = ft_strdup(line);
 		map->start_read = true;

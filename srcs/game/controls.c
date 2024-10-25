@@ -34,9 +34,9 @@ void	move_up(t_game *game)
 		check_move(game);
 		return ;
 	}
-		refresh_position(game, MOVE, game->player.speed);
-		if (game->player.speed < 0.01)
-			game->player.speed += 0.0005;
+	refresh_position(game, MOVE, game->player.speed);
+	if (game->player.speed < 0.01)
+		game->player.speed += 0.0005;
 }
 
 void	move_down(t_game *game)

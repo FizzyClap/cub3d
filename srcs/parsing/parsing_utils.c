@@ -2,8 +2,20 @@
 
 int	path_exist(char *file)
 {
+	int	len_file;
 	int	fd;
 
+	len_file = ft_strlen(file);
+	if (ft_strcmp(file + len_file - 4, ".xpm") != 0)
+	{
+		ft_fprintf(2, "Error: %s is not a \".xpm\" extension\n", file);
+		return (FAILURE);
+	}
+	else if (len_file < 5)
+	{
+		ft_fprintf(STDERR_FILENO, "Error: %s has no name\n", file);
+		return (FAILURE);
+	}
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
@@ -49,7 +61,7 @@ int	nb_start_pos(t_map *map, int y, int x)
 	{
 		if (++map->count_start_pos == 2)
 		{
-			ft_fprintf(2, "Error: there is too much start position\n");
+			ft_fprintf(STDERR_FILENO, ERR_PLAYERS);
 			return (FAILURE);
 		}
 		map->start_x = x;

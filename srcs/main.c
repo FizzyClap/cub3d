@@ -15,7 +15,7 @@ int	main(int argc, char **argv)
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	if (load_textures(game) == FAILURE)
-		return (ft_fprintf(2, "Error: textures can't be loaded\n"), close_game(game));
+		return (ft_fprintf(STDERR_FILENO, ERR_LOAD), close_game(game));
 	player_init(game);
 	minimap(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -23,8 +23,6 @@ int	main(int argc, char **argv)
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
-	mlx_mouse_hide(game->mlx, game->win);
-	//mlx_mouse_hook(game->win, mouse_hook, NULL);
 	mlx_mouse_hide(game->mlx, game->win);
 	//mlx_mouse_hook(game->win, mouse_hook, NULL);
 	mlx_loop_hook(game->mlx, loop, game);
@@ -65,7 +63,6 @@ void	clear_image(char *address, int height, int width)
 	}
 }
 
-
 static int	loop(t_game *game, t_ray *ray)
 {
 	struct timeval		start;
@@ -82,11 +79,13 @@ static int	loop(t_game *game, t_ray *ray)
 	mouse_move(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
-	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, 118, 118);
+	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
+		118, 118);
 	gettimeofday(&end, NULL);
-	duration = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+	duration = (end.tv_sec - start.tv_sec) * 1000000 + \
+		(end.tv_usec - start.tv_usec);
 	frame -= duration;
 	if (frame > 0)
 		usleep(frame);
-	return (1);
+	return (SUCCESS);
 }

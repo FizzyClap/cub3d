@@ -1,17 +1,6 @@
 #include "../includes/cub3D.h"
 
-static void	paint_cursor(t_game *game)
-{
-	t_coord	paint;
-
-	paint.x = -1;
-	while (++paint.x < 5)
-	{
-		paint.y = -1;
-		while (++paint.y < 5)
-			my_mlx_pixel_put(game->player.cursor, paint.x, paint.y, RED);
-	}
-}
+static void	paint_cursor(t_game *game);
 
 void	player_init(t_game *game)
 {
@@ -33,4 +22,17 @@ void	player_init(t_game *game)
 	game->player.d_x = cos(game->player.angle) * 5;
 	game->player.d_y = sin(game->player.angle) * 5;
 	game->player.speed = 0.005;
+}
+
+static void	paint_cursor(t_game *game)
+{
+	t_coord	paint;
+
+	paint.x = -1;
+	while (++paint.x < 5)
+	{
+		paint.y = -1;
+		while (++paint.y < 5)
+			my_mlx_pixel_put(game->player.cursor, paint.x, paint.y, RED);
+	}
 }
