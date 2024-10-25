@@ -1,4 +1,4 @@
-#include "../../includes/cub3D.h"
+#include "../includes/cub3D.h"
 
 void	draw_vertical_line(t_game *game, int x, int start, int color)
 {

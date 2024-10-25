@@ -1,4 +1,5 @@
 NAME = cub3D
+NAME_BONUS = cub3D_bonus
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 LIBFT = libft/libft.a
@@ -14,28 +15,31 @@ RED = \033[0;31m
 BLUE = \033[38;5;153m
 NC = \033[0m
 
-SRCS =	srcs/main.c\
-		srcs/init.c\
-		srcs/debug/print.c\
-		srcs/free/free_game.c\
-		srcs/free/free_texture.c\
-		srcs/free/free_map.c\
-		srcs/game/character.c\
-		srcs/game/colors.c\
-		srcs/game/controls.c\
-		srcs/game/controls_utils.c\
-		srcs/game/image.c\
-		srcs/game/minimap.c\
-		srcs/game/mouse_cam.c\
-		srcs/game/raycasting_utils.c\
-		srcs/game/raycasting.c\
-		srcs/parsing/check_arg.c\
-		srcs/parsing/check_texture.c\
-		srcs/parsing/check_map.c\
-		srcs/parsing/check_walls.c\
-		srcs/parsing/parsing_utils.c\
+SRCS =	srcs/mandatory/main.c\
+		srcs/mandatory/init.c\
+		srcs/mandatory/debug/print.c\
+		srcs/mandatory/free/free_game.c\
+		srcs/mandatory/free/free_texture.c\
+		srcs/mandatory/free/free_map.c\
+		srcs/mandatory/game/character.c\
+		srcs/mandatory/game/colors.c\
+		srcs/mandatory/game/controls.c\
+		srcs/mandatory/game/controls_utils.c\
+		srcs/mandatory/game/image.c\
+		srcs/mandatory/game/minimap.c\
+		srcs/mandatory/game/mouse_cam.c\
+		srcs/mandatory/game/raycasting_utils.c\
+		srcs/mandatory/game/raycasting.c\
+		srcs/mandatory/parsing/check_arg.c\
+		srcs/mandatory/parsing/check_texture.c\
+		srcs/mandatory/parsing/check_map.c\
+		srcs/mandatory/parsing/check_walls.c\
+		srcs/mandatory/parsing/parsing_utils.c\
+
+SRCS_BONUS =	srcs/bonus/main.c\
 
 OBJS = $(SRCS:.c=.o)
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LDFLAGS) $(INCLUDES)

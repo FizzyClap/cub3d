@@ -106,7 +106,8 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	{
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
-		color = tex->color[tex->width * tex->y + tex->x];
+		if (tex->x >= 0 && tex->x < tex->width && tex->y >= 0 && tex->y < tex->height)
+			color = tex->color[tex->width * tex->y + tex->x];
 		draw_vertical_line(game, loop.x, loop.y, color);
 	}
 }
