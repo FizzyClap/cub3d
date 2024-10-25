@@ -48,14 +48,12 @@ int	open_map(char *file)
 		exit(EXIT_FAILURE);
 	}
 	bytes_read = read(fd, buffer, 1);
-	if (bytes_read == -1)
+	if (bytes_read <= 0)
 	{
-		ft_fprintf(STDERR_FILENO, "Error: %s : Is a directory\n", file);
-		exit(EXIT_FAILURE);
-	}
-	else if (bytes_read == 0)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: %s : Is empty\n", file);
+		if (bytes_read == -1)
+			ft_fprintf(STDERR_FILENO, "Error: %s : Is a directory\n", file);
+		else if (bytes_read == 0)
+			ft_fprintf(STDERR_FILENO, "Error: %s : Is empty\n", file);
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
