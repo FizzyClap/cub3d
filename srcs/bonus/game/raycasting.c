@@ -100,9 +100,9 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 		// draw_end = SCREEN_HEIGHT - 1;
 	select_wall_texture(game, ray, &tex);
 	tex->step = 1.0 * tex->height / line_height;
-	// if (ray->wall_dist > 1)
-	// 	tex->pos = 0;
-	// else
+	if (ray->wall_dist > 1)
+		tex->pos = 0;
+	else
 		tex->pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * tex->step;
 	loop.y = draw_start - 1;
 	while (++loop.y < draw_end)
