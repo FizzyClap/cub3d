@@ -30,13 +30,13 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex)
 {
 	if (ray->side == 1 && ray->step_y < 0)
-		*tex = &game->texture->image[0];
+		*tex = &game->texture->image[NORTH];
 	else if (ray->side == 1 && ray->step_y > 0)
-		*tex = &game->texture->image[1];
+		*tex = &game->texture->image[SOUTH];
 	else if (ray->side == 0 && ray->step_x < 0)
-		*tex = &game->texture->image[2];
+		*tex = &game->texture->image[WEST];
 	else if (ray->side == 0 && ray->step_x > 0)
-		*tex = &game->texture->image[3];
+		*tex = &game->texture->image[EAST];
 	if (ray->side == 0)
 		(*tex)->wall_x = ray->pos_y + ray->wall_dist * ray->dir_y;
 	else

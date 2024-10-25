@@ -48,7 +48,7 @@ int	minimap_color(t_game *game, t_coord pos)
 	pos.x < game->map->lines[pos.y]->x)
 	{
 		if (game->map->lines[pos.y]->content[pos.x] == '1')
-			return (BLUE);
+			return (*game->texture->image[NORTH].color);
 		else
 			return (game->floor.color);
 	}
