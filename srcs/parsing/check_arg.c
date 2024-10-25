@@ -9,7 +9,7 @@ int	check_arg(int argc, char **argv)
 		if (argc == 1)
 			ft_fprintf(STDERR_FILENO, "Error: there is 1 argument missing\n");
 		else if (argc == 3)
-			ft_fprintf(2, "Error: there is 1 argument more than expected\n");
+			ft_fprintf(STDERR_FILENO, ERR_ARG);
 		else
 			ft_fprintf(STDERR_FILENO, "Error: there are %d arguments" \
 			" more than expected\n", argc - 2);

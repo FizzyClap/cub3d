@@ -39,15 +39,22 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	init_texture(*texture);
 	fd = read_textures(*texture, argv[1]);
 	if (fd == FAILURE)
-		return (free_texture(*texture), FAILURE);
+	{
+		free_texture(*texture);
+		return (FAILURE);
+	}
 	*map = malloc(sizeof(t_map));
 	init_map(*map, argv[1]);
 	if (read_map(*map, fd) == FAILURE)
-		return (free_texture(*texture), free_map(*map), FAILURE);
+	{
+		free_texture(*texture);
+		free_map(*map);
+		return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
-void	clear_image(char *address, int height, int width)
+static void	clear_image(char *address, int height, int width)
 {
 	int		*image_data;
 	int		pixels;
@@ -65,13 +72,6 @@ void	clear_image(char *address, int height, int width)
 
 static int	loop(t_game *game, t_ray *ray)
 {
-	struct timeval		start;
-	struct timeval		end;
-	long long			frame;
-	long long			duration;
-
-	frame = 1000000 / 60;
-	gettimeofday(&start, NULL);
 	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
 	raycasting(ray, game);
 	clear_image(game->minimap.addr, MMH, MMW);
@@ -81,11 +81,5 @@ static int	loop(t_game *game, t_ray *ray)
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
 		118, 118);
-	gettimeofday(&end, NULL);
-	duration = (end.tv_sec - start.tv_sec) * 1000000 + \
-		(end.tv_usec - start.tv_usec);
-	frame -= duration;
-	if (frame > 0)
-		usleep(frame);
 	return (SUCCESS);
 }
