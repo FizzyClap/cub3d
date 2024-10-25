@@ -41,7 +41,7 @@ static int	get_texture(t_texture *texture, char *line)
 	i = 0;
 	while (!ft_iswhitespace(line + i))
 		i++;
-	texture->id = ft_strdnup(line, i);
+	texture->id = ft_strndup(line, i);
 	if (right_order(texture) == FAILURE)
 		return (FAILURE);
 	if (path_texture(texture, line) == FAILURE)

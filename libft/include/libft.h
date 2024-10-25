@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:02:12 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/07 11:15:15 by roespici         ###   ########.fr       */
+/*   Updated: 2024/10/25 10:35:13 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t				ft_strlcpy(char *dst, char *src, size_t size);
 size_t				ft_strlen(char *str);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_strncmp(char *s1, char *s2, size_t n);
-char				*ft_strdnup(char *src, int n);
+char				*ft_strndup(char *src, int n);
 char				*ft_strnstr(char *big, char *little,
 						size_t len);
 char				*ft_strrchr(char *s, int c);
