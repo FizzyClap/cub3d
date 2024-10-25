@@ -46,6 +46,7 @@ void	check_move(t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_up(t_game *game);
 void	move_down(t_game *game);
+void	jump_and_crouch(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP

@@ -65,27 +65,15 @@ void	clear_image(char *address, int height, int width)
 
 static int	loop(t_game *game, t_ray *ray)
 {
-	struct timeval		start;
-	struct timeval		end;
-	long long			frame;
-	long long			duration;
-
-	frame = 1000000 / 60;
-	gettimeofday(&start, NULL);
 	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
 	raycasting(ray, game);
 	clear_image(game->minimap.addr, MMH, MMW);
 	draw_minimap(game, game->minimap);
 	mouse_move(game);
+	// jump_and_crouch(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
 		118, 118);
-	gettimeofday(&end, NULL);
-	duration = (end.tv_sec - start.tv_sec) * 1000000 + \
-		(end.tv_usec - start.tv_usec);
-	frame -= duration;
-	if (frame > 0)
-		usleep(frame);
 	return (SUCCESS);
 }

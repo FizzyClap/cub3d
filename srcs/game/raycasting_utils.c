@@ -9,7 +9,7 @@ void	draw_vertical_line(t_game *game, int x, int start, int color)
 		start = 0;
 	end = start + 1;
 	if (end >= SCREEN_HEIGHT)
-		end = SCREEN_HEIGHT - 1;
+		end = SCREEN_HEIGHT;
 	y = start - 1;
 	while (++y <= end)
 		my_mlx_pixel_put(game->raycast, x, y, color);

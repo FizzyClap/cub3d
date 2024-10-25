@@ -86,16 +86,14 @@ static void	calculate_wall_distance(t_ray *ray)
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
 	int				line_height;
-	int				draw_start;
-	int				draw_end;
 	int				color;
+	int				draw_end;
+	int				draw_start;
 	t_texture_data	*tex;
 
 	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
-	draw_start = (SCREEN_HEIGHT - line_height) / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = (SCREEN_HEIGHT + line_height) / 2;
+	draw_start = ((SCREEN_HEIGHT - line_height) / 2);
+	draw_end = ((SCREEN_HEIGHT + line_height) / 2);
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
 	select_wall_texture(game, ray, &tex);
@@ -107,6 +105,6 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
 		color = tex->color[tex->width * tex->y + tex->x];
-		draw_vertical_line(game, loop.x, loop.y, color);
+		draw_vertical_line(game, loop.x, loop.y + game->player.z, color);
 	}
 }
