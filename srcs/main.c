@@ -10,12 +10,15 @@ int	main(int argc, char **argv)
 	t_game		*game;
 
 	if (parsing(&texture, &map, argc, argv) == FAILURE)
-		return (1);
+		return (EXIT_FAILURE);
 	init_game(&game, texture, map);
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	if (load_textures(game) == FAILURE)
-		return (ft_fprintf(STDERR_FILENO, ERR_LOAD), close_game(game));
+	{
+		ft_fprintf(STDERR_FILENO, "Error: textures can't be loaded\n");
+		close_game(game);
+	}
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	player_init(game);
 	minimap(game);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -24,7 +27,6 @@ int	main(int argc, char **argv)
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_mouse_hide(game->mlx, game->win);
-	//mlx_mouse_hook(game->win, mouse_hook, NULL);
 	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
 }

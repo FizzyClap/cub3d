@@ -32,6 +32,7 @@ void	init_game(t_game **game, t_texture *texture, t_map *map)
 	int		i;
 
 	*game = malloc(sizeof(t_game));
+	(*game)->win = NULL;
 	(*game)->texture = texture;
 	(*game)->map = map;
 	(*game)->raycast.img = NULL;
