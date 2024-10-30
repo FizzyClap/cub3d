@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -60,6 +60,11 @@ SRCS_BONUS =	srcs/bonus/main.c\
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
+TARGET = $(NAME)
+ifeq ($(MAKECMDGOALS), bonus)
+	TARGET = $(NAME_BONUS)
+endif
+
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LDFLAGS) $(INCLUDES)
 	@echo "\033[1A\033[2K\033[1A"
@@ -67,12 +72,24 @@ $(NAME): $(LIBFT) $(OBJS)
 	@echo "└──────────────────────────────────────────────┘"
 	@$(RM) errors.tmp
 
+$(NAME_BONUS): $(LIBFT) $(OBJS_BONUS)
+	@$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(LDFLAGS) $(INCLUDES)
+	@echo "\033[1A\033[2K\033[1A"
+	@echo "│$(GREEN) Compilation of $(NAME_BONUS) completed ✓ $(NC)      │"
+	@echo "└──────────────────────────────────────────────┘"
+	@$(RM) errors.tmp
+
 .c.o:
-	@if [ ! -f .mandatory ]; then \
+	@if [ "$(TARGET)" = "$(NAME)" ] && [ ! -f .mandatory ]; then \
 		echo "$(NC)┌─────$(NAME)────────────────────────────────────┐"; \
 		echo "│$(BLUE) Compiling $(NAME) in progress... ⌛$(NC)	       │"; \
 		echo "\033[s└──────────────────────────────────────────────┘"; \
 		touch .mandatory; \
+	elif [ "$(TARGET)" = "$(NAME_BONUS)" ] && [ ! -f .bonus ]; then \
+		echo "$(NC)┌─────$(NAME_BONUS)──────────────────────────────┐"; \
+		echo "│$(BLUE) Compiling $(NAME_BONUS) in progress... ⌛$(NC)      │"; \
+		echo "\033[s└──────────────────────────────────────────────┘"; \
+		touch .bonus; \
 	fi
 	@$(CC) $(FLAGS) -c -o $@ $< $(INCLUDES) 2>> errors.tmp || \
 	{ \
@@ -89,8 +106,8 @@ all: $(NAME)
 $(LIBFT):
 	@make -s -C $(LIBFT_PATH)
 
-bonus: $(OBJS_BONUS)
-	$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(LDFLAGS) $(INCLUDES)
+bonus: $(NAME_BONUS)
+	@$(RM) .bonus
 
 mlx:
 	@git clone https://github.com/42Paris/minilibx-linux mlx
@@ -105,7 +122,7 @@ clean:
 	@echo "└──────────────────────────────────────────────┘"
 	@sleep 0.8
 	@echo "\033[1A\033[2K\033[1A"
-	@$(RM) $(OBJS) .mandatory
+	@$(RM) $(OBJS) .mandatory $(OBJS_BONUS) .bonus
 	@echo "│$(GREEN) Cleaning of $(NAME) objects completed ✓ $(NC)       │"
 	@echo "└──────────────────────────────────────────────┘"
 
@@ -115,7 +132,7 @@ fclean: clean
 	@echo "└──────────────────────────────────────────────┘"
 	@sleep 0.8
 	@echo "\033[1A\033[2K\033[1A"
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(NAME_BONUS)
 	@echo "│$(GREEN) Cleaning of $(NAME) completed ✓ $(NC)	       │"
 	@echo "└──────────────────────────────────────────────┘"
 #	@make -s -C $(LIBFT_PATH) fclean
@@ -131,4 +148,4 @@ norme:
 	fi
 	@$(RM) norme.tmp
 
-.PHONY: all mlx clean fclean re norme
+.PHONY: all bonus mlx clean fclean re norme
