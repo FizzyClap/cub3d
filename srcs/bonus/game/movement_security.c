@@ -36,3 +36,20 @@ double	check_backroom(t_game *game, double x, double y)
 	free(ray);
 	return (check_ray(game, ray, SCREEN_WIDTH / 2, x, y));
 }
+
+void	jump(t_game *game)
+{
+	if (game->player.crouch == true)
+		game->player.speed = 0.003;
+	if (game->player.jump == false && game->player.h > 0)
+		game->player.h -= 40;
+	if (game->player.jump == true && game->player.h < 400)
+		game->player.h += 40;
+	if (game->player.h >= 400)
+		game->player.jump = false;
+	if (game->player.crouch == true && game->player.h > -250)
+		game->player.h -= 50;
+	if (game->player.crouch == false && game->player.h < 0)
+		game->player.h += 50;
+	
+}

@@ -80,14 +80,17 @@ typedef struct s_texture
 
 typedef struct s_player
 {
+	int		*action;
+	bool	jump;
+	bool	crouch;
 	int		z;
+	int		h;
 	double	x;
 	double	y;
 	double	d_x;
 	double	d_y;
 	double	speed;
 	double	angle;
-	double	mid_ray;
 	t_image	cursor;
 }	t_player;
 

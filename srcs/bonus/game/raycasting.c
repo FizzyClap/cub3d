@@ -20,8 +20,6 @@ void	raycasting(t_ray *ray, t_game *game)
 		calculate_wall_distance(ray);
 		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
-		if (loop.x == SCREEN_WIDTH / 2)
-			game->player.mid_ray = ray->wall_dist;
 	}
 	free(ray);
 }
@@ -91,20 +89,17 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	t_texture_data	*tex;
 
 	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
-	draw_start = (SCREEN_HEIGHT - line_height) / 2 ;
-	draw_end = (SCREEN_HEIGHT + line_height) / 2;
+	draw_start = (SCREEN_HEIGHT - line_height) / 2 + (game->player.h / ray->wall_dist);
+	draw_end = (SCREEN_HEIGHT + line_height) / 2 + (game->player.h / ray->wall_dist);
 	select_wall_texture(game, ray, &tex);
 	tex->step = 1.0 * tex->height / line_height;
-	if (ray->wall_dist > 1)
-		tex->pos = 0;
-	else
-		tex->pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * tex->step;
+	tex->pos = 0;
 	loop.y = draw_start - 1;
 	while (++loop.y < draw_end)
 	{
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
-		if (tex->x >= 0 && tex->x < tex->width && tex->y >= 0 && tex->y < tex->height)
+		// if (tex->x >= 0 && tex->x < tex->width && tex->y >= 0 && tex->y < tex->height)
 			color = tex->color[tex->width * tex->y + tex->x];
 		draw_vertical_line(game, loop.x, loop.y + game->player.z, color);
 	}

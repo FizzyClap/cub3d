@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
+	mlx_hook(game->win, KeyRelease, KeyReleaseMask, keyrelease, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_mouse_hide(game->mlx, game->win);
@@ -76,7 +77,9 @@ static int	loop(t_game *game, t_ray *ray)
 	raycasting(ray, game);
 	clear_image(game->minimap.addr, MMH, MMW, BLACK);
 	draw_minimap(game, game->minimap);
+	make_actions(game);
 	mouse_move(game);
+	jump(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \

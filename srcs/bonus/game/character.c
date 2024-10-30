@@ -1,6 +1,7 @@
 #include "../includes/cub3D.h"
 
 static void	paint_cursor(t_game *game);
+static void	init_moves(t_game *game);
 
 void	player_init(t_game *game)
 {
@@ -23,7 +24,19 @@ void	player_init(t_game *game)
 	game->player.d_y = sin(game->player.angle) * 5;
 	game->player.speed = 0.005;
 	game->player.z = 0;
-	game->player.mid_ray = 0;
+	game->player.h = 0;
+	game->player.jump = false;
+	game->player.crouch = false;
+	init_moves(game);
+}
+
+static void	init_moves(t_game *game)
+{
+	game->player.action = malloc(sizeof(int) * 4);
+	game->player.action[MOVEUP] = 0;
+	game->player.action[MOVEBACK] = 0;
+	game->player.action[MOVELEFT] = 0;
+	game->player.action[MOVERIGHT] = 0;
 }
 
 static void	paint_cursor(t_game *game)

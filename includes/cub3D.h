@@ -17,6 +17,9 @@
 # include <string.h>
 # include <math.h>
 
+void	jump(t_game *game);
+int		keyrelease(int keycode, t_game *game);
+void	make_actions(t_game * game);
 //INIT
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
