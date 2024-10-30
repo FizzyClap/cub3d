@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	player_init(game);
 	minimap(game);
+	mlx_mouse_move(game->mlx, game->win, 960, 540);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
@@ -56,7 +57,7 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	return (SUCCESS);
 }
 
-static void	clear_image(char *address, int height, int width)
+static void	clear_image(char *address, int height, int width, int color)
 {
 	int		*image_data;
 	int		pixels;
@@ -64,19 +65,16 @@ static void	clear_image(char *address, int height, int width)
 
 	image_data = (int *)address;
 	pixels = height * width;
-	i = 0;
-	while (i < pixels)
-	{
-		image_data[i] = 0x000000;
-		i++;
-	}
+	i = -1;
+	while (++i < pixels)
+		image_data[i] = color;
 }
 
 static int	loop(t_game *game, t_ray *ray)
 {
-	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
+	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH, game->floor.color);
 	raycasting(ray, game);
-	clear_image(game->minimap.addr, MMH, MMW);
+	clear_image(game->minimap.addr, MMH, MMW, BLACK);
 	draw_minimap(game, game->minimap);
 	mouse_move(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);

@@ -31,6 +31,7 @@
 # define SOUTH 1
 # define WEST 2
 # define EAST 3
+# define MINIMAP_RADIUS (MMW / 2)
 # define ERR_ARG "Error: there is 1 argument more than expected\n"
 # define ERR_PLAYERS "Error: there is too much start position\n"
 # define ERR_EMPTY "Error: line is empty\n"

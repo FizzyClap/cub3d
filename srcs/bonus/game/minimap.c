@@ -42,17 +42,26 @@ void	draw_minimap(t_game *game, t_image minimap)
 
 static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 {
-	int	x;
 	int	y;
+	int	x;
+	t_coord	center;
+	t_coord	dist;
 
 	if (color == 0)
 		return ;
-	x = -1;
-	while (++x < max.x && (x + coord.x) < MMW)
+	center.x = MMW / 2;
+	center.y = MMH / 2;
+	y = -1;
+	while (++y < max.y && (y + coord.y) < MMH)
 	{
-		y = -1;
-		while (++y < max.y && (y + coord.y) < MMH)
-			my_mlx_pixel_put(image, x + coord.x, y + coord.y, color);
+		x = -1;
+		while (++x < max.x && (x + coord.x) < MMW)
+		{
+			dist.x = (x + coord.x) - center.x;
+			dist.y = (y + coord.y) - center.y;
+			if (pow(dist.x, 2) + pow(dist.y, 2) <= pow(MINIMAP_RADIUS, 2))
+				my_mlx_pixel_put(image, x + coord.x, y + coord.y, color);
+		}
 	}
 }
 
@@ -60,6 +69,8 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color)
 {
 	char	*dst;
 
+	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
+		return ;
 	dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
 	*(unsigned int *) dst = color;
 }
