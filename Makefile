@@ -49,6 +49,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/image.c\
 				srcs/bonus/game/minimap.c\
 				srcs/bonus/game/mouse_cam.c\
+				srcs/bonus/game/movement_security.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
 				srcs/bonus/parsing/check_arg.c\

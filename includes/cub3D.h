@@ -22,6 +22,7 @@ void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
 void	init_game(t_game **game, t_texture *texture, t_map *map);
 void	init_ray(t_ray *ray, t_game *game, double angle);
+double	deg_to_rad(double degrees);
 //DEBUG/PRINT
 void	print_map(t_map *map, int fd);
 void	print_texture(t_texture *texture, int fd);
@@ -46,6 +47,8 @@ void	refresh_position(t_game *game, int action, double speed);
 int		keycode(int keycode, t_game *game);
 void	move_up(t_game *game);
 void	move_down(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP
@@ -56,13 +59,16 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color);
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
 void	right_cam(t_game *game, int x);
-int		check_backroom(t_game *game, int x, int y);
+double	check_backroom(t_game *game, double x, double y);
 //GAME/RAYCASTING_UTILS
 void	draw_vertical_line(t_game *game, int x, int start, int color);
 void	camera_angle_distortion(t_game *game, t_ray *ray);
 void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex);
 //GAME/RAYCASTING
 void	raycasting(t_ray *ray, t_game *game);
+void	perform_dda(t_ray *ray, t_game *game);
+void	calculate_steps(t_ray *ray);
+void	calculate_wall_distance(t_ray *ray);
 //PARSING/CHECK_ARG
 int		check_arg(int argc, char **argv);
 int		open_map(char *file);

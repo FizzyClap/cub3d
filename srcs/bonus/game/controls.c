@@ -1,8 +1,5 @@
 #include "../includes/cub3D.h"
 
-static void	move_left(t_game *game);
-static void	move_right(t_game *game);
-
 int	keycode(int keycode, t_game *game)
 {
 	if (keycode == ESC)
@@ -24,12 +21,12 @@ int	keycode(int keycode, t_game *game)
 
 void	move_up(t_game *game)
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 
 	x = (game->player.x + game->player.d_x * (game->player.speed * 2));
 	y = (game->player.y + game->player.d_y * (game->player.speed * 2));
-	if (check_backroom(game, x, y) == FAILURE)
+	if (check_backroom(game, x, y) < 0.25)
 	{
 		check_move(game);
 		return ;
@@ -41,15 +38,15 @@ void	move_up(t_game *game)
 
 void	move_down(t_game *game)
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 
 	game->player.angle -= PI;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 	x = (game->player.x - game->player.d_x * game->player.speed);
 	y = (game->player.y - game->player.d_y * game->player.speed);
-	if (check_backroom(game, x, y) == FAILURE)
+	if (check_backroom(game, x, y) < 0.25)
 		check_move(game);
 	move_up(game);
 	game->player.angle += PI;
@@ -57,17 +54,17 @@ void	move_down(t_game *game)
 	refresh_position(game, DELTA, 0);
 }
 
-static void	move_left(t_game *game)
+void	move_left(t_game *game)
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 
 	game->player.angle -= (PI / 2);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 	x = (game->player.x - game->player.d_x * game->player.speed);
 	y = (game->player.y - game->player.d_y * game->player.speed);
-	if (check_backroom(game, x, y) == FAILURE)
+	if (check_backroom(game, x, y) < 0.25)
 		check_move(game);
 	move_up(game);
 	game->player.angle += (PI / 2);
@@ -75,17 +72,17 @@ static void	move_left(t_game *game)
 	refresh_position(game, DELTA, 0);
 }
 
-static void	move_right(t_game *game)
+void	move_right(t_game *game)
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 
 	game->player.angle += (PI / 2);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 	x = (game->player.x - game->player.d_x * game->player.speed);
 	y = (game->player.y - game->player.d_y * game->player.speed);
-	if (check_backroom(game, x, y) == FAILURE)
+	if (check_backroom(game, x, y) < 0.25)
 		check_move(game);
 	move_up(game);
 	game->player.angle -= (PI / 2);

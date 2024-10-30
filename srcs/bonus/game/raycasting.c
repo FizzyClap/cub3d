@@ -1,8 +1,5 @@
 #include "../includes/cub3D.h"
 
-static void	calculate_steps(t_ray *ray);
-static void	perform_dda(t_ray *ray, t_game *game);
-static void	calculate_wall_distance(t_ray *ray);
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
 
 void	raycasting(t_ray *ray, t_game *game)
@@ -29,7 +26,7 @@ void	raycasting(t_ray *ray, t_game *game)
 	free(ray);
 }
 
-static void	calculate_steps(t_ray *ray)
+void	calculate_steps(t_ray *ray)
 {
 	if (ray->dir_x < 0)
 	{
@@ -53,7 +50,7 @@ static void	calculate_steps(t_ray *ray)
 	}
 }
 
-static void	perform_dda(t_ray *ray, t_game *game)
+void	perform_dda(t_ray *ray, t_game *game)
 {
 	int	hit;
 
@@ -77,7 +74,7 @@ static void	perform_dda(t_ray *ray, t_game *game)
 	}
 }
 
-static void	calculate_wall_distance(t_ray *ray)
+void	calculate_wall_distance(t_ray *ray)
 {
 	if (ray->side == 0)
 		ray->wall_dist = ray->side_dist_x - ray->delta_x;

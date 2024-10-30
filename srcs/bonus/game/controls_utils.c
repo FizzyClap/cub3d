@@ -1,35 +1,33 @@
 #include "../includes/cub3D.h"
 
-static int	try_move_left(t_game *game);
-static int	try_move_right(t_game *game);
+static double	try_move_left(t_game *game);
+static double	try_move_right(t_game *game);
 
 void	check_move(t_game *game)
 {
-	int	left;
-	int	right;
+	double	left;
+	double	right;
 
 	left = try_move_left(game);
 	right = try_move_right(game);
-	if (left < right)
+	if (left < right && left > 0.25)
 	{
-		game->player.angle -= (double)(left * 0.1);
+		game->player.angle -= (PI / 6);
 		correct_angle(game);
 		refresh_position(game, DELTA, 0);
 		refresh_position(game, MOVE, game->player.speed);
-		game->player.angle += (double)(left * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
+		game->player.angle += (PI / 6);
 	}
-	else
+	else if (right > 0.25 && right != 145000)
 	{
-		game->player.angle += (double)(right * 0.1);
+		game->player.angle += (PI / 6);
 		correct_angle(game);
 		refresh_position(game, DELTA, 0);
 		refresh_position(game, MOVE, game->player.speed);
-		game->player.angle -= (double)(right * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
+		game->player.angle -= (PI / 6);
 	}
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
 }
 
 void	correct_angle(t_game *game)
@@ -54,56 +52,48 @@ void	refresh_position(t_game *game, int action, double speed)
 	}
 }
 
-static int	try_move_left(t_game *game)
+static double	try_move_left(t_game *game)
 {
-	double	tmp;
-	int		i;
-	int		x;
-	int		y;
+	double	result;
+	double	x;
+	double	y;
 
 	if (game->player.speed > 0.002)
 		game->player.speed -= 0.0005;
-	tmp = game->player.angle;
-	i = 0;
+	game->player.angle -= PI / 6;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
 	x = (game->player.x + game->player.d_x * (game->player.speed));
 	y = (game->player.y + game->player.d_y * (game->player.speed));
-	while (check_backroom(game, x, y) == FAILURE)
-	{
-		game->player.angle -= 0.1;
-		i++;
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-		x = (game->player.x + game->player.d_x * (game->player.speed));
-		y = (game->player.y + game->player.d_y * (game->player.speed));
-	}
-	game->player.angle = tmp;
+	result = check_backroom(game, x, y);
+	game->player.angle += PI / 6;
+	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	return (i);
+	if (result > 0.25)
+		return (result);
+	else
+		return (0);
 }
 
-static int	try_move_right(t_game *game)
+static double	try_move_right(t_game *game)
 {
-	double	tmp;
-	int		i;
-	int		x;
-	int		y;
+	double	result;
+	double	x;
+	double	y;
 
 	if (game->player.speed > 0.002)
 		game->player.speed -= 0.0005;
-	tmp = game->player.angle;
-	i = 0;
+	game->player.angle += PI / 6;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
 	x = (game->player.x + game->player.d_x * (game->player.speed));
 	y = (game->player.y + game->player.d_y * (game->player.speed));
-	while (check_backroom(game, x, y) == FAILURE)
-	{
-		game->player.angle += 0.1;
-		i++;
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-		x = (game->player.x + game->player.d_x * (game->player.speed));
-		y = (game->player.y + game->player.d_y * (game->player.speed));
-	}
-	game->player.angle = tmp;
+	result = check_backroom(game, x, y);
+	game->player.angle -= PI / 6;
+	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	return (i);
+	if (result > 0.25)
+		return (result);
+	else
+		return (145000);
 }
