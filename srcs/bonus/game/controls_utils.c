@@ -10,7 +10,7 @@ void	check_move(t_game *game)
 
 	left = try_move_left(game);
 	right = try_move_right(game);
-	if (left < right && left > 0.25)
+	if (left > right && left > 0.25)
 	{
 		game->player.angle -= (PI / 6);
 		correct_angle(game);

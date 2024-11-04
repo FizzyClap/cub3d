@@ -27,6 +27,7 @@ void	player_init(t_game *game)
 	game->player.h = 0;
 	game->player.jump = false;
 	game->player.crouch = false;
+	game->player.move_div = 0;
 	init_moves(game);
 }
 

@@ -28,7 +28,7 @@ double	check_backroom(t_game *game, double x, double y)
 	t_ray	*ray;
 
 	ray = malloc(sizeof(t_ray));
-	if (check_ray(game, ray, 0, x, y) < 0.25 || check_ray(game, ray, SCREEN_WIDTH, x, y) < 0.25)
+	if (check_ray(game, ray, 0, x, y) < 0.25 || check_ray(game, ray, SCREEN_WIDTH, x, y) < 0.25 || check_ray(game, ray, SCREEN_WIDTH / 2, x, y) < 0.25)
 	{
 		free(ray);
 		return (0);
