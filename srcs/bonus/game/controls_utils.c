@@ -10,7 +10,7 @@ void	check_move(t_game *game, int move)
 
 	left = try_move_left(game, move);
 	right = try_move_right(game, move);
-	if (left > right && left > 0.25)
+	if (left < right && left >= 0.2)
 	{
 		game->player.angle -= (PI / 6);
 		correct_angle(game);
@@ -55,21 +55,15 @@ void	refresh_position(t_game *game, int action, double speed)
 static double	try_move_left(t_game *game, int move)
 {
 	double	result;
-	double	x;
-	double	y;
 
-	if (game->player.speed > 0.002)
-		game->player.speed -= 0.0005;
 	game->player.angle -= PI / 6;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x + game->player.d_x * (game->player.speed));
-	y = (game->player.y + game->player.d_y * (game->player.speed));
 	result = check_backroom(game, move);
 	game->player.angle += PI / 6;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	if (result > 0.25)
+	if (result > 0.2)
 		return (result);
 	else
 		return (0);
@@ -78,21 +72,15 @@ static double	try_move_left(t_game *game, int move)
 static double	try_move_right(t_game *game, int move)
 {
 	double	result;
-	double	x;
-	double	y;
 
-	if (game->player.speed > 0.002)
-		game->player.speed -= 0.0005;
 	game->player.angle += PI / 6;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x + game->player.d_x * (game->player.speed));
-	y = (game->player.y + game->player.d_y * (game->player.speed));
 	result = check_backroom(game, move);
 	game->player.angle -= PI / 6;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	if (result > 0.25)
+	if (result > 0.2)
 		return (result);
 	else
 		return (INT_MAX);

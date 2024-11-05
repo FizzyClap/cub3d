@@ -42,8 +42,8 @@ void	draw_minimap(t_game *game, t_image minimap)
 
 static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
 	t_coord	center;
 	t_coord	dist;
 

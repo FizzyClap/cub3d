@@ -6,7 +6,7 @@ void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color)
 	int	y;
 
 	y = -1;
-	while (++y <( SCREEN_HEIGHT / 2) + game->player.z)
+	while (++y < (SCREEN_HEIGHT / 2) + game->player.z)
 	{
 		x = -1;
 		while (++x < SCREEN_WIDTH)

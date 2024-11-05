@@ -1,5 +1,41 @@
 #include "../includes/cub3D.h"
 
+static double	check_ray(t_game *game, t_ray ray);
+static double	ray_distance(t_game *game, t_ray ray);
+
+double	check_backroom(t_game *game, int move)
+{
+	if (check_ray(game, game->player.cross_ray[move]) == FAILURE)
+		return (FAILURE);
+	return (check_ray(game, game->player.cross_ray[move]));
+}
+
+static double	check_ray(t_game *game, t_ray ray)
+{
+	double	tmp;
+
+	tmp = game->player.angle;
+	if (ray_distance(game, ray) < 0.2)
+		return (FAILURE);
+	game->player.angle += PI / 4;
+	correct_angle(game);
+	if (ray_distance(game, ray) < 0.15)
+	{
+		game->player.angle = tmp;
+		return (FAILURE);
+	}
+	game->player.angle = tmp;
+	game->player.angle -= PI / 4;
+	correct_angle(game);
+	if (ray_distance(game, ray) < 0.15)
+	{
+		game->player.angle = tmp;
+		return (FAILURE);
+	}
+	game->player.angle = tmp;
+	return (ray_distance(game, ray));
+}
+
 static double	ray_distance(t_game *game, t_ray ray)
 {
 	double	angle;
@@ -8,7 +44,7 @@ static double	ray_distance(t_game *game, t_ray ray)
 	angle = ((angle * 180 / PI) - FOV / 2 + \
 	FOV * (870 / (double)SCREEN_WIDTH));
 	ray.pos_x = game->player.x;
-	ray.pos_y =	game->player.y;
+	ray.pos_y = game->player.y;
 	ray.dir_x = cos(deg_to_rad(angle));
 	ray.dir_y = sin(deg_to_rad(angle));
 	ray.plane_x = -ray.dir_y * FOV;
@@ -22,37 +58,6 @@ static double	ray_distance(t_game *game, t_ray ray)
 	perform_dda(&ray, game);
 	calculate_wall_distance(&ray);
 	return (ray.wall_dist);
-}
-
-static double	check_ray(t_game *game, t_ray ray)
-{
-	double	tmp;
-
-	tmp = game->player.angle;
-	if (ray_distance(game, ray) < 0.2)
-		return (0);
-	game->player.angle += PI / 4;
-	if (ray_distance(game, ray) < 0.15)
-	{
-		game->player.angle = tmp;
-		return (0);
-	}
-	game->player.angle = tmp;
-	game->player.angle -= PI / 4;
-	if (ray_distance(game, ray) < 0.15)
-	{
-		game->player.angle = tmp;
-		return (0);
-	}
-	game->player.angle = tmp;
-	return (ray_distance(game, ray));
-}
-
-double	check_backroom(t_game *game, int move)
-{
-	if (check_ray(game, game->player.cross_ray[move]) < 0.2)
-		return (0);
-	return (check_ray(game, game->player.cross_ray[move]));
 }
 
 void	jump(t_game *game)
@@ -69,5 +74,4 @@ void	jump(t_game *game)
 		game->player.h -= 50;
 	if (game->player.crouch == false && game->player.h < 0)
 		game->player.h += 50;
-	
 }

@@ -18,10 +18,6 @@
 # include <string.h>
 # include <math.h>
 
-void	jump(t_game *game);
-int		keyrelease(int keycode, t_game *game);
-void	make_actions(t_game * game);
-int		move_div(t_game *game);
 //INIT
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
@@ -49,11 +45,10 @@ void	check_move(t_game *game, int move);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS
+void	make_actions(t_game *game);
+int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
-void	move_up(t_game *game);
-void	move_down(t_game *game);
-void	move_left(t_game *game);
-void	move_right(t_game *game);
+int		move_div(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP
@@ -64,7 +59,14 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color);
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
 void	right_cam(t_game *game, int x);
+//GAME/MOVEMENT_SECURITY
 double	check_backroom(t_game *game, int move);
+void	jump(t_game *game);
+//GAME/MOVES
+void	move_up(t_game *game);
+void	move_down(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
 //GAME/RAYCASTING_UTILS
 void	draw_vertical_line(t_game *game, int x, int start, int color);
 void	camera_angle_distortion(t_game *game, t_ray *ray);

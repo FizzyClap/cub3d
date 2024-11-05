@@ -37,8 +37,8 @@ static void	init_moves(t_game *game)
 
 	i = -1;
 	game->player.action = malloc(sizeof(int) * 4);
-	while(++i < 4)
-	game->player.action[i] = 0;
+	while (++i < 4)
+		game->player.action[i] = 0;
 	i = -1;
 	game->player.cross_ray = malloc(sizeof(t_ray) * 4);
 	while (++i < 4)
@@ -49,8 +49,10 @@ static void	init_moves(t_game *game)
 		game->player.cross_ray->dir_y = sin(deg_to_rad(game->player.angle));
 		game->player.cross_ray->plane_x = -game->player.cross_ray->dir_y * FOV;
 		game->player.cross_ray->plane_y = game->player.cross_ray->dir_x * FOV;
-		game->player.cross_ray->delta_x = fabs(1 / game->player.cross_ray->dir_x);
-		game->player.cross_ray->delta_y = fabs(1 / game->player.cross_ray->dir_y);
+		game->player.cross_ray->delta_x = fabs(1 / game->player.\
+		cross_ray->dir_x);
+		game->player.cross_ray->delta_y = fabs(1 / game->player.\
+		cross_ray->dir_y);
 		game->player.cross_ray->side_dist_x = 0;
 		game->player.cross_ray->side_dist_y = 0;
 		game->player.cross_ray->angle = game->player.angle;

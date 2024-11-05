@@ -27,7 +27,7 @@ static void	cam_z(t_game *game, int y)
 	z = 540 - y;
 	game->player.z += z;
 	if (game->player.z > 3000)
-		game->player.z = 3000;	
+		game->player.z = 3000;
 	if (game->player.z < -3000)
 		game->player.z = -3000;
 }
