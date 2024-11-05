@@ -1,15 +1,15 @@
 #include "../includes/cub3D.h"
 
-static double	try_move_left(t_game *game);
-static double	try_move_right(t_game *game);
+static double	try_move_left(t_game *game, int move);
+static double	try_move_right(t_game *game, int move);
 
-void	check_move(t_game *game)
+void	check_move(t_game *game, int move)
 {
 	double	left;
 	double	right;
 
-	left = try_move_left(game);
-	right = try_move_right(game);
+	left = try_move_left(game, move);
+	right = try_move_right(game, move);
 	if (left > right && left > 0.25)
 	{
 		game->player.angle -= (PI / 6);
@@ -18,7 +18,7 @@ void	check_move(t_game *game)
 		refresh_position(game, MOVE, game->player.speed);
 		game->player.angle += (PI / 6);
 	}
-	else if (right > 0.25 && right != 145000)
+	else if (right > 0.25 && right < INT_MAX)
 	{
 		game->player.angle += (PI / 6);
 		correct_angle(game);
@@ -52,7 +52,7 @@ void	refresh_position(t_game *game, int action, double speed)
 	}
 }
 
-static double	try_move_left(t_game *game)
+static double	try_move_left(t_game *game, int move)
 {
 	double	result;
 	double	x;
@@ -65,7 +65,7 @@ static double	try_move_left(t_game *game)
 	refresh_position(game, DELTA, 0);
 	x = (game->player.x + game->player.d_x * (game->player.speed));
 	y = (game->player.y + game->player.d_y * (game->player.speed));
-	result = check_backroom(game, x, y);
+	result = check_backroom(game, move);
 	game->player.angle += PI / 6;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
@@ -75,7 +75,7 @@ static double	try_move_left(t_game *game)
 		return (0);
 }
 
-static double	try_move_right(t_game *game)
+static double	try_move_right(t_game *game, int move)
 {
 	double	result;
 	double	x;
@@ -88,12 +88,12 @@ static double	try_move_right(t_game *game)
 	refresh_position(game, DELTA, 0);
 	x = (game->player.x + game->player.d_x * (game->player.speed));
 	y = (game->player.y + game->player.d_y * (game->player.speed));
-	result = check_backroom(game, x, y);
+	result = check_backroom(game, move);
 	game->player.angle -= PI / 6;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 	if (result > 0.25)
 		return (result);
 	else
-		return (145000);
+		return (INT_MAX);
 }

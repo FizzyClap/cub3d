@@ -33,11 +33,28 @@ void	player_init(t_game *game)
 
 static void	init_moves(t_game *game)
 {
+	int	i;
+
+	i = -1;
 	game->player.action = malloc(sizeof(int) * 4);
-	game->player.action[MOVEUP] = 0;
-	game->player.action[MOVEBACK] = 0;
-	game->player.action[MOVELEFT] = 0;
-	game->player.action[MOVERIGHT] = 0;
+	while(++i < 4)
+	game->player.action[i] = 0;
+	i = -1;
+	game->player.cross_ray = malloc(sizeof(t_ray) * 4);
+	while (++i < 4)
+	{
+		game->player.cross_ray->pos_x = game->player.x;
+		game->player.cross_ray->pos_y = game->player.y;
+		game->player.cross_ray->dir_x = cos(deg_to_rad(game->player.angle));
+		game->player.cross_ray->dir_y = sin(deg_to_rad(game->player.angle));
+		game->player.cross_ray->plane_x = -game->player.cross_ray->dir_y * FOV;
+		game->player.cross_ray->plane_y = game->player.cross_ray->dir_x * FOV;
+		game->player.cross_ray->delta_x = fabs(1 / game->player.cross_ray->dir_x);
+		game->player.cross_ray->delta_y = fabs(1 / game->player.cross_ray->dir_y);
+		game->player.cross_ray->side_dist_x = 0;
+		game->player.cross_ray->side_dist_y = 0;
+		game->player.cross_ray->angle = game->player.angle;
+	}
 }
 
 static void	paint_cursor(t_game *game)

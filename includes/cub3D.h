@@ -9,6 +9,7 @@
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
 # include <unistd.h>
+# include <limits.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/time.h>
@@ -20,6 +21,7 @@
 void	jump(t_game *game);
 int		keyrelease(int keycode, t_game *game);
 void	make_actions(t_game * game);
+int		move_div(t_game *game);
 //INIT
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
@@ -43,7 +45,7 @@ int		rgb_to_int(int r, int g, int b);
 void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color);
 int		minimap_color(t_game *game, t_coord pos);
 //GAME/CONTROLS_UTILS
-void	check_move(t_game *game);
+void	check_move(t_game *game, int move);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS
@@ -62,7 +64,7 @@ void	my_mlx_pixel_put(t_image img, int x, int y, int color);
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
 void	right_cam(t_game *game, int x);
-double	check_backroom(t_game *game, double x, double y);
+double	check_backroom(t_game *game, int move);
 //GAME/RAYCASTING_UTILS
 void	draw_vertical_line(t_game *game, int x, int start, int color);
 void	camera_angle_distortion(t_game *game, t_ray *ray);

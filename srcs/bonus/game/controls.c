@@ -76,14 +76,9 @@ int	move_div(t_game *game)
 
 void	move_up(t_game *game)
 {
-	double	x;
-	double	y;
-
-	x = (game->player.x + game->player.d_x * (game->player.speed / move_div(game)));
-	y = (game->player.y + game->player.d_y * (game->player.speed / move_div(game)));
-	if (check_backroom(game, x, y) < 0.25)
+	if (check_backroom(game, MOVEUP) < 0.2)
 	{
-		check_move(game);
+		check_move(game, MOVEUP);
 		return ;
 	}
 	refresh_position(game, MOVE, game->player.speed / move_div(game));
@@ -93,16 +88,16 @@ void	move_up(t_game *game)
 
 void	move_down(t_game *game)
 {
-	double	x;
-	double	y;
-
 	game->player.angle -= PI;
 	correct_angle(game);
+	if (check_backroom(game, MOVEBACK) < 0.2)
+	{
+		check_move(game, MOVEBACK);
+		game->player.angle += PI;
+		correct_angle(game);
+		return ;
+	}
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * (game->player.speed / move_div(game)));
-	y = (game->player.y - game->player.d_y * (game->player.speed / move_div(game)));
-	if (check_backroom(game, x, y) < 0.25)
-		check_move(game);
 	refresh_position(game, MOVE, game->player.speed / move_div(game));
 	game->player.angle += PI;
 	correct_angle(game);
@@ -113,16 +108,16 @@ void	move_down(t_game *game)
 
 void	move_left(t_game *game)
 {
-	double	x;
-	double	y;
-
 	game->player.angle -= (PI / 2);
 	correct_angle(game);
+	if (check_backroom(game, MOVELEFT) < 0.2)
+	{
+		check_move(game, MOVELEFT);
+		game->player.angle += (PI / 2);
+		correct_angle(game);
+		return ;
+	}
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * (game->player.speed / move_div(game)));
-	y = (game->player.y - game->player.d_y * (game->player.speed / move_div(game)));
-	if (check_backroom(game, x, y) < 0.25)
-		check_move(game);
 	refresh_position(game, MOVE, game->player.speed / move_div(game));
 	game->player.angle += (PI / 2);
 	correct_angle(game);
@@ -133,16 +128,16 @@ void	move_left(t_game *game)
 
 void	move_right(t_game *game)
 {
-	double	x;
-	double	y;
-
 	game->player.angle += (PI / 2);
 	correct_angle(game);
+	if (check_backroom(game, MOVERIGHT) < 0.2)
+	{
+		check_move(game, MOVERIGHT);
+		game->player.angle -= (PI / 2);
+		correct_angle(game);
+		return ;
+	}
 	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * (game->player.speed / move_div(game)));
-	y = (game->player.y - game->player.d_y * (game->player.speed / move_div(game)));
-	if (check_backroom(game, x, y) < 0.25)
-		check_move(game);
 	refresh_position(game, MOVE, game->player.speed / move_div(game));
 	game->player.angle -= (PI / 2);
 	correct_angle(game);

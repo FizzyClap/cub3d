@@ -78,31 +78,6 @@ typedef struct s_texture
 	t_texture_data	image[4];
 }	t_texture;
 
-typedef struct s_player
-{
-	bool	jump;
-	bool	crouch;
-	int		*action;
-	int		move_div;
-	int		z;
-	int		h;
-	double	x;
-	double	y;
-	double	d_x;
-	double	d_y;
-	double	speed;
-	double	angle;
-	t_image	cursor;
-}	t_player;
-
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-	int	color;
-}	t_color;
-
 typedef struct s_ray
 {
 	double	pos_x;
@@ -121,6 +96,32 @@ typedef struct s_ray
 	double	wall_dist;
 	double	angle;
 }	t_ray;
+
+typedef struct s_player
+{
+	bool	jump;
+	bool	crouch;
+	int		*action;
+	int		move_div;
+	int		z;
+	int		h;
+	double	x;
+	double	y;
+	double	d_x;
+	double	d_y;
+	double	speed;
+	double	angle;
+	t_ray	*cross_ray;
+	t_image	cursor;
+}	t_player;
+
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+	int	color;
+}	t_color;
 
 typedef struct s_game
 {
