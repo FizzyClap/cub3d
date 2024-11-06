@@ -5,19 +5,24 @@ static double	ray_distance(t_game *game, t_ray ray);
 
 double	check_backroom(t_game *game, int move)
 {
-	if (check_ray(game, game->player.cross_ray[move]) == FAILURE)
+	double	result;
+
+	result = check_ray(game, game->player.cross_ray[move]);
+	if (result == FAILURE)
 		return (FAILURE);
-	return (check_ray(game, game->player.cross_ray[move]));
+	return (result);
 }
 
 static double	check_ray(t_game *game, t_ray ray)
 {
 	double	tmp;
+	double	result;
 
 	tmp = game->player.angle;
-	if (ray_distance(game, ray) < 0.2)
+	result = ray_distance(game, ray);
+	if (result < 0.2)
 		return (FAILURE);
-	game->player.angle += PI / 4;
+	game->player.angle += Q_PI;
 	correct_angle(game);
 	if (ray_distance(game, ray) < 0.15)
 	{
@@ -25,7 +30,7 @@ static double	check_ray(t_game *game, t_ray ray)
 		return (FAILURE);
 	}
 	game->player.angle = tmp;
-	game->player.angle -= PI / 4;
+	game->player.angle -= Q_PI;
 	correct_angle(game);
 	if (ray_distance(game, ray) < 0.15)
 	{
@@ -33,7 +38,8 @@ static double	check_ray(t_game *game, t_ray ray)
 		return (FAILURE);
 	}
 	game->player.angle = tmp;
-	return (ray_distance(game, ray));
+	correct_angle(game);
+	return (result);
 }
 
 static double	ray_distance(t_game *game, t_ray ray)
@@ -41,7 +47,7 @@ static double	ray_distance(t_game *game, t_ray ray)
 	double	angle;
 
 	angle = game->player.angle;
-	angle = ((angle * 180 / PI) - FOV / 2 + \
+	angle = ((angle * CENT_PI) - 30 + \
 	FOV * (870 / (double)SCREEN_WIDTH));
 	ray.pos_x = game->player.x;
 	ray.pos_y = game->player.y;

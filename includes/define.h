@@ -4,7 +4,15 @@
 //UTILS
 # define FAILURE 0
 # define SUCCESS 1
+//180 / PI
+# define CENT_PI 57.2957795131
 # define PI 3.14159265358
+//PI * 2
+# define DD_PI 6.28318530718
+//PI / 2
+# define D_PI 1.57079632679
+//PI / 4
+# define Q_PI 0.78539816339
 # define FOV 60
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080

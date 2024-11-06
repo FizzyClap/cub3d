@@ -35,9 +35,9 @@ void	check_move(t_game *game)
 void	correct_angle(t_game *game)
 {
 	if (game->player.angle < 0)
-		game->player.angle += 2 * PI;
-	if (game->player.angle > 2 * PI)
-		game->player.angle -= 2 * PI;
+		game->player.angle += DD_PI;
+	if (game->player.angle > DD_PI)
+		game->player.angle -= DD_PI;
 }
 
 void	refresh_position(t_game *game, int action, double speed)

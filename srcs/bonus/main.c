@@ -77,6 +77,7 @@ static int	loop(t_game *game, t_ray *ray)
 	raycasting(ray, game);
 	clear_image(game->minimap.addr, MMH, MMW, BLACK);
 	draw_minimap(game, game->minimap);
+	move_div(game);
 	make_actions(game);
 	mouse_move(game);
 	jump(game);

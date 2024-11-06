@@ -23,8 +23,9 @@ SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/free/free_map.c\
 		srcs/mandatory/game/character.c\
 		srcs/mandatory/game/colors.c\
-		srcs/mandatory/game/controls.c\
 		srcs/mandatory/game/controls_utils.c\
+		srcs/mandatory/game/controls.c\
+		srcs/mandatory/game/floor_raycast.c\
 		srcs/mandatory/game/image.c\
 		srcs/mandatory/game/minimap.c\
 		srcs/mandatory/game/mouse_cam.c\

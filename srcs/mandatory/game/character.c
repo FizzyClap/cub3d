@@ -12,9 +12,9 @@ void	player_init(t_game *game)
 	game->player.x = game->map->start_x + 0.5;
 	game->player.y = game->map->start_y + 0.5;
 	if (game->map->orientation == 'N')
-		game->player.angle = PI / 2;
+		game->player.angle = D_PI;
 	else if (game->map->orientation == 'S')
-		game->player.angle = 3 * PI / 2;
+		game->player.angle = 3 * D_PI;
 	else if (game->map->orientation == 'E')
 		game->player.angle = PI;
 	else if (game->map->orientation == 'W')

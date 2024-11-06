@@ -15,7 +15,7 @@ void	raycasting(t_ray *ray, t_game *game)
 	loop.x = -1;
 	while (++loop.x < SCREEN_WIDTH)
 	{
-		ray_angle = (game->player.angle * 180 / PI) - FOV / 2 + \
+		ray_angle = (game->player.angle * CENT_PI) - FOV / 2 + \
 		FOV * (loop.x / (double)SCREEN_WIDTH);
 		init_ray(ray, game, ray_angle);
 		calculate_steps(ray);

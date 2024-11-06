@@ -48,7 +48,9 @@ void	refresh_position(t_game *game, int action, double speed);
 void	make_actions(t_game *game);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
-int		move_div(t_game *game);
+void	move_div(t_game *game);
+//GAME/FLOOR_RAYCAST
+
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP

@@ -21,15 +21,15 @@ void	left_cam(t_game *game, int x)
 {
 	game->player.angle -= cam_sensibility(x);
 	if (game->player.angle < 0)
-		game->player.angle += 2 * PI;
+		game->player.angle += DD_PI;
 	refresh_position(game, DELTA, 0);
 }
 
 void	right_cam(t_game *game, int x)
 {
 	game->player.angle += cam_sensibility(x);
-	if (game->player.angle > 2 * PI)
-		game->player.angle -= 2 * PI;
+	if (game->player.angle > DD_PI)
+		game->player.angle -= DD_PI;
 	refresh_position(game, DELTA, 0);
 }
 

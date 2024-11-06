@@ -58,7 +58,7 @@ int	keycode(int keycode, t_game *game)
 	return (SUCCESS);
 }
 
-int	move_div(t_game *game)
+void	move_div(t_game *game)
 {
 	int	result;
 
@@ -71,5 +71,5 @@ int	move_div(t_game *game)
 		result++;
 	if (game->player.action[MOVEBACK] == 1)
 		result++;
-	return (result);
+	game->player.move_div = result;
 }

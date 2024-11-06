@@ -62,7 +62,7 @@ static void	move_left(t_game *game)
 	int	x;
 	int	y;
 
-	game->player.angle -= (PI / 2);
+	game->player.angle -= (D_PI);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 	x = (game->player.x - game->player.d_x * game->player.speed);
@@ -70,7 +70,7 @@ static void	move_left(t_game *game)
 	if (check_backroom(game, x, y) == FAILURE)
 		check_move(game);
 	move_up(game);
-	game->player.angle += (PI / 2);
+	game->player.angle += (D_PI);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 }
@@ -80,7 +80,7 @@ static void	move_right(t_game *game)
 	int	x;
 	int	y;
 
-	game->player.angle += (PI / 2);
+	game->player.angle += (D_PI);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 	x = (game->player.x - game->player.d_x * game->player.speed);
@@ -88,7 +88,7 @@ static void	move_right(t_game *game)
 	if (check_backroom(game, x, y) == FAILURE)
 		check_move(game);
 	move_up(game);
-	game->player.angle -= (PI / 2);
+	game->player.angle -= (D_PI);
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
 }

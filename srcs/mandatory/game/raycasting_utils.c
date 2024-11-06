@@ -21,9 +21,9 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 
 	camera_angle = game->player.angle - (ray->angle * PI / 180);
 	if (camera_angle < 0)
-		camera_angle += 2 * PI;
-	if (camera_angle > 2 * PI)
-		camera_angle -= 2 * PI;
+		camera_angle += DD_PI;
+	if (camera_angle > DD_PI)
+		camera_angle -= DD_PI;
 	ray->wall_dist = ray->wall_dist * cos(camera_angle);
 }
 
