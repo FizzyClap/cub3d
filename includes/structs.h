@@ -86,6 +86,7 @@ typedef struct s_ray
 	double	plane_y;
 	double	dir_x;
 	double	dir_y;
+	double	projected_dist;
 	int		step_x;
 	int		step_y;
 	double	delta_x;

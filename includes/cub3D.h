@@ -45,7 +45,7 @@ void	check_move(t_game *game, int move);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS
-void	make_actions(t_game *game);
+void	make_actions(t_game *game, t_ray *ray);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
@@ -70,7 +70,6 @@ void	move_down(t_game *game);
 void	move_left(t_game *game);
 void	move_right(t_game *game);
 //GAME/RAYCASTING_UTILS
-void	draw_vertical_line(t_game *game, int x, int start, int color);
 void	camera_angle_distortion(t_game *game, t_ray *ray);
 void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex);
 //GAME/RAYCASTING

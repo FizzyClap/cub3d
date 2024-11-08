@@ -1,20 +1,5 @@
 #include "../includes/cub3D.h"
 
-void	draw_vertical_line(t_game *game, int x, int start, int color)
-{
-	int	y;
-	int	end;
-
-	// if (start < 0)
-	// 	start = 0;
-	end = start + 1;
-	// if (end >= SCREEN_HEIGHT)
-		// end = SCREEN_HEIGHT - 1;
-	y = start - 1;
-	while (++y <= end)
-		my_mlx_pixel_put(game->raycast, x, y, color);
-}
-
 void	camera_angle_distortion(t_game *game, t_ray *ray)
 {
 	double	camera_angle;
@@ -24,7 +9,7 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 		camera_angle += 2 * PI;
 	if (camera_angle > 2 * PI)
 		camera_angle -= 2 * PI;
-	ray->wall_dist = ray->wall_dist * cos(camera_angle);
+	ray->projected_dist = ray->wall_dist * cos(camera_angle);
 }
 
 void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex)
@@ -42,7 +27,7 @@ void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex)
 	else
 		(*tex)->wall_x = ray->pos_x + ray->wall_dist * ray->dir_x;
 	(*tex)->wall_x -= floor((*tex)->wall_x);
-	(*tex)->x = (int)((*tex)->wall_x * (double)(*tex)->width);
-	if ((!ray->side && ray->dir_x > 0) || (ray->side && ray->dir_y < 0))
-		(*tex)->x = (*tex)->width - (*tex)->x - 1;
+	if (ray->side == 0 && ray->dir_x > 0)
+		(*tex)->wall_x = 1.0 - (*tex)->wall_x;
+	(*tex)->x = (int)((*tex)->wall_x * (*tex)->width);
 }

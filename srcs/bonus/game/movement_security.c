@@ -69,11 +69,13 @@ static double	ray_distance(t_game *game, t_ray ray)
 void	jump(t_game *game)
 {
 	if (game->player.crouch == true)
-		game->player.speed = 0.003;
+		game->player.speed = 0.0125;
+	if (game->player.crouch == false && game->player.speed < 0.025)
+		game->player.speed += 0.005;
 	if (game->player.jump == false && game->player.h > 0)
-		game->player.h -= 40;
+		game->player.h -= 100;
 	if (game->player.jump == true && game->player.h < 400)
-		game->player.h += 40;
+		game->player.h += 100;
 	if (game->player.h >= 400)
 		game->player.jump = false;
 	if (game->player.crouch == true && game->player.h > -250)
