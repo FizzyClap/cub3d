@@ -26,21 +26,25 @@ static void	cam_z(t_game *game, int y)
 
 	z = 540 - y;
 	game->player.z += z;
+	if (game->player.z > 3000)
+		game->player.z = 3000;
+	if (game->player.z < -3000)
+		game->player.z = -3000;
 }
 
 void	left_cam(t_game *game, int x)
 {
 	game->player.angle -= cam_sensibility(x);
 	if (game->player.angle < 0)
-		game->player.angle += 2 * PI;
+		game->player.angle += DD_PI;
 	refresh_position(game, DELTA, 0);
 }
 
 void	right_cam(t_game *game, int x)
 {
 	game->player.angle += cam_sensibility(x);
-	if (game->player.angle > 2 * PI)
-		game->player.angle -= 2 * PI;
+	if (game->player.angle > DD_PI)
+		game->player.angle -= DD_PI;
 	refresh_position(game, DELTA, 0);
 }
 
@@ -50,17 +54,4 @@ static double	cam_sensibility(int x)
 	if (x < 0)
 		x *= -1;
 	return ((double)(x * 0.001));
-}
-
-int	check_backroom(t_game *game, int x, int y)
-{
-	if (game->map->lines[y]->content[x] == '1')
-		return (FAILURE);
-	if (y > game->player.y && game->map->lines[y - 1] && \
-	game->map->lines[y - 1]->content[x] == '1')
-		return (FAILURE);
-	if (x > game->player.x && game->map->lines[y]->content[x - 1] && \
-	game->map->lines[y]->content[x - 1] == '1')
-		return (FAILURE);
-	return (SUCCESS);
 }

@@ -76,6 +76,7 @@ void	start_game(t_game *game, bool launcher)
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
+	mlx_hook(game->win, KeyRelease, KeyReleaseMask, keyrelease, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_mouse_hide(game->mlx, game->win);
@@ -83,18 +84,18 @@ void	start_game(t_game *game, bool launcher)
 	mlx_loop(game->mlx);
 }
 
-static void	clear_image(char *address, int height, int width, int color)
-{
-	int		*image_data;
-	int		pixels;
-	int		i;
+//static void	clear_image(char *address, int height, int width, int color)
+//{
+//	int		*image_data;
+//	int		pixels;
+//	int		i;
 
-	image_data = (int *)address;
-	pixels = height * width;
-	i = -1;
-	while (++i < pixels)
-		image_data[i] = color;
-}
+//	image_data = (int *)address;
+//	pixels = height * width;
+//	i = -1;
+//	while (++i < pixels)
+//		image_data[i] = color;
+//}
 
 void put_image_with_transparency(t_game *game, t_image image, int x_start, int y_start)
 {
@@ -121,17 +122,12 @@ void put_image_with_transparency(t_game *game, t_image image, int x_start, int y
 
 static int	loop(t_game *game, t_ray *ray)
 {
-	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH, game->floor.color);
-	raycasting(ray, game);
+	move_div(game);
+	make_actions(game, ray);
 	mouse_move(game);
+	jump(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
-	clear_image(game->minimap.addr, MMH, MMW, 0xFF00FF);
-	draw_minimap(game, game->minimap);
-	//clear_image(game->ring.addr, 300, 295, 0xFF00FF);
-	//mlx_put_image_to_window(game->mlx, game->win, game->ring.img, 0, 0);
-	//put_image_with_transparency(game, game->minimap, 60, 53);
-	mlx_put_image_to_window(game->mlx, game->win, game->balrog.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
-		160, 150);
+		118, 118);
 	return (SUCCESS);
 }

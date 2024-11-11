@@ -43,7 +43,6 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/free/free_texture.c\
 				srcs/bonus/free/free_map.c\
 				srcs/bonus/game/character.c\
-				srcs/bonus/game/cohen_sutherland.c\
 				srcs/bonus/game/colors.c\
 				srcs/bonus/game/controls.c\
 				srcs/bonus/game/controls_utils.c\
@@ -51,6 +50,8 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/launcher.c\
 				srcs/bonus/game/minimap.c\
 				srcs/bonus/game/mouse_cam.c\
+				srcs/bonus/game/movement_security.c\
+				srcs/bonus/game/moves.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
 				srcs/bonus/parsing/check_arg.c\

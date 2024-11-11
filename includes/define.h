@@ -1,25 +1,20 @@
 #ifndef DEFINE_H
 # define DEFINE_H
 
+//UTILS
 # define FAILURE 0
 # define SUCCESS 1
-# define ESC 65307
-# define LEFT 65361
-# define UP 65362
-# define RIGHT 65363
-# define DOWN 65364
-# define A 97
-# define W 119
-# define D 100
-# define S 115
-# define SPACE 32
+//180 / PI
+# define CENT_PI 57.2957795131
 # define PI 3.14159265358
-# define FOV 70
-# define BLUE 0x000000FF
-# define RED 0x00FF0000
-# define GREEN 0x0000FF00
-# define WHITE 0x00FFFFFF
-# define BLACK 0x00000000
+//PI * 2
+# define DD_PI 6.28318530718
+//PI / 2
+# define D_PI 1.57079632679
+//PI / 4
+# define Q_PI 0.78539816339
+# define RADIUS 0.25
+# define FOV 60
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define MMW 180
@@ -36,5 +31,28 @@
 # define ERR_ARG "Error: there is 1 argument more than expected\n"
 # define ERR_PLAYERS "Error: there is too much start position\n"
 # define ERR_EMPTY "Error: line is empty\n"
+//KEYCODES
+# define ESC 65307
+# define LEFT 65361
+# define UP 65362
+# define RIGHT 65363
+# define DOWN 65364
+# define A 97
+# define W 119
+# define D 100
+# define S 115
+# define SPACE 32
+# define SHIFT 65505
+//COLORS
+# define BLUE 0x000000FF
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+# define WHITE 0x00FFFFFF
+# define BLACK 0x00000000
+//MOVEMENTS
+# define MOVEUP 0
+# define MOVEBACK 1
+# define MOVELEFT 2
+# define MOVERIGHT 3
 
 #endif

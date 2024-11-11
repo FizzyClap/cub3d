@@ -1,8 +1,5 @@
 #include "../includes/cub3D.h"
 
-static void	calculate_steps(t_ray *ray);
-static void	perform_dda(t_ray *ray, t_game *game);
-static void	calculate_wall_distance(t_ray *ray);
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
 
 void	raycasting(t_ray *ray, t_game *game)
@@ -12,10 +9,10 @@ void	raycasting(t_ray *ray, t_game *game)
 
 	draw_floor_ceiling(game, game->floor.color, game->ceiling.color);
 	ray = malloc(sizeof(t_ray));
-	loop.x = -1;
-	while (++loop.x < SCREEN_WIDTH)
+	loop.x = 0;
+	while (loop.x < SCREEN_WIDTH)
 	{
-		ray_angle = (game->player.angle * 180 / PI) - FOV / 2 + \
+		ray_angle = ((game->player.angle) * 180 / PI) - FOV / 2 + \
 		FOV * (loop.x / (double)SCREEN_WIDTH);
 		init_ray(ray, game, ray_angle);
 		calculate_steps(ray);
@@ -23,11 +20,12 @@ void	raycasting(t_ray *ray, t_game *game)
 		calculate_wall_distance(ray);
 		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
+		loop.x++;
 	}
 	free(ray);
 }
 
-static void	calculate_steps(t_ray *ray)
+void	calculate_steps(t_ray *ray)
 {
 	if (ray->dir_x < 0)
 	{
@@ -51,7 +49,7 @@ static void	calculate_steps(t_ray *ray)
 	}
 }
 
-static void	perform_dda(t_ray *ray, t_game *game)
+void	perform_dda(t_ray *ray, t_game *game)
 {
 	int	hit;
 
@@ -70,12 +68,13 @@ static void	perform_dda(t_ray *ray, t_game *game)
 			ray->pos_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == '1')
+		if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == '1' || \
+			game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
 			hit = 1;
 	}
 }
 
-static void	calculate_wall_distance(t_ray *ray)
+void	calculate_wall_distance(t_ray *ray)
 {
 	if (ray->side == 0)
 		ray->wall_dist = ray->side_dist_x - ray->delta_x;
@@ -85,21 +84,24 @@ static void	calculate_wall_distance(t_ray *ray)
 
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
+	double	max_tex_step;
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
 	int		color;
+	int		height_correct;
 	t_image	*tex;
 
-	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
-	draw_start = (SCREEN_HEIGHT - line_height) / 2 ;
-	draw_end = (SCREEN_HEIGHT + line_height) / 2;
+	height_correct = game->player.h / ray->projected_dist;
+	line_height = (int)(SCREEN_HEIGHT / ray->projected_dist);
+	draw_start = (SCREEN_HEIGHT - line_height + height_correct) / 2;
+	draw_end = (SCREEN_HEIGHT + line_height + height_correct) / 2;
 	select_wall_texture(game, ray, &tex);
-	tex->step = 1.0 * tex->height / line_height;
-	if (ray->wall_dist > 1)
-		tex->pos = 0;
-	else
-		tex->pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * tex->step;
+	max_tex_step = SCREEN_HEIGHT / ray->wall_dist;
+	tex->step = (double)tex->height / line_height;
+	// if (tex->step > max_tex_step)
+	// 	tex->step = max_tex_step;
+	tex->pos = (draw_start - 540 + (line_height - height_correct) / 2) * tex->step;
 	loop.y = draw_start - 1;
 	while (++loop.y < draw_end)
 	{
@@ -107,6 +109,6 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 		tex->pos += tex->step;
 		if (tex->x >= 0 && tex->x < tex->width && tex->y >= 0 && tex->y < tex->height)
 			color = tex->color[tex->width * tex->y + tex->x];
-		draw_vertical_line(game, loop.x, loop.y + game->player.z, color);
+		my_mlx_pixel_put(game->raycast, loop.x, loop.y + game->player.z, color);
 	}
 }

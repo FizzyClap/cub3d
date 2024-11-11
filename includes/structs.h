@@ -44,50 +44,30 @@ typedef struct s_image
 	void	*img;
 	char	*addr;
 	int		*color;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	double	wall_x;
-	double	step;
-	double	pos;
 	int		width;
 	int		height;
 	int		x;
 	int		y;
+	int		bpp;
+	int		endian;
+	int		line_len;
+	double	wall_x;
+	double	step;
+	double	pos;
 }	t_image;
 
 typedef struct s_texture
 {
-	char	*id;
-	char	*north_path;
-	char	*south_path;
-	char	*west_path;
-	char	*east_path;
-	char	*floor_color;
-	char	*ceiling_color;
-	t_order	order;
-	t_image	image[4];
+	char			*id;
+	char			*north_path;
+	char			*south_path;
+	char			*west_path;
+	char			*east_path;
+	char			*floor_color;
+	char			*ceiling_color;
+	t_order			order;
+	t_image			image[4];
 }	t_texture;
-
-typedef struct s_player
-{
-	int		z;
-	double	x;
-	double	y;
-	double	d_x;
-	double	d_y;
-	double	speed;
-	double	angle;
-	t_image	cursor;
-}	t_player;
-
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-	int	color;
-}	t_color;
 
 typedef struct s_ray
 {
@@ -97,6 +77,7 @@ typedef struct s_ray
 	double	plane_y;
 	double	dir_x;
 	double	dir_y;
+	double	projected_dist;
 	int		step_x;
 	int		step_y;
 	double	delta_x;
@@ -108,6 +89,32 @@ typedef struct s_ray
 	double	angle;
 }	t_ray;
 
+typedef struct s_player
+{
+	bool	jump;
+	bool	crouch;
+	int		*action;
+	int		move_div;
+	int		z;
+	int		h;
+	double	x;
+	double	y;
+	double	d_x;
+	double	d_y;
+	double	speed;
+	double	angle;
+	t_ray	*cross_ray;
+	t_image	cursor;
+}	t_player;
+
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+	int	color;
+}	t_color;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -115,10 +122,12 @@ typedef struct s_game
 	void		*select;
 	char		*file;
 	bool		launcher_is_running;
+	bool		door_isopen;
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
 	t_image		balrog;
+	t_image		door_open;
 	t_image		door;
 	t_image		launcher;
 	t_image		launcher_moria;

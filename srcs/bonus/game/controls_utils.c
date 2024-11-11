@@ -1,43 +1,41 @@
 #include "../includes/cub3D.h"
 
-static int	try_move_left(t_game *game);
-static int	try_move_right(t_game *game);
+static double	try_move_left(t_game *game, int move);
+static double	try_move_right(t_game *game, int move);
 
-void	check_move(t_game *game)
+void	check_move(t_game *game, int move)
 {
-	int	left;
-	int	right;
+	double	left;
+	double	right;
 
-	left = try_move_left(game);
-	right = try_move_right(game);
-	if (left < right)
+	left = try_move_left(game, move);
+	right = try_move_right(game, move);
+	if (left < right && left >= 0.2)
 	{
-		game->player.angle -= (double)(left * 0.1);
+		game->player.angle -= (0.5);
 		correct_angle(game);
 		refresh_position(game, DELTA, 0);
 		refresh_position(game, MOVE, game->player.speed);
-		game->player.angle += (double)(left * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
+		game->player.angle += (0.5);
 	}
-	else
+	else if (right > 0.25 && right < INT_MAX)
 	{
-		game->player.angle += (double)(right * 0.1);
+		game->player.angle += (0.5);
 		correct_angle(game);
 		refresh_position(game, DELTA, 0);
 		refresh_position(game, MOVE, game->player.speed);
-		game->player.angle -= (double)(right * 0.1);
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
+		game->player.angle -= (0.5);
 	}
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
 }
 
 void	correct_angle(t_game *game)
 {
 	if (game->player.angle < 0)
-		game->player.angle += 2 * PI;
-	if (game->player.angle > 2 * PI)
-		game->player.angle -= 2 * PI;
+		game->player.angle += DD_PI;
+	if (game->player.angle > DD_PI)
+		game->player.angle -= DD_PI;
 }
 
 void	refresh_position(t_game *game, int action, double speed)
@@ -49,61 +47,41 @@ void	refresh_position(t_game *game, int action, double speed)
 	}
 	else
 	{
-		game->player.x += game->player.d_x * speed;
-		game->player.y += game->player.d_y * speed;
+		game->player.x += game->player.d_x * speed / game->player.move_div;
+		game->player.y += game->player.d_y * speed / game->player.move_div;
 	}
 }
 
-static int	try_move_left(t_game *game)
+static double	try_move_left(t_game *game, int move)
 {
-	double	tmp;
-	int		i;
-	int		x;
-	int		y;
+	double	result;
 
-	if (game->player.speed > 0.002)
-		game->player.speed -= 0.0005;
-	tmp = game->player.angle;
-	i = 0;
-	x = (game->player.x + game->player.d_x * (game->player.speed));
-	y = (game->player.y + game->player.d_y * (game->player.speed));
-	while (check_backroom(game, x, y) == FAILURE)
-	{
-		game->player.angle -= 0.1;
-		i++;
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-		x = (game->player.x + game->player.d_x * (game->player.speed));
-		y = (game->player.y + game->player.d_y * (game->player.speed));
-	}
-	game->player.angle = tmp;
+	game->player.angle -= 0.8;
+	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	return (i);
+	result = check_backroom(game, move);
+	game->player.angle += 0.8;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
+	if (result > 0.2)
+		return (result);
+	else
+		return (0);
 }
 
-static int	try_move_right(t_game *game)
+static double	try_move_right(t_game *game, int move)
 {
-	double	tmp;
-	int		i;
-	int		x;
-	int		y;
+	double	result;
 
-	if (game->player.speed > 0.002)
-		game->player.speed -= 0.0005;
-	tmp = game->player.angle;
-	i = 0;
-	x = (game->player.x + game->player.d_x * (game->player.speed));
-	y = (game->player.y + game->player.d_y * (game->player.speed));
-	while (check_backroom(game, x, y) == FAILURE)
-	{
-		game->player.angle += 0.1;
-		i++;
-		correct_angle(game);
-		refresh_position(game, DELTA, 0);
-		x = (game->player.x + game->player.d_x * (game->player.speed));
-		y = (game->player.y + game->player.d_y * (game->player.speed));
-	}
-	game->player.angle = tmp;
+	game->player.angle += 0.8;
+	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	return (i);
+	result = check_backroom(game, move);
+	game->player.angle -= 0.8;
+	correct_angle(game);
+	refresh_position(game, DELTA, 0);
+	if (result > 0.2)
+		return (result);
+	else
+		return (INT_MAX);
 }
