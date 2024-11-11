@@ -48,4 +48,8 @@ static void	free_image(t_game *game)
 		mlx_destroy_image(game->mlx, game->launcher_morgul.img);
 	if (game->launcher.img)
 		mlx_destroy_image(game->mlx, game->launcher.img);
+	if (game->door.img)
+		mlx_destroy_image(game->mlx, game->door.img);
+	if (game->door_open.img)
+		mlx_destroy_image(game->mlx, game->door_open.img);
 }

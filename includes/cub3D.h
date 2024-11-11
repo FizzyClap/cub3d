@@ -20,11 +20,11 @@
 
 int		parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher);
 void	start_game(t_game *game, bool launcher);
-int		open_launcher(t_game **game);
+int		open_launcher(t_game *game);
 //INIT
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
-void	init_game(t_game **game, t_texture *texture, t_map *map, bool launcher);
+void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher);
 void	init_ray(t_ray *ray, t_game *game, double angle);
 double	deg_to_rad(double degrees);
 //DEBUG/PRINT

@@ -1,6 +1,6 @@
 NO 				textures/wall.xpm
-SO             textures/door.xpm
-WE 				textures/door_open.xpm
+SO             textures/wall.xpm
+WE 				textures/wall.xpm
 EA    textures/wall.xpm
 
 F 0, 100, 0

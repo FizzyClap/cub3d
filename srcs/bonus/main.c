@@ -12,11 +12,12 @@ int	main(int argc, char **argv)
 
 	if (parsing(&texture, &map, argc, argv) == FAILURE)
 		return (EXIT_FAILURE);
-	if (argc == 1 && open_launcher(&game) == FAILURE)
+	game = malloc(sizeof(t_game));
+	if (argc == 1 && open_launcher(game) == FAILURE)
 		return (EXIT_FAILURE);
 	else if (argc == 2)
 	{
-		init_game(&game, texture, map, false);
+		init_game(game, texture, map, false);
 		start_game(game, false);
 	}
 	return (EXIT_SUCCESS);

@@ -58,15 +58,15 @@ typedef struct s_image
 
 typedef struct s_texture
 {
-	char			*id;
-	char			*north_path;
-	char			*south_path;
-	char			*west_path;
-	char			*east_path;
-	char			*floor_color;
-	char			*ceiling_color;
-	t_order			order;
-	t_image			image[4];
+	char	*id;
+	char	*north_path;
+	char	*south_path;
+	char	*west_path;
+	char	*east_path;
+	char	*floor_color;
+	char	*ceiling_color;
+	t_order	order;
+	t_image	image[4];
 }	t_texture;
 
 typedef struct s_ray
