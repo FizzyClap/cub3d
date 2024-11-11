@@ -27,7 +27,7 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 	ray->wall_dist = ray->wall_dist * cos(camera_angle);
 }
 
-void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex)
+void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
 	if (ray->side == 1 && ray->step_y < 0)
 		*tex = &game->texture->image[NORTH];

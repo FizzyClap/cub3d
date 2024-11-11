@@ -23,8 +23,6 @@ void	raycasting(t_ray *ray, t_game *game)
 		calculate_wall_distance(ray);
 		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
-		if (loop.x == SCREEN_WIDTH / 2)
-			game->player.mid_ray = ray->wall_dist;
 	}
 	free(ray);
 }
@@ -87,11 +85,11 @@ static void	calculate_wall_distance(t_ray *ray)
 
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
-	int				color;
-	t_texture_data	*tex;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		color;
+	t_image	*tex;
 
 	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
 	draw_start = (SCREEN_HEIGHT - line_height) / 2 ;

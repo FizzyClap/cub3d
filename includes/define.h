@@ -12,6 +12,7 @@
 # define W 119
 # define D 100
 # define S 115
+# define SPACE 32
 # define PI 3.14159265358
 # define FOV 70
 # define BLUE 0x000000FF

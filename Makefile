@@ -43,10 +43,12 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/free/free_texture.c\
 				srcs/bonus/free/free_map.c\
 				srcs/bonus/game/character.c\
+				srcs/bonus/game/cohen_sutherland.c\
 				srcs/bonus/game/colors.c\
 				srcs/bonus/game/controls.c\
 				srcs/bonus/game/controls_utils.c\
 				srcs/bonus/game/image.c\
+				srcs/bonus/game/launcher.c\
 				srcs/bonus/game/minimap.c\
 				srcs/bonus/game/mouse_cam.c\
 				srcs/bonus/game/raycasting_utils.c\
@@ -139,6 +141,8 @@ fclean: clean
 
 re: fclean all
 
+rebonus: fclean bonus
+
 norme:
 	@echo "$(BLUE)Checking norminette in progress... ⌛"
 	@if norminette srcs includes libft > norme.tmp;\
@@ -148,4 +152,4 @@ norme:
 	fi
 	@$(RM) norme.tmp
 
-.PHONY: all bonus mlx clean fclean re norme
+.PHONY: all bonus mlx clean fclean re rebonus norme

@@ -17,10 +17,12 @@
 # include <string.h>
 # include <math.h>
 
+int		parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher);
+void	start_game(t_game *game, bool launcher);
 //INIT
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
-void	init_game(t_game **game, t_texture *texture, t_map *map);
+void	init_game(t_game **game, t_texture *texture, t_map *map, bool launcher);
 void	init_ray(t_ray *ray, t_game *game, double angle);
 //DEBUG/PRINT
 void	print_map(t_map *map, int fd);
@@ -33,6 +35,8 @@ void	free_map(t_map *map);
 void	free_texture(t_texture *texture);
 //GAME/CHARACTER
 void	player_init(t_game *game);
+//GAME/COHEN_SUTHERLAND
+bool	cohenSutherland(double x0, double y0, double x1, double y1);
 //GAME/COLORS
 void	get_color(t_color *type, char *path);
 int		rgb_to_int(int r, int g, int b);
@@ -48,6 +52,8 @@ void	move_up(t_game *game);
 void	move_down(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
+//GAME/LAUNCHER
+int		open_launcher(t_game **game);
 //GAME/MINIMAP
 void	minimap(t_game *game);
 void	draw_minimap(t_game *game, t_image minimap);
@@ -60,7 +66,7 @@ int		check_backroom(t_game *game, int x, int y);
 //GAME/RAYCASTING_UTILS
 void	draw_vertical_line(t_game *game, int x, int start, int color);
 void	camera_angle_distortion(t_game *game, t_ray *ray);
-void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex);
+void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
 //GAME/RAYCASTING
 void	raycasting(t_ray *ray, t_game *game);
 //PARSING/CHECK_ARG

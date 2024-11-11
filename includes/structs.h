@@ -47,35 +47,26 @@ typedef struct s_image
 	int		bpp;
 	int		line_len;
 	int		endian;
-}	t_image;
-
-typedef struct s_texture_data
-{
-	void	*img;
-	int		*color;
+	double	wall_x;
+	double	step;
+	double	pos;
 	int		width;
 	int		height;
 	int		x;
 	int		y;
-	int		bpp;
-	int		endian;
-	int		line_len;
-	double	wall_x;
-	double	step;
-	double	pos;
-}	t_texture_data;
+}	t_image;
 
 typedef struct s_texture
 {
-	char			*id;
-	char			*north_path;
-	char			*south_path;
-	char			*west_path;
-	char			*east_path;
-	char			*floor_color;
-	char			*ceiling_color;
-	t_order			order;
-	t_texture_data	image[4];
+	char	*id;
+	char	*north_path;
+	char	*south_path;
+	char	*west_path;
+	char	*east_path;
+	char	*floor_color;
+	char	*ceiling_color;
+	t_order	order;
+	t_image	image[4];
 }	t_texture;
 
 typedef struct s_player
@@ -87,7 +78,6 @@ typedef struct s_player
 	double	d_y;
 	double	speed;
 	double	angle;
-	double	mid_ray;
 	t_image	cursor;
 }	t_player;
 
@@ -122,13 +112,31 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
+	void		*select;
+	char		*file;
+	bool		launcher_is_running;
 	t_image		minimap;
 	t_image		raycast;
+	t_image		ring;
+	t_image		balrog;
+	t_image		door;
+	t_image		launcher;
+	t_image		launcher_moria;
+	t_image		launcher_morgul;
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;
 	t_color		floor;
 	t_color		ceiling;
 }	t_game;
+
+typedef enum e_outcode
+{
+	INSIDE_SCREEN = 0b0000,
+	LEFT_SCREEN = 0b0001,
+	RIGHT_SCREEN = 0b0010,
+	BOTTOM_SCREEN = 0b0100,
+	TOP_SCREEN = 0b1000
+}	t_outcode;
 
 #endif

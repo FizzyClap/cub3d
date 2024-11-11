@@ -27,16 +27,21 @@ void	init_texture(t_texture *texture)
 	texture->ceiling_color = NULL;
 }
 
-void	init_game(t_game **game, t_texture *texture, t_map *map)
+void	init_game(t_game **game, t_texture *texture, t_map *map, bool launcher)
 {
 	int		i;
 
-	*game = malloc(sizeof(t_game));
-	(*game)->win = NULL;
-	(*game)->texture = texture;
-	(*game)->map = map;
+	if (launcher == false)
+	{
+		*game = malloc(sizeof(t_game));
+		(*game)->win = NULL;
+		(*game)->texture = texture;
+		(*game)->map = map;
+	}
 	(*game)->raycast.img = NULL;
 	(*game)->minimap.img = NULL;
+	(*game)->launcher_morgul.img = NULL;
+	(*game)->launcher_moria.img = NULL;
 	(*game)->player.cursor.img = NULL;
 	i = -1;
 	while (++i < 4)
