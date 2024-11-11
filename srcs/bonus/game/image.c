@@ -1,13 +1,14 @@
 #include "../includes/cub3D.h"
 
 static int	load_walls(t_game *game);
+static int	load_doors(t_game *game);
 
 int	load_textures(t_game *game)
 {
 	int	width;
 	int	height;
 
-	if (load_walls(game) == FAILURE)
+	if (load_walls(game) == FAILURE || load_doors(game) == FAILURE)
 		return (FAILURE);
 	game->balrog.img = mlx_xpm_file_to_image(game->mlx, "textures/balrog.xpm", &width, &height);
 	if (!game->balrog.img)
@@ -47,11 +48,34 @@ static int	load_walls(t_game *game)
 		game->texture->image[i].width = width;
 		game->texture->image[i].height = height;
 	}
-	game->door.img = mlx_xpm_file_to_image(game->mlx, "textures/door.xpm", &width, &height);
+
+	return (SUCCESS);
+}
+
+static int	load_doors(t_game *game)
+{
+	int	width;
+	int	height;
+
+	game->door.img = \
+		mlx_xpm_file_to_image(game->mlx, "textures/door.xpm", &width, &height);
 	if (!game->door.img)
 		return (FAILURE);
-	game->door_open.img = mlx_xpm_file_to_image(game->mlx, "textures/door_open.xpm", &width, &height);
+	game->door.addr = mlx_get_data_addr(game->door.img, &game->door.bpp, \
+		&game->door.line_len, &game->door.endian);
+	game->door.color = (int *)mlx_get_data_addr(game->door.img, \
+		&game->door.bpp, &game->door.line_len, &game->door.endian);
+	game->door.width = width;
+	game->door.height = height;
+	game->door_open.img = \
+		mlx_xpm_file_to_image(game->mlx, "textures/door_open.xpm", &width, &height);
 	if (!game->door_open.img)
 		return (FAILURE);
+	game->door_open.addr = mlx_get_data_addr(game->door_open.img, \
+		&game->door_open.bpp, &game->door_open.line_len, &game->door_open.endian);
+	game->door_open.color = (int *)mlx_get_data_addr(game->door_open.img, \
+		&game->door_open.bpp, &game->door_open.line_len, &game->door_open.endian);
+	game->door_open.width = width;
+	game->door_open.height = height;
 	return (SUCCESS);
 }

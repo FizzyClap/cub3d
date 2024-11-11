@@ -41,7 +41,8 @@ int	minimap_color(t_game *game, t_coord pos)
 	if (pos.y > -1 && pos.x > -1 && pos.y < game->map->y && \
 	pos.x < game->map->lines[pos.y]->x)
 	{
-		if (game->map->lines[pos.y]->content[pos.x] == '1')
+		if (game->map->lines[pos.y]->content[pos.x] == '1' || (game->map->lines\
+		[pos.y]->content[pos.x] == 'D' && game->door_isopen == false))
 			return (*game->texture->image[NORTH].color);
 		else
 			return (game->floor.color);

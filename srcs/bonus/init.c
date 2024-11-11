@@ -36,11 +36,14 @@ void	init_game(t_game **game, t_texture *texture, t_map *map, bool launcher)
 		(*game)->texture = texture;
 		(*game)->map = map;
 	}
+	(*game)->door_isopen = false;
 	(*game)->raycast.img = NULL;
 	(*game)->minimap.img = NULL;
 	(*game)->launcher_morgul.img = NULL;
 	(*game)->launcher_moria.img = NULL;
 	(*game)->player.cursor.img = NULL;
+	(*game)->door.img = NULL;
+	(*game)->door_open.img = NULL;
 	i = -1;
 	while (++i < 4)
 		(*game)->texture->image[i].img = NULL;
