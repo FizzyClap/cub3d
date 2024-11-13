@@ -88,25 +88,23 @@ static int	load_doors_morgul(t_game *game)
 {
 	int	width;
 	int	height;
+	int	t;
 
 	game->door.img = \
 		mlx_xpm_file_to_image(game->mlx, "textures/door2.xpm", &width, &height);
 	if (!game->door.img)
 		return (FAILURE);
-	game->door.addr = mlx_get_data_addr(game->door.img, &game->door.bpp, \
-		&game->door.line_len, &game->door.endian);
-	game->door.color = (int *)mlx_get_data_addr(game->door.img, \
-		&game->door.bpp, &game->door.line_len, &game->door.endian);
+	game->door.addr = mlx_get_data_addr(game->door.img, &t, &t, &t);
+	game->door.color = (int *)mlx_get_data_addr(game->door.img, &t, &t, &t);
 	game->door.width = width;
 	game->door.height = height;
 	game->door_open.img = \
 		mlx_xpm_file_to_image(game->mlx, "textures/door_open2.xpm", &width, &height);
 	if (!game->door_open.img)
 		return (FAILURE);
-	game->door_open.addr = mlx_get_data_addr(game->door_open.img, \
-		&game->door_open.bpp, &game->door_open.line_len, &game->door_open.endian);
-	game->door_open.color = (int *)mlx_get_data_addr(game->door_open.img, \
-		&game->door_open.bpp, &game->door_open.line_len, &game->door_open.endian);
+	game->door_open.addr = mlx_get_data_addr(game->door_open.img, &t, &t, &t);
+	game->door_open.color = \
+		(int *)mlx_get_data_addr(game->door_open.img, &t, &t, &t);
 	game->door_open.width = width;
 	game->door_open.height = height;
 	return (SUCCESS);
