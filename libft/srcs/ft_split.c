@@ -6,13 +6,13 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 21:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/09/02 08:08:40 by roespici         ###   ########.fr       */
+/*   Updated: 2024/11/13 06:56:04 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int	ft_strlen_split(char *s, char c)
+static int	len_word(char *s, char c)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ int	ft_strlen_split(char *s, char c)
 	return (i);
 }
 
-int	ft_countstrings(char *s, char c)
+static int	countstrings(char *s, char c)
 {
 	size_t	i;
 	size_t	strings;
@@ -43,48 +43,30 @@ int	ft_countstrings(char *s, char c)
 	return (strings);
 }
 
-char	*ft_strdup_split(char *s, char c)
-{
-	size_t	i;
-	char	*dest;
-	size_t	wordlen;
-
-	i = 0;
-	wordlen = ft_strlen_split(s, c);
-	dest = ft_calloc(sizeof(char), (wordlen + 1));
-	if (!dest)
-		return (NULL);
-	while (i < wordlen)
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	return (dest);
-}
-
 char	**ft_split(char *s, char c)
 {
 	size_t		i;
 	int			j;
-	size_t		countstrings;
 	char		**splits;
+	int			length;
 
 	if (!s)
 		return (NULL);
 	i = 0;
 	j = -1;
-	countstrings = ft_countstrings(s, c);
-	splits = ft_calloc(sizeof(char *), (countstrings + 1));
+	splits = ft_calloc(sizeof(char *), (countstrings(s, c) + 1));
 	if (!splits)
 		return (NULL);
 	while (s[i])
 	{
 		while (s[i] && s[i] == c)
 			i++;
-		if (s[i])
-			splits[++j] = ft_strdup_split(s + i, c);
-		while (s[i] && s[i] != c)
-			i++;
+		if (s[i] && s[i] != c)
+		{
+			length = len_word(s, c);
+			splits[++j] = ft_substr(s, i, length);
+			i += length;
+		}
 	}
 	return (splits);
 }
