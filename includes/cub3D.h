@@ -45,7 +45,7 @@ int		rgb_to_int(int r, int g, int b);
 void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color);
 int		minimap_color(t_game *game, t_coord pos);
 //GAME/CONTROLS_UTILS
-void	check_move(t_game *game, int move);
+// void	check_move(t_game *game, int move);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS

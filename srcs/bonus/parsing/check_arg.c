@@ -4,19 +4,20 @@ static void	file_format(char *file);
 
 int	check_arg(int argc, char **argv)
 {
-	if (argc != 2)
+	if (argc > 2)
 	{
-		if (argc == 1)
-			ft_fprintf(STDERR_FILENO, "Error: there is 1 argument missing\n");
-		else if (argc == 3)
+		if (argc == 3)
 			ft_fprintf(STDERR_FILENO, ERR_ARG);
 		else
 			ft_fprintf(STDERR_FILENO, "Error: there are %d arguments" \
 			" more than expected\n", argc - 2);
 		exit(EXIT_FAILURE);
 	}
-	file_format(argv[1]);
-	open_map(argv[1]);
+	if (argc == 2)
+	{
+		file_format(argv[1]);
+		open_map(argv[1]);
+	}
 	return (SUCCESS);
 }
 
