@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -23,9 +23,8 @@ SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/free/free_map.c\
 		srcs/mandatory/game/character.c\
 		srcs/mandatory/game/colors.c\
-		srcs/mandatory/game/controls_utils.c\
 		srcs/mandatory/game/controls.c\
-		srcs/mandatory/game/floor_raycast.c\
+		srcs/mandatory/game/controls_utils.c\
 		srcs/mandatory/game/image.c\
 		srcs/mandatory/game/minimap.c\
 		srcs/mandatory/game/mouse_cam.c\
@@ -48,6 +47,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/controls.c\
 				srcs/bonus/game/controls_utils.c\
 				srcs/bonus/game/image.c\
+				srcs/bonus/game/launcher.c\
 				srcs/bonus/game/minimap.c\
 				srcs/bonus/game/mouse_cam.c\
 				srcs/bonus/game/movement_security.c\
@@ -142,6 +142,8 @@ fclean: clean
 
 re: fclean all
 
+rebonus: fclean bonus
+
 norme:
 	@echo "$(BLUE)Checking norminette in progress... ⌛"
 	@if norminette srcs includes libft > norme.tmp;\
@@ -151,4 +153,4 @@ norme:
 	fi
 	@$(RM) norme.tmp
 
-.PHONY: all bonus mlx clean fclean re norme
+.PHONY: all bonus mlx clean fclean re rebonus norme

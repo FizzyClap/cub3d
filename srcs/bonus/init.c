@@ -25,26 +25,31 @@ void	init_texture(t_texture *texture)
 	texture->ceiling_color = NULL;
 }
 
-void	init_game(t_game **game, t_texture *texture, t_map *map)
+void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 {
 	int		i;
 
-	*game = malloc(sizeof(t_game));
-	(*game)->win = NULL;
-	(*game)->texture = texture;
-	(*game)->map = map;
-	(*game)->raycast.img = NULL;
-	(*game)->minimap.img = NULL;
-	(*game)->player.cursor.img = NULL;
+	if (launcher == false)
+	{
+		game->win = NULL;
+		game->texture = texture;
+		game->map = map;
+	}
+	game->door_isopen = false;
+	game->raycast.img = NULL;
+	game->minimap.img = NULL;
+	game->player.cursor.img = NULL;
+	game->door.img = NULL;
+	game->door_open.img = NULL;
 	i = -1;
 	while (++i < 4)
-		(*game)->texture->image[i].img = NULL;
-	get_color(&(*game)->floor, (*game)->texture->floor_color);
-	get_color(&(*game)->ceiling, (*game)->texture->ceiling_color);
-	(*game)->ceiling.color = rgb_to_int((*game)->ceiling.r, \
-	(*game)->ceiling.g, (*game)->ceiling.b);
-	(*game)->floor.color = rgb_to_int((*game)->floor.r, \
-	(*game)->floor.g, (*game)->floor.b);
+		game->texture->image[i].img = NULL;
+	get_color(&game->floor, game->texture->floor_color);
+	get_color(&game->ceiling, game->texture->ceiling_color);
+	game->ceiling.color = rgb_to_int(game->ceiling.r, \
+	game->ceiling.g, game->ceiling.b);
+	game->floor.color = rgb_to_int(game->floor.r, \
+	game->floor.g, game->floor.b);
 }
 
 void	init_ray(t_ray *ray, t_game *game, double angle)

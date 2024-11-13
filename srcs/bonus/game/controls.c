@@ -35,12 +35,14 @@ int	keycode(int keycode, t_game *game)
 {
 	if (keycode == ESC)
 		close_game(game);
+	if (keycode == O)
+		game->door_isopen = ft_change_bool(game->door_isopen);
 	if (keycode == W || keycode == UP)
 		game->player.action[0] = 1;
-	if (keycode == A)
-		game->player.action[2] = 1;
 	if (keycode == S || keycode == DOWN)
 		game->player.action[1] = 1;
+	if (keycode == A)
+		game->player.action[2] = 1;
 	if (keycode == D)
 		game->player.action[3] = 1;
 	if (keycode == RIGHT)

@@ -20,9 +20,7 @@ void	raycasting(t_ray *ray, t_game *game)
 		calculate_wall_distance(ray);
 		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
-		loop.x ++;
-		draw_wall(game, ray, loop);
-		loop.x ++;
+		loop.x++;
 	}
 	free(ray);
 }
@@ -70,7 +68,8 @@ void	perform_dda(t_ray *ray, t_game *game)
 			ray->pos_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == '1')
+		if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == '1' || \
+			game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
 			hit = 1;
 	}
 }
@@ -85,13 +84,13 @@ void	calculate_wall_distance(t_ray *ray)
 
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
-	double			max_tex_step;
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
-	int				color;
-	int				height_correct;
-	t_texture_data	*tex;
+	double	max_tex_step;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		color;
+	int		height_correct;
+	t_image	*tex;
 
 	height_correct = game->player.h / ray->projected_dist;
 	line_height = (int)(SCREEN_HEIGHT / ray->projected_dist);

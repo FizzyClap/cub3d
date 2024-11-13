@@ -43,6 +43,7 @@
 # define S 115
 # define SPACE 32
 # define SHIFT 65505
+# define O 111
 //COLORS
 # define BLUE 0x000000FF
 # define RED 0x00FF0000

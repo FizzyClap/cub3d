@@ -44,9 +44,16 @@ typedef struct s_image
 	void	*img;
 	char	*addr;
 	int		*color;
+	int		width;
+	int		height;
+	int		x;
+	int		y;
 	int		bpp;
-	int		line_len;
 	int		endian;
+	int		line_len;
+	double	wall_x;
+	double	step;
+	double	pos;
 }	t_image;
 
 typedef struct s_texture_data
@@ -128,8 +135,17 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
+	void		*select;
+	char		*file;
+	bool		launcher_is_running;
+	bool		door_isopen;
 	t_image		minimap;
 	t_image		raycast;
+	t_image		ring;
+	t_image		balrog;
+	t_image		door_open;
+	t_image		door;
+	t_image		launcher;
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;

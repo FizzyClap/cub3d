@@ -15,7 +15,7 @@ void	raycasting(t_ray *ray, t_game *game)
 	loop.x = -1;
 	while (++loop.x < SCREEN_WIDTH)
 	{
-		ray_angle = (game->player.angle * CENT_PI) - FOV / 2 + \
+		ray_angle = (game->player.angle * 180 / PI) - FOV / 2 + \
 		FOV * (loop.x / (double)SCREEN_WIDTH);
 		init_ray(ray, game, ray_angle);
 		calculate_steps(ray);
@@ -85,11 +85,11 @@ static void	calculate_wall_distance(t_ray *ray)
 
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
-	int				line_height;
-	int				draw_start;
-	int				draw_end;
-	int				color;
-	t_texture_data	*tex;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		color;
+	t_image	*tex;
 
 	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
 	draw_start = (SCREEN_HEIGHT - line_height) / 2;

@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 12:39:37 by roespici          #+#    #+#             */
-/*   Updated: 2024/09/02 08:08:40 by roespici         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:59:37 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,9 @@ char	*ft_strtrim(char *s1, char *set)
 	while (start < end)
 		dest[i++] = s1[start++];
 	return (dest);
+}
+
+int	main()
+{
+	printf("%s\n", ft_strtrim("   xxx    xxx", " x"));
 }

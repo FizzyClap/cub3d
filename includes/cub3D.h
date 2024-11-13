@@ -17,11 +17,15 @@
 # include <stdlib.h>
 # include <string.h>
 # include <math.h>
+# include <limits.h>
 
+int		parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher);
+void	start_game(t_game *game, bool launcher);
+int		open_launcher(t_game *game);
 //INIT
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
-void	init_game(t_game **game, t_texture *texture, t_map *map);
+void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher);
 void	init_ray(t_ray *ray, t_game *game, double angle);
 double	deg_to_rad(double degrees);
 //DEBUG/PRINT
@@ -49,8 +53,6 @@ void	make_actions(t_game *game, t_ray *ray);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
-//GAME/FLOOR_RAYCAST
-
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP
@@ -71,7 +73,7 @@ void	move_left(t_game *game);
 void	move_right(t_game *game);
 //GAME/RAYCASTING_UTILS
 void	camera_angle_distortion(t_game *game, t_ray *ray);
-void	select_wall_texture(t_game *game, t_ray *ray, t_texture_data **tex);
+void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
 //GAME/RAYCASTING
 void	raycasting(t_ray *ray, t_game *game);
 void	perform_dda(t_ray *ray, t_game *game);
