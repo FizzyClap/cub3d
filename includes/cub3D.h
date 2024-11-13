@@ -52,8 +52,6 @@ void	make_actions(t_game *game, t_ray *ray);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
-//GAME/FLOOR_RAYCAST
-
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP

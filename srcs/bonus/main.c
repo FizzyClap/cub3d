@@ -18,6 +18,7 @@ int	main(int argc, char **argv)
 	else if (argc == 2)
 	{
 		init_game(game, texture, map, false);
+		game->file = argv[1];
 		start_game(game, false);
 	}
 	return (EXIT_SUCCESS);
@@ -130,5 +131,6 @@ static int	loop(t_game *game, t_ray *ray)
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
 		118, 118);
+	//mlx_put_image_to_window(game->mlx, game->win, game->balrog.img, 0, 0);
 	return (SUCCESS);
 }
