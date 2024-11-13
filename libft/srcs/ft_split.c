@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 21:31:52 by roespici          #+#    #+#             */
-/*   Updated: 2024/11/13 06:56:04 by roespici         ###   ########.fr       */
+/*   Updated: 2024/11/13 06:58:05 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**ft_split(char *s, char c)
 			i++;
 		if (s[i] && s[i] != c)
 		{
-			length = len_word(s, c);
+			length = len_word(s + i, c);
 			splits[++j] = ft_substr(s, i, length);
 			i += length;
 		}
