@@ -42,10 +42,6 @@ static void	free_image(t_game *game)
 		mlx_destroy_image(game->mlx, game->player.cursor.img);
 	if (game->balrog.img)
 		mlx_destroy_image(game->mlx, game->balrog.img);
-	if (game->launcher_moria.img)
-		mlx_destroy_image(game->mlx, game->launcher_moria.img);
-	if (game->launcher_morgul.img)
-		mlx_destroy_image(game->mlx, game->launcher_morgul.img);
 	if (game->launcher.img)
 		mlx_destroy_image(game->mlx, game->launcher.img);
 	if (game->door.img)

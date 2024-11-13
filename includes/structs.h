@@ -130,22 +130,11 @@ typedef struct s_game
 	t_image		door_open;
 	t_image		door;
 	t_image		launcher;
-	t_image		launcher_moria;
-	t_image		launcher_morgul;
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;
 	t_color		floor;
 	t_color		ceiling;
 }	t_game;
-
-typedef enum e_outcode
-{
-	INSIDE_SCREEN = 0b0000,
-	LEFT_SCREEN = 0b0001,
-	RIGHT_SCREEN = 0b0010,
-	BOTTOM_SCREEN = 0b0100,
-	TOP_SCREEN = 0b1000
-}	t_outcode;
 
 #endif

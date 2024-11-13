@@ -38,8 +38,6 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	game->door_isopen = false;
 	game->raycast.img = NULL;
 	game->minimap.img = NULL;
-	game->launcher_morgul.img = NULL;
-	game->launcher_moria.img = NULL;
 	game->player.cursor.img = NULL;
 	game->door.img = NULL;
 	game->door_open.img = NULL;
