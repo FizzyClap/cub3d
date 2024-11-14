@@ -71,22 +71,18 @@ static void	check_collision(t_game *game, double x, double y)
 	px = (int)(game->player.x);
 	if (x > game->player.x && \
 	game->map->lines[py]->content[(int)(x + RADIUS)] != '1' && \
-	!(game->map->lines[py]->content[(int)(x + RADIUS)] == 'D' && \
-	game->door_isopen == false))
+	!(game->map->lines[py]->content[(int)(x + RADIUS)] == 'D'))
 		game->player.x = x;
 	else if (x < game->player.x && \
 	game->map->lines[py]->content[(int)(x - RADIUS)] != '1' && \
-	!(game->map->lines[py]->content[(int)(x - RADIUS)] == 'D' && \
-	game->door_isopen == false))
+	!(game->map->lines[py]->content[(int)(x - RADIUS)] == 'D'))
 		game->player.x = x;
 	if (y > game->player.y && \
 	game->map->lines[(int)(y + RADIUS)]->content[px] != '1' && \
-	!(game->map->lines[(int)(y + RADIUS)]->content[px] == 'D' && \
-	game->door_isopen == false))
+	!(game->map->lines[(int)(y + RADIUS)]->content[px] == 'D'))
 		game->player.y = y;
 	else if (y < game->player.y && \
 	game->map->lines[(int)(y - RADIUS)]->content[px] != '1' && \
-	!(game->map->lines[(int)(y - RADIUS)]->content[px] == 'D' && \
-	game->door_isopen == false))
+	!(game->map->lines[(int)(y - RADIUS)]->content[px] == 'D'))
 		game->player.y = y;
 }

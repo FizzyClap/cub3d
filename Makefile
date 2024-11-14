@@ -44,8 +44,9 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/free/free_map.c\
 				srcs/bonus/game/character.c\
 				srcs/bonus/game/colors.c\
-				srcs/bonus/game/controls.c\
 				srcs/bonus/game/controls_utils.c\
+				srcs/bonus/game/controls.c\
+				srcs/bonus/game/doors.c\
 				srcs/bonus/game/image.c\
 				srcs/bonus/game/launcher.c\
 				srcs/bonus/game/minimap.c\

@@ -6,25 +6,12 @@ static int	load_doors_morgul(t_game *game);
 
 int	load_textures(t_game *game)
 {
-	//int	width;
-	//int	height;
-
 	if (load_walls(game) == FAILURE)
 		return (FAILURE);
 	if (!ft_strcmp(game->file, "maps/moria.cub") && load_doors_moria(game) == FAILURE)
 		return (FAILURE);
 	if (!ft_strcmp(game->file, "maps/morgul.cub") && load_doors_morgul(game) == FAILURE)
 		return (FAILURE);
-	//game->balrog.img = mlx_xpm_file_to_image(game->mlx, "textures/balrog.xpm", &width, &height);
-	//if (!game->balrog.img)
-	//	return (FAILURE);
-	//game->balrog.addr = mlx_get_data_addr(game->balrog.img, &game->balrog.bpp, &game->balrog.line_len, &game->balrog.endian);
-	//game->balrog.color = (int *)mlx_get_data_addr(game->balrog.img, &game->balrog.bpp, &game->balrog.line_len, &game->balrog.endian);
-	//game->ring.img = mlx_xpm_file_to_image(game->mlx, "textures/ring.xpm", &width, &height);
-	//if (!game->ring.img)
-	//	return (FAILURE);
-	//game->ring.addr = mlx_get_data_addr(game->ring.img, &game->ring.bpp, &game->ring.line_len, &game->ring.endian);
-	//game->ring.color = (int *)mlx_get_data_addr(game->ring.img, &game->ring.bpp, &game->ring.line_len, &game->ring.endian);
 	return (SUCCESS);
 }
 

@@ -13,6 +13,13 @@ typedef struct s_line
 	int		x;
 }	t_line;
 
+typedef struct s_doors
+{
+	int		x;
+	int		y;
+	bool	is_open;
+}	t_doors;
+
 typedef struct s_map
 {
 	bool	start_read;
@@ -122,7 +129,7 @@ typedef struct s_game
 	void		*select;
 	char		*file;
 	bool		launcher_is_running;
-	bool		door_isopen;
+	int			nb_doors;
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
@@ -135,6 +142,7 @@ typedef struct s_game
 	t_player	player;
 	t_color		floor;
 	t_color		ceiling;
+	t_doors		*doors;
 }	t_game;
 
 #endif

@@ -35,7 +35,9 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 		game->texture = texture;
 		game->map = map;
 	}
-	game->door_isopen = false;
+	init_doors(game);
+	game->balrog.img = NULL;
+	game->launcher.img = NULL;
 	game->raycast.img = NULL;
 	game->minimap.img = NULL;
 	game->player.cursor.img = NULL;

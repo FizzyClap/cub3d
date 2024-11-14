@@ -38,12 +38,22 @@ int	rgb_to_int(int r, int g, int b)
 
 int	minimap_color(t_game *game, t_coord pos)
 {
+	int	i;
+
+	i = -1;
 	if (pos.y > -1 && pos.x > -1 && pos.y < game->map->y && \
 	pos.x < game->map->lines[pos.y]->x)
 	{
-		if (game->map->lines[pos.y]->content[pos.x] == '1' || (game->map->lines\
-		[pos.y]->content[pos.x] == 'D' && game->door_isopen == false))
+		if (game->map->lines[pos.y]->content[pos.x] == '1')
 			return (*game->texture->image[NORTH].color);
+		else if (game->map->lines[pos.y]->content[pos.x] == 'D')
+		{
+			while (++i < game->nb_doors)
+				if (game->doors[i].y == pos.y && game->doors[i].x == pos.x && \
+				game->doors[i].is_open == false)
+					return (*game->texture->image[NORTH].color);
+			return (game->floor.color);
+		}
 		else
 			return (game->floor.color);
 	}

@@ -36,7 +36,7 @@ int	keycode(int keycode, t_game *game)
 	if (keycode == ESC)
 		close_game(game);
 	if (keycode == O)
-		game->door_isopen = ft_change_bool(game->door_isopen);
+		shoot_central_ray(game);
 	if (keycode == W || keycode == UP)
 		game->player.action[0] = 1;
 	if (keycode == S || keycode == DOWN)
