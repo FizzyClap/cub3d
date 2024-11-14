@@ -79,3 +79,16 @@ void	select_door_texture(t_game *game, t_ray *ray, t_image **tex)
 		}
 	}
 }
+
+bool	is_door_open(t_game *game, double x, double y)
+{
+	int	i;
+
+	i = -1;
+	while (++i < game->nb_doors)
+	{
+		if (game->doors[i].x == x && game->doors[i].y == y)
+			return (game->doors[i].is_open);
+	}
+	return (false);
+}

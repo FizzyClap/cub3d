@@ -57,6 +57,7 @@ void	move_div(t_game *game);
 void	init_doors(t_game *game);
 void	toggle_door(t_game *game, int y, int x);
 void	select_door_texture(t_game *game, t_ray *ray, t_image **tex);
+bool	is_door_open(t_game *game, double x, double y);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP
