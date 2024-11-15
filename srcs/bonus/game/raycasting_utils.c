@@ -12,10 +12,10 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 	ray->projected_dist = ray->wall_dist * cos(camera_angle);
 }
 
-void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
+void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex, double time)
 {
 	if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
-		select_door_texture(game, ray, tex);
+		select_door_texture(game, ray, tex, time);
 	else if (ray->side == 1 && ray->step_y < 0)
 		*tex = &game->texture->image[NORTH];
 	else if (ray->side == 1 && ray->step_y > 0)
@@ -34,11 +34,13 @@ void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 	(*tex)->x = (int)((*tex)->wall_x * (*tex)->width);
 }
 
-void	shoot_central_ray(t_game *game)
+void	shoot_ray_to_door(t_game *game)
 {
 	t_ray	ray;
+	int		mid_ray;
 
-	init_ray(&ray, game, ((game->player.angle * CENT_PI) - 30 + FOV * (870 / (double)SCREEN_WIDTH)));
+	mid_ray = (game->player.angle * CENT_PI) - 30 + FOV * (870 / (double)SCREEN_WIDTH);
+	init_ray(&ray, game, mid_ray);
 	calculate_steps(&ray);
 	perform_dda(&ray, game);
 	if (game->map->lines[(int)ray.pos_y]->content[(int)ray.pos_x] == 'D')

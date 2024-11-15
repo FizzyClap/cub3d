@@ -18,6 +18,9 @@ typedef struct s_doors
 	int		x;
 	int		y;
 	bool	is_open;
+	bool	is_animating;
+	int		current_frames;
+	double	start_animation;
 }	t_doors;
 
 typedef struct s_map
@@ -130,12 +133,16 @@ typedef struct s_game
 	char		*file;
 	bool		launcher_is_running;
 	int			nb_doors;
+	char		**moria;
+	char		**morgul;
+	long long	time;
+	int			total_frames;
+	int			frame;
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
 	t_image		balrog;
-	t_image		door_open;
-	t_image		door;
+	t_image		door[16];
 	t_image		launcher;
 	t_map		*map;
 	t_texture	*texture;

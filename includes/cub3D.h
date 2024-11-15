@@ -49,14 +49,14 @@ int		minimap_color(t_game *game, t_coord pos);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS
-void	make_actions(t_game *game, t_ray *ray);
+void	make_actions(t_game *game, t_ray *, double time);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
 //GAME/DOORS
 void	init_doors(t_game *game);
 void	toggle_door(t_game *game, int y, int x);
-void	select_door_texture(t_game *game, t_ray *ray, t_image **tex);
+void	select_door_texture(t_game *game, t_ray *ray, t_image **tex, double time);
 bool	is_door_open(t_game *game, double x, double y);
 //GAME/IMAGE
 int		load_textures(t_game *game);
@@ -78,10 +78,10 @@ void	move_left(t_game *game);
 void	move_right(t_game *game);
 //GAME/RAYCASTING_UTILS
 void	camera_angle_distortion(t_game *game, t_ray *ray);
-void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
-void	shoot_central_ray(t_game *game);
+void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex, double time);
+void	shoot_ray_to_door(t_game *game);
 //GAME/RAYCASTING
-void	raycasting(t_ray *ray, t_game *game);
+void	raycasting(t_ray *ray, t_game *game, double time);
 void	perform_dda(t_ray *ray, t_game *game);
 void	calculate_steps(t_ray *ray);
 void	calculate_wall_distance(t_ray *ray);
@@ -100,5 +100,6 @@ int		color_format(char *id, char *line);
 int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
+double	get_current_time(void);
 
 #endif

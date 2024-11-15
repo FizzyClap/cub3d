@@ -1,8 +1,8 @@
 #include "../includes/cub3D.h"
 
-void	make_actions(t_game *game, t_ray *ray)
+void	make_actions(t_game *game, t_ray *ray, double time)
 {
-	raycasting(ray, game);
+	raycasting(ray, game, time);
 	draw_minimap(game, game->raycast);
 	if (game->player.action[MOVEUP] == 1)
 		move_up(game);
@@ -36,7 +36,7 @@ int	keycode(int keycode, t_game *game)
 	if (keycode == ESC)
 		close_game(game);
 	if (keycode == O)
-		shoot_central_ray(game);
+		shoot_ray_to_door(game);
 	if (keycode == W || keycode == UP)
 		game->player.action[0] = 1;
 	if (keycode == S || keycode == DOWN)
