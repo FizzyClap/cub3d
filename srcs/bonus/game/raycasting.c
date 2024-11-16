@@ -22,8 +22,8 @@ void	raycasting(t_ray *ray, t_game *game)
 		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
 		loop.x++;
-		draw_wall(game, ray, loop);
-		loop.x++;
+		// draw_wall(game, ray, loop);
+		// loop.x++;
 	}
 	free(ray);
 }
