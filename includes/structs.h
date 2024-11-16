@@ -7,6 +7,29 @@ typedef struct s_coord
 	int	y;
 }	t_coord;
 
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}	t_vector;
+
+typedef struct s_new_ray
+{
+	t_vector	pos;
+	t_vector	dir;
+	t_vector	plane;
+	t_vector	side_dist;
+	t_vector	delta_dist;
+	t_coord		map;
+	t_coord		step;
+	double		perp_wall_dist;
+	int			hit;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+}	t_new_ray;
+
 typedef struct s_line
 {
 	char	*content;
@@ -87,6 +110,7 @@ typedef struct s_ray
 	int		side;
 	double	wall_dist;
 	double	angle;
+	int		end;
 }	t_ray;
 
 typedef struct s_player
