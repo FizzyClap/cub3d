@@ -124,8 +124,9 @@ void put_image_with_transparency(t_game *game, t_image image, int x_start, int y
 
 static int	loop(t_game *game, t_ray *ray)
 {
+	game->time = get_current_time();
 	move_div(game);
-	make_actions(game, ray, get_current_time());
+	make_actions(game, ray);
 	mouse_move(game);
 	jump(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);

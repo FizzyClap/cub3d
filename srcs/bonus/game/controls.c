@@ -1,8 +1,8 @@
 #include "../includes/cub3D.h"
 
-void	make_actions(t_game *game, t_ray *ray, double time)
+void	make_actions(t_game *game, t_ray *ray)
 {
-	raycasting(ray, game, time);
+	raycasting(ray, game);
 	draw_minimap(game, game->raycast);
 	if (game->player.action[MOVEUP] == 1)
 		move_up(game);

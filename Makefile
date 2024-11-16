@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 -O2 #-fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -O2 -fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -42,6 +42,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/free/free_game.c\
 				srcs/bonus/free/free_texture.c\
 				srcs/bonus/free/free_map.c\
+				srcs/bonus/game/animation.c\
 				srcs/bonus/game/character.c\
 				srcs/bonus/game/colors.c\
 				srcs/bonus/game/controls_utils.c\

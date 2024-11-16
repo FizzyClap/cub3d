@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include "../libft/include/libft.h"
+
 typedef struct s_coord
 {
 	int	x;
@@ -21,6 +23,7 @@ typedef struct s_doors
 	bool	is_animating;
 	int		current_frames;
 	double	start_animation;
+	int		texture_id;
 }	t_doors;
 
 typedef struct s_map
@@ -97,6 +100,7 @@ typedef struct s_ray
 	int		side;
 	double	wall_dist;
 	double	angle;
+	t_list	*alpha;
 }	t_ray;
 
 typedef struct s_player
@@ -122,7 +126,7 @@ typedef struct s_color
 	int	r;
 	int	g;
 	int	b;
-	int	color;
+	int	a;
 }	t_color;
 
 typedef struct s_game
@@ -135,9 +139,8 @@ typedef struct s_game
 	int			nb_doors;
 	char		**moria;
 	char		**morgul;
-	long long	time;
 	int			total_frames;
-	int			frame;
+	double		time;
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;

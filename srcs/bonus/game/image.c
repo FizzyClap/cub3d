@@ -56,6 +56,9 @@ static int	load_doors(t_game *game, char **map)
 
 	i = -1;
 	while (++i < game->total_frames)
+		game->door[i].img = NULL;
+	i = -1;
+	while (++i < game->total_frames)
 	{
 		game->door[i].img = mlx_xpm_file_to_image(game->mlx, map[i], &width, &height);
 		if (!game->door[i].img)
@@ -115,12 +118,4 @@ static char **create_morgul_tab(t_game *game)
 	game->morgul[17] = NULL;
 	game->total_frames = 17;
 	return (game->morgul);
-}
-
-double	get_current_time(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec + time.tv_usec / 1000000.0);
 }

@@ -1,13 +1,13 @@
 #include "../includes/cub3D.h"
 
-static void	draw_wall(t_game *game, t_ray *ray, t_coord loop, double time);
+static void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
 
-void	raycasting(t_ray *ray, t_game *game, double time)
+void	raycasting(t_ray *ray, t_game *game)
 {
 	t_coord	loop;
 	double	ray_angle;
 
-	draw_floor_ceiling(game, game->floor.color, game->ceiling.color);
+	draw_floor_ceiling(game, game->floor.a, game->ceiling.a);
 	ray = malloc(sizeof(t_ray));
 	loop.x = 0;
 	while (loop.x < SCREEN_WIDTH)
@@ -19,7 +19,7 @@ void	raycasting(t_ray *ray, t_game *game, double time)
 		perform_dda(ray, game);
 		calculate_wall_distance(ray);
 		camera_angle_distortion(game, ray);
-		draw_wall(game, ray, loop, time);
+		draw_wall(game, ray, loop);
 		loop.x++;
 	}
 	free(ray);
@@ -82,7 +82,7 @@ void	calculate_wall_distance(t_ray *ray)
 		ray->wall_dist = ray->side_dist_y - ray->delta_y;
 }
 
-static void	draw_wall(t_game *game, t_ray *ray, t_coord loop, double time)
+static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
 	double	max_tex_step;
 	int		line_height;
@@ -96,11 +96,9 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop, double time)
 	line_height = (int)(SCREEN_HEIGHT / ray->projected_dist);
 	draw_start = (SCREEN_HEIGHT - line_height + height_correct) / 2;
 	draw_end = (SCREEN_HEIGHT + line_height + height_correct) / 2;
-	select_wall_texture(game, ray, &tex, time);
+	select_wall_texture(game, ray, &tex);
 	max_tex_step = SCREEN_HEIGHT / ray->wall_dist;
 	tex->step = (double)tex->height / line_height;
-	// if (tex->step > max_tex_step)
-	// 	tex->step = max_tex_step;
 	tex->pos = (draw_start - 540 + (line_height - height_correct) / 2) * tex->step;
 	loop.y = draw_start - 1;
 	while (++loop.y < draw_end)

@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:02:12 by roespici          #+#    #+#             */
-/*   Updated: 2024/10/25 10:35:13 by roespici         ###   ########.fr       */
+/*   Updated: 2024/11/16 07:46:34 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}					t_list;
+}	t_list;
 
 int					ft_atoi(char *nptr);
 char				*ft_itoa(int nb);

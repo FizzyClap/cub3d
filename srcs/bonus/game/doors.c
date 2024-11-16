@@ -1,7 +1,6 @@
 #include "../includes/cub3D.h"
 
 static void	fill_struct_doors(t_game *game);
-t_image	*doors_animation(t_game *game, double time, int idx, int start);
 
 void	init_doors(t_game *game)
 {
@@ -69,7 +68,7 @@ void	toggle_door(t_game *game, int y, int x)
 	}
 }
 
-void	select_door_texture(t_game *game, t_ray *ray, t_image **tex, double time)
+void	select_door_texture(t_game *game, t_ray *ray, t_image **tex)
 {
 	int	i;
 	int	start;
@@ -84,7 +83,7 @@ void	select_door_texture(t_game *game, t_ray *ray, t_image **tex, double time)
 				start = 0;
 			else
 				start = game->total_frames;
-			*tex = doors_animation(game, time, i, start);
+			*tex = doors_animation(game, i, start);
 			break ;
 		}
 	}
@@ -101,30 +100,4 @@ bool	is_door_open(t_game *game, double x, double y)
 			return (game->doors[i].is_open);
 	}
 	return (false);
-}
-
-t_image	*doors_animation(t_game *game, double time, int idx, int start)
-{
-	int		current_frame;
-	double	elapsed_time;
-
-	elapsed_time = time - game->doors[idx].start_animation;
-	if (elapsed_time < 0)
-		elapsed_time = 0;
-	if (game->doors[idx].is_animating == false)
-	{
-		if (game->doors[idx].is_open == true)
-			return (&game->door[game->total_frames - 1]);
-		else
-			return (&game->door[0]);
-	}
-	current_frame = (int)(elapsed_time / 0.1);
-	if (current_frame >= game->total_frames)
-	{
-		current_frame = game->total_frames - 1;
-		game->doors[idx].is_animating = false;
-	}
-	if (start == 0)
-		current_frame = game->total_frames - 1 - current_frame;
-	return (&game->door[current_frame]);
 }

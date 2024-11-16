@@ -12,10 +12,10 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 	ray->projected_dist = ray->wall_dist * cos(camera_angle);
 }
 
-void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex, double time)
+void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
 	if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
-		select_door_texture(game, ray, tex, time);
+		select_door_texture(game, ray, tex);
 	else if (ray->side == 1 && ray->step_y < 0)
 		*tex = &game->texture->image[NORTH];
 	else if (ray->side == 1 && ray->step_y > 0)

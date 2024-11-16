@@ -46,11 +46,10 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 		game->texture->image[i].img = NULL;
 	get_color(&game->floor, game->texture->floor_color);
 	get_color(&game->ceiling, game->texture->ceiling_color);
-	game->ceiling.color = rgb_to_int(game->ceiling.r, \
+	game->ceiling.a = rgb_to_int(game->ceiling.r, \
 	game->ceiling.g, game->ceiling.b);
-	game->floor.color = rgb_to_int(game->floor.r, \
+	game->floor.a = rgb_to_int(game->floor.r, \
 	game->floor.g, game->floor.b);
-	game->frame = 0;
 }
 
 void	init_ray(t_ray *ray, t_game *game, double angle)
@@ -66,6 +65,7 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->side_dist_x = 0;
 	ray->side_dist_y = 0;
 	ray->angle = angle;
+	ray->alpha = NULL;
 }
 
 double	deg_to_rad(double degrees)
