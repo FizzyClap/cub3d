@@ -36,7 +36,6 @@ typedef struct s_map
 	int		start_x;
 	int		start_y;
 	int		y;
-	int		x_max;
 	int		count_start_pos;
 	char	orientation;
 }	t_map;
@@ -100,6 +99,10 @@ typedef struct s_ray
 	int		side;
 	double	wall_dist;
 	double	angle;
+	int		door_found;
+	double	door_x;
+	double	door_y;
+	int		end;
 	t_list	*alpha;
 }	t_ray;
 
@@ -145,7 +148,9 @@ typedef struct s_game
 	t_image		raycast;
 	t_image		ring;
 	t_image		balrog;
-	t_image		door[16];
+	t_image		door[20];
+	t_image		ceil;
+	t_image		floor_txt;
 	t_image		launcher;
 	t_map		*map;
 	t_texture	*texture;

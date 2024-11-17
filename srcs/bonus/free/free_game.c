@@ -46,7 +46,7 @@ static void	free_image(t_game *game)
 	if (game->launcher.img)
 		mlx_destroy_image(game->mlx, game->launcher.img);
 	i = -1;
-	while (++i < game->total_frames - 1)
+	while (++i < game->total_frames + 2)
 		if (game->door[i].img)
 			mlx_destroy_image(game->mlx, game->door[i].img);
 }

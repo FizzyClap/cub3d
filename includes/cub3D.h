@@ -61,6 +61,10 @@ void	init_doors(t_game *game);
 void	toggle_door(t_game *game, int y, int x);
 void	select_door_texture(t_game *game, t_ray *ray, t_image **tex);
 bool	is_door_open(t_game *game, double x, double y);
+//GAME/FLOORS_RAYCAST
+int		get_texture_color(t_image *texture, int tx, int ty);
+void	floor_raycast(t_game *game);
+void	ceil_raycast(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP

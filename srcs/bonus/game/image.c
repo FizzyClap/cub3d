@@ -44,6 +44,14 @@ static int	load_walls(t_game *game)
 		game->texture->image[i].width = width;
 		game->texture->image[i].height = height;
 	}
+	game->ring.img = mlx_xpm_file_to_image(game->mlx, "textures/ring.xpm",
+		&width, &height);
+	if (!game->ring.img)
+		return (FAILURE);
+	game->ring.color = \
+		(int *)mlx_get_data_addr(game->ring.img, &t, &t, &t);
+	game->ring.width = width;
+	game->ring.height = height;
 	return (SUCCESS);
 }
 
@@ -55,10 +63,10 @@ static int	load_doors(t_game *game, char **map)
 	int	i;
 
 	i = -1;
-	while (++i < game->total_frames)
+	while (++i < game->total_frames + 2)
 		game->door[i].img = NULL;
 	i = -1;
-	while (++i < game->total_frames)
+	while (++i < game->total_frames + 2)
 	{
 		game->door[i].img = mlx_xpm_file_to_image(game->mlx, map[i], &width, &height);
 		if (!game->door[i].img)
@@ -74,7 +82,7 @@ static int	load_doors(t_game *game, char **map)
 
 static char **create_moria_tab(t_game *game)
 {
-	game->moria = malloc(sizeof(char *) * 12);
+	game->moria = malloc(sizeof(char *) * 14);
 	if (!game->moria)
 		return (NULL);
 	game->moria[0] = "textures/doors/moria.xpm";
@@ -87,15 +95,17 @@ static char **create_moria_tab(t_game *game)
 	game->moria[7] = "textures/doors/moria(7).xpm";
 	game->moria[8] = "textures/doors/moria(8).xpm";
 	game->moria[9] = "textures/doors/moria(9).xpm";
-	game->moria[10] = "textures/doors/moria_open.xpm";
-	game->moria[11] = NULL;
+	game->moria[10] = "textures/doors/door_open_test.xpm";
+	game->moria[11] = "textures/moria_ceil.xpm";
+	game->moria[12] = "textures/moria_floor.xpm";
+	game->moria[13] = NULL;
 	game->total_frames = 11;
 	return (game->moria);
 }
 
 static char **create_morgul_tab(t_game *game)
 {
-	game->morgul = malloc(sizeof(char *) * 18);
+	game->morgul = malloc(sizeof(char *) * 20);
 	if (!game->morgul)
 		return (NULL);
 	game->morgul[0] = "textures/doors/morgul.xpm";
@@ -115,7 +125,9 @@ static char **create_morgul_tab(t_game *game)
 	game->morgul[14] = "textures/doors/morgul(14).xpm";
 	game->morgul[15] = "textures/doors/morgul(15).xpm";
 	game->morgul[16] = "textures/doors/morgul_open.xpm";
-	game->morgul[17] = NULL;
+	game->morgul[17] = "textures/morgul_ceil.xpm";
+	game->morgul[18] = "textures/morgul_floor.xpm";
+	game->morgul[19] = NULL;
 	game->total_frames = 17;
 	return (game->morgul);
 }

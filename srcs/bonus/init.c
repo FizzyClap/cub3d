@@ -8,7 +8,6 @@ void	init_map(t_map *map, char *file)
 	map->start_read = false;
 	map->end_read = false;
 	map->y = 0;
-	map->x_max = 0;
 	map->start_x = 0;
 	map->start_y = 0;
 	map->count_start_pos = 0;
@@ -66,6 +65,9 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->side_dist_y = 0;
 	ray->angle = angle;
 	ray->alpha = NULL;
+	ray->door_found = 0;
+	ray->door_x = 0;
+	ray->door_y = 0;
 }
 
 double	deg_to_rad(double degrees)

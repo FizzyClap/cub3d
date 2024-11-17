@@ -68,8 +68,6 @@ static void	create_line(t_map *map, char *line, int y, int fd)
 	map->lines[y] = malloc(sizeof(t_line));
 	map->lines[y]->content = ft_strdup(line);
 	map->lines[y]->x = ft_strlen(line) - 1;
-	if (map->x_max < map->lines[y]->x)
-		map->x_max = map->lines[y]->x;
 	free(line);
 }
 

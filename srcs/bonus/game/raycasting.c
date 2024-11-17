@@ -7,7 +7,9 @@ void	raycasting(t_ray *ray, t_game *game)
 	t_coord	loop;
 	double	ray_angle;
 
-	draw_floor_ceiling(game, game->floor.a, game->ceiling.a);
+	// draw_floor_ceiling(game, game->floor.color, game->ceiling.color);
+	floor_raycast(game);
+	ceil_raycast(game);
 	ray = malloc(sizeof(t_ray));
 	loop.x = 0;
 	while (loop.x < SCREEN_WIDTH)
@@ -51,7 +53,8 @@ void	calculate_steps(t_ray *ray)
 
 void	perform_dda(t_ray *ray, t_game *game)
 {
-	int	hit;
+	int		hit;
+	char	pos;
 
 	hit = 0;
 	while (!hit)
@@ -68,8 +71,8 @@ void	perform_dda(t_ray *ray, t_game *game)
 			ray->pos_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == '1' || \
-			game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
+		pos = game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x];
+		if (pos == '1' || pos == 'D')
 			hit = 1;
 	}
 }
@@ -84,7 +87,6 @@ void	calculate_wall_distance(t_ray *ray)
 
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
-	double	max_tex_step;
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
@@ -97,7 +99,6 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	draw_start = (SCREEN_HEIGHT - line_height + height_correct) / 2;
 	draw_end = (SCREEN_HEIGHT + line_height + height_correct) / 2;
 	select_wall_texture(game, ray, &tex);
-	max_tex_step = SCREEN_HEIGHT / ray->wall_dist;
 	tex->step = (double)tex->height / line_height;
 	tex->pos = (draw_start - 540 + (line_height - height_correct) / 2) * tex->step;
 	loop.y = draw_start - 1;
@@ -109,4 +110,5 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 			color = tex->color[tex->width * tex->y + tex->x];
 		my_mlx_pixel_put(game->raycast, loop.x, loop.y + game->player.z, color);
 	}
+	ray->end = draw_end;
 }
