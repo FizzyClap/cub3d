@@ -16,6 +16,8 @@ int	close_game(t_game *game)
 	free_character(game->player);
 	free_texture(game->texture);
 	free_map(game->map);
+	free(game->doors);
+	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);
 }
@@ -44,8 +46,8 @@ static void	free_image(t_game *game)
 		mlx_destroy_image(game->mlx, game->balrog.img);
 	if (game->launcher.img)
 		mlx_destroy_image(game->mlx, game->launcher.img);
-	if (game->door.img)
-		mlx_destroy_image(game->mlx, game->door.img);
-	if (game->door_open.img)
-		mlx_destroy_image(game->mlx, game->door_open.img);
+	i = -1;
+	while (++i < game->total_frames + 2)
+		if (game->door[i].img)
+			mlx_destroy_image(game->mlx, game->door[i].img);
 }

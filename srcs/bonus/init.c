@@ -8,7 +8,6 @@ void	init_map(t_map *map, char *file)
 	map->start_read = false;
 	map->end_read = false;
 	map->y = 0;
-	map->x_max = 0;
 	map->start_x = 0;
 	map->start_y = 0;
 	map->count_start_pos = 0;
@@ -31,24 +30,26 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 
 	if (launcher == false)
 	{
+		game->launcher_is_running = false;
 		game->win = NULL;
 		game->texture = texture;
 		game->map = map;
+		struct_game_sound(game);
 	}
-	game->door_isopen = false;
+	init_doors(game);
+	game->balrog.img = NULL;
+	game->launcher.img = NULL;
 	game->raycast.img = NULL;
 	game->minimap.img = NULL;
 	game->player.cursor.img = NULL;
-	game->door.img = NULL;
-	game->door_open.img = NULL;
 	i = -1;
 	while (++i < 4)
 		game->texture->image[i].img = NULL;
 	get_color(&game->floor, game->texture->floor_color);
 	get_color(&game->ceiling, game->texture->ceiling_color);
-	game->ceiling.color = rgb_to_int(game->ceiling.r, \
+	game->ceiling.a = rgb_to_int(game->ceiling.r, \
 	game->ceiling.g, game->ceiling.b);
-	game->floor.color = rgb_to_int(game->floor.r, \
+	game->floor.a = rgb_to_int(game->floor.r, \
 	game->floor.g, game->floor.b);
 }
 

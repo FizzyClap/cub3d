@@ -50,6 +50,8 @@ int		close_game(t_game *game);
 void	free_map(t_map *map);
 //FREE/FREE_TEXTURE
 void	free_texture(t_texture *texture);
+//GAME/ANIMATION
+t_image	*doors_animation(t_game *game, int idx, int start);
 //GAME/CHARACTER
 void	player_init(t_game *game);
 //GAME/COLORS
@@ -57,15 +59,25 @@ void	get_color(t_color *type, char *path);
 int		rgb_to_int(int r, int g, int b);
 void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color);
 int		minimap_color(t_game *game, t_coord pos);
+t_color	get_alpha_blended_color(t_color prev, t_color new);
 //GAME/CONTROLS_UTILS
 // void	check_move(t_game *game, int move);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS
-void	make_actions(t_game *game, t_ray *ray);
+void	make_actions(t_game *game, t_ray *);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
+//GAME/DOORS
+void	init_doors(t_game *game);
+void	toggle_door(t_game *game, int y, int x);
+void	select_door_texture(t_game *game, t_ray *ray, t_image **tex);
+bool	is_door_open(t_game *game, double x, double y);
+//GAME/FLOORS_RAYCAST
+int		get_texture_color(t_image *texture, int tx, int ty);
+void	floor_raycast(t_game *game);
+void	ceil_raycast(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/MINIMAP
@@ -87,6 +99,7 @@ void	move_right(t_game *game);
 //GAME/RAYCASTING_UTILS
 void	camera_angle_distortion(t_game *game, t_ray *ray);
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
+void	shoot_ray_to_door(t_game *game);
 //GAME/RAYCASTING
 void	raycasting(t_ray *ray, t_game *game);
 void	perform_dda(t_ray *ray, t_game *game);
@@ -107,5 +120,10 @@ int		color_format(char *id, char *line);
 int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
-
+double	get_current_time(void);
+void	sound(t_game *game);
+void	init_sound(void);
+void	free_sound(t_game *game);
+void	struct_game_sound(t_game *game);
+void	init_sound_effects(t_game *game);
 #endif

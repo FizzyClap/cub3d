@@ -1,6 +1,10 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include "../libft/include/libft.h"
+# include "../sound/SDL2/include/SDL.h"
+# include "../sound/SDL2_mixer/include/SDL_mixer.h"
+# include "../sound/SDL2_mixer/src/codecs/music_wav.h"
 typedef struct s_coord
 {
 	int	x;
@@ -36,6 +40,17 @@ typedef struct s_line
 	int		x;
 }	t_line;
 
+typedef struct s_doors
+{
+	int		x;
+	int		y;
+	bool	is_open;
+	bool	is_animating;
+	int		current_frames;
+	double	start_animation;
+	int		texture_id;
+}	t_doors;
+
 typedef struct s_map
 {
 	bool	start_read;
@@ -46,7 +61,6 @@ typedef struct s_map
 	int		start_x;
 	int		start_y;
 	int		y;
-	int		x_max;
 	int		count_start_pos;
 	char	orientation;
 }	t_map;
@@ -137,8 +151,17 @@ typedef struct s_color
 	int	r;
 	int	g;
 	int	b;
-	int	color;
+	int	a;
 }	t_color;
+
+typedef struct s_music
+{
+	Mix_Music	*launcher;
+	Mix_Music	*moria;
+	Mix_Music	*morgul;
+	Mix_Chunk	*door;
+	Mix_Chunk	*step;
+}	t_music;
 
 typedef struct s_game
 {
@@ -147,19 +170,26 @@ typedef struct s_game
 	void		*select;
 	char		*file;
 	bool		launcher_is_running;
-	bool		door_isopen;
+	int			nb_doors;
+	char		**moria;
+	char		**morgul;
+	int			total_frames;
+	double		time;
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
 	t_image		balrog;
-	t_image		door_open;
-	t_image		door;
+	t_image		door[20];
+	t_image		ceil;
+	t_image		floor_txt;
 	t_image		launcher;
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;
 	t_color		floor;
 	t_color		ceiling;
+	t_doors		*doors;
+	t_music		*music;
 }	t_game;
 
 #endif

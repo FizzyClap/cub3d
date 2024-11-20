@@ -19,6 +19,7 @@ int	main(int argc, char **argv)
 	{
 		init_game(game, texture, map, false);
 		game->file = argv[1];
+		init_sound();
 		start_game(game, false);
 	}
 	return (EXIT_SUCCESS);
@@ -29,7 +30,8 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	if (check_arg(argc, argv) == FAILURE)
 		return (FAILURE);
 	if (argc == 2)
-		parse_texture_and_map(texture, map, argv[1], false);
+		if (parse_texture_and_map(texture, map, argv[1], false) == FAILURE)
+			return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -72,6 +74,8 @@ void	start_game(t_game *game, bool launcher)
 		close_game(game);
 	}
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	init_sound_effects(game);
+	sound(game);
 	player_init(game);
 	minimap(game);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
@@ -86,44 +90,9 @@ void	start_game(t_game *game, bool launcher)
 	mlx_loop(game->mlx);
 }
 
-//static void	clear_image(char *address, int height, int width, int color)
-//{
-//	int		*image_data;
-//	int		pixels;
-//	int		i;
-
-//	image_data = (int *)address;
-//	pixels = height * width;
-//	i = -1;
-//	while (++i < pixels)
-//		image_data[i] = color;
-//}
-
-void put_image_with_transparency(t_game *game, t_image image, int x_start, int y_start)
-{
-	int	x;
-	int	y;
-	int	color;
-	int	offset;
-
-	y = -1;
-	while (++y < 180)
-	{
-		x = -1;
-		while (++x < 180)
-		{
-			// Calculer l'adresse du pixel dans la minimap
-			offset = y * image.line_len + x * (image.bpp / 8);
-			color = *(int *)(image.addr + offset);
-			// Vérifier si le pixel est différent de la couleur de "transparence"
-			if (color != 0xFF00FF) // Si ce n'est pas magenta
-				mlx_pixel_put(game->mlx, game->win, x_start + x, y_start + y, color);
-		}
-	}
-}
-
 static int	loop(t_game *game, t_ray *ray)
 {
+	game->time = get_current_time();
 	move_div(game);
 	make_actions(game, ray);
 	mouse_move(game);

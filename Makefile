@@ -1,12 +1,14 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -O2 -g3 #-fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -O2 #-fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 MLX_PATH = ./mlx
 MLX_FLAGS = -L$(MLX_PATH) -lmlx -lbsd -lXext -lX11 -lm
+SDL_PATH = ./sound
+SDL_FLAGS = -L$(SDL_PATH)/SDL2/build/.libs -L$(SDL_PATH)/SDL2_mixer/build/.libs -lSDL2 -lSDL2_mixer -I./$(SDL_PATH)/SDL2/include -I./$(SDL_PATH)/SDL2_mixer/include
 LDFLAGS = $(LIBFT_FLAGS) $(MLX_FLAGS)
 INCLUDES = -I./includes -I$(LIBFT_PATH)/includes
 RM = rm -rf
@@ -14,6 +16,7 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 BLUE = \033[38;5;153m
 NC = \033[0m
+CMD_TO_EXPORT= export LD_LIBRARY_PATH=$(pwd)/sound/SDL2/build/.libs:$(pwd)/sound/SDL2_mixer/build/.libs:$LD_LIBRARY_PATH
 
 SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/init.c\
@@ -42,10 +45,13 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/free/free_game.c\
 				srcs/bonus/free/free_texture.c\
 				srcs/bonus/free/free_map.c\
+				srcs/bonus/game/animation.c\
 				srcs/bonus/game/character.c\
 				srcs/bonus/game/colors.c\
-				srcs/bonus/game/controls.c\
 				srcs/bonus/game/controls_utils.c\
+				srcs/bonus/game/controls.c\
+				srcs/bonus/game/doors.c\
+				srcs/bonus/game/floor_raycast.c\
 				srcs/bonus/game/image.c\
 				srcs/bonus/game/launcher.c\
 				srcs/bonus/game/minimap.c\
@@ -54,7 +60,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/moves.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
-				srcs/bonus/game/floor_raycast.c\
+				srcs/bonus/game/sound.c\
 				srcs/bonus/parsing/check_arg.c\
 				srcs/bonus/parsing/check_texture.c\
 				srcs/bonus/parsing/check_map.c\
@@ -77,7 +83,7 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(RM) errors.tmp
 
 $(NAME_BONUS): $(LIBFT) $(OBJS_BONUS)
-	@$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(LDFLAGS) $(INCLUDES)
+	@$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(LDFLAGS) $(SDL_FLAGS) $(INCLUDES)
 	@echo "\033[1A\033[2K\033[1A"
 	@echo "│$(GREEN) Compilation of $(NAME_BONUS) completed ✓ $(NC)      │"
 	@echo "└──────────────────────────────────────────────┘"
@@ -120,6 +126,22 @@ mlx:
 	@echo "│$(GREEN) Compilation of mlx completed ✓ $(NC)	       │"
 	@echo "└──────────────────────────────────────────────┘"
 
+sdl:
+	@cd sound && wget https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-2.28.5.tar.gz > /dev/null 2>&1
+	@cd sound && tar -xvf SDL2-2.28.5.tar.gz > /dev/null 2>&1 && rm -rf SDL2-2.28.5.tar.gz
+	@cd sound && mv SDL2-2.28.5 SDL2
+	@echo "$(BLUE)Compiling SDL2 in progress..."
+	@cd sound/SDL2 && ./configure > /dev/null 2>&1 && make -s > /dev/null 2>&1 || \
+	{ echo "$(RED)Compiling SDL2 failed, FF."; exit 1; }
+	@echo "$(GREEN)Compilation of SDL2 completed!"
+	@cd sound && wget https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.8.0/SDL2_mixer-2.8.0.tar.gz > /dev/null 2>&1
+	@cd sound && tar -xvf SDL2_mixer-2.8.0.tar.gz > /dev/null 2>&1 && rm -rf SDL2_mixer-2.8.0.tar.gz
+	@cd sound && mv SDL2_mixer-2.8.0 SDL2_mixer
+	@echo "$(BLUE)Compiling SDL2 Mixer in progress..."
+	@cd sound/SDL2_mixer && ./configure > /dev/null 2>&1 && make -s > /dev/null 2>&1 || \
+	{ echo "$(RED)Compiling SDL2 Mixer failed, FF."; exit 1; }
+	@echo "$(GREEN)Compilation of SDL2 Mixer completed!"
+
 clean:
 	@echo "$(NC)┌─────clean $(NAME)──────────────────────────────┐"
 	@echo "│$(BLUE) Cleaning $(NAME) objects in progress... ⌛$(NC)     │"
@@ -154,4 +176,4 @@ norme:
 	fi
 	@$(RM) norme.tmp
 
-.PHONY: all bonus mlx clean fclean re rebonus norme
+.PHONY: all bonus mlx sdl path clean fclean re rebonus norme

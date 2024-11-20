@@ -10,7 +10,6 @@ void	init_map(t_map *map, char *file)
 	map->start_read = false;
 	map->end_read = false;
 	map->y = 0;
-	map->x_max = 0;
 	map->start_x = 0;
 	map->start_y = 0;
 	map->count_start_pos = 0;
@@ -43,9 +42,9 @@ void	init_game(t_game **game, t_texture *texture, t_map *map)
 		(*game)->texture->image[i].img = NULL;
 	get_color(&(*game)->floor, (*game)->texture->floor_color);
 	get_color(&(*game)->ceiling, (*game)->texture->ceiling_color);
-	(*game)->ceiling.color = rgb_to_int((*game)->ceiling.r, \
+	(*game)->ceiling.a = rgb_to_int((*game)->ceiling.r, \
 	(*game)->ceiling.g, (*game)->ceiling.b);
-	(*game)->floor.color = rgb_to_int((*game)->floor.r, \
+	(*game)->floor.a = rgb_to_int((*game)->floor.r, \
 	(*game)->floor.g, (*game)->floor.b);
 }
 

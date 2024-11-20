@@ -54,7 +54,8 @@ void	calculate_steps(t_ray *ray)
 
 void	perform_dda(t_ray *ray, t_game *game)
 {
-	int	hit;
+	int		hit;
+	char	pos;
 
 	hit = 0;
 	while (!hit)
@@ -71,8 +72,8 @@ void	perform_dda(t_ray *ray, t_game *game)
 			ray->pos_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == '1' || \
-			game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
+		pos = game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x];
+		if (pos == '1' || pos == 'D')
 			hit = 1;
 	}
 }
@@ -102,8 +103,6 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	select_wall_texture(game, ray, &tex);
 	// max_tex_step = SCREEN_HEIGHT / ray->wall_dist;
 	tex->step = (double)tex->height / line_height;
-	// if (tex->step > max_tex_step)
-	// 	tex->step = max_tex_step;
 	tex->pos = (draw_start - 540 + (line_height - height_correct) / 2) * tex->step;
 	loop.y = draw_start - 1;
 	while (++loop.y < draw_end)
@@ -114,6 +113,7 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 			color = tex->color[tex->width * tex->y + tex->x];
 		my_mlx_pixel_put(game->raycast, loop.x, loop.y + game->player.z, color);
 	}
+	ray->end = draw_end;
 	ray->end = draw_end;
 }
 
