@@ -16,6 +16,7 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 BLUE = \033[38;5;153m
 NC = \033[0m
+CMD_TO_EXPORT= export LD_LIBRARY_PATH=$(pwd)/sound/SDL2/build/.libs:$(pwd)/sound/SDL2_mixer/build/.libs:$LD_LIBRARY_PATH
 
 SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/init.c\
