@@ -127,6 +127,7 @@ typedef struct s_player
 	double	d_y;
 	double	speed;
 	double	angle;
+	double	initial_angle;
 	t_ray	*cross_ray;
 	t_image	cursor;
 }	t_player;
