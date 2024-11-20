@@ -58,6 +58,7 @@ void	toggle_door(t_game *game, int y, int x)
 		{
 			if (game->doors[i].is_animating == false)
 			{
+				Mix_PlayChannel(-1, game->music->door, 0);
 				game->doors[i].is_open = ft_change_bool(game->doors[i].is_open);
 				game->doors[i].is_animating = true;
 				game->doors[i].current_frames = 0;

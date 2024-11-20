@@ -19,6 +19,7 @@ int	main(int argc, char **argv)
 	{
 		init_game(game, texture, map, false);
 		game->file = argv[1];
+		init_sound();
 		start_game(game, false);
 	}
 	return (EXIT_SUCCESS);
@@ -73,6 +74,8 @@ void	start_game(t_game *game, bool launcher)
 		close_game(game);
 	}
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	init_sound_effects(game);
+	sound(game);
 	player_init(game);
 	minimap(game);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);

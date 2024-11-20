@@ -30,9 +30,11 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 
 	if (launcher == false)
 	{
+		game->launcher_is_running = false;
 		game->win = NULL;
 		game->texture = texture;
 		game->map = map;
+		struct_game_sound(game);
 	}
 	init_doors(game);
 	game->balrog.img = NULL;
@@ -64,10 +66,6 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->side_dist_x = 0;
 	ray->side_dist_y = 0;
 	ray->angle = angle;
-	ray->alpha = NULL;
-	ray->door_found = 0;
-	ray->door_x = 0;
-	ray->door_y = 0;
 }
 
 double	deg_to_rad(double degrees)

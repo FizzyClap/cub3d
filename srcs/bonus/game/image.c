@@ -44,14 +44,14 @@ static int	load_walls(t_game *game)
 		game->texture->image[i].width = width;
 		game->texture->image[i].height = height;
 	}
-	game->ring.img = mlx_xpm_file_to_image(game->mlx, "textures/ring.xpm",
-		&width, &height);
-	if (!game->ring.img)
-		return (FAILURE);
-	game->ring.color = \
-		(int *)mlx_get_data_addr(game->ring.img, &t, &t, &t);
-	game->ring.width = width;
-	game->ring.height = height;
+	//game->ring.img = mlx_xpm_file_to_image(game->mlx, "textures/ring.xpm",
+	//	&width, &height);
+	//if (!game->ring.img)
+	//	return (FAILURE);
+	//game->ring.color = \
+	//	(int *)mlx_get_data_addr(game->ring.img, &t, &t, &t);
+	//game->ring.width = width;
+	//game->ring.height = height;
 	return (SUCCESS);
 }
 

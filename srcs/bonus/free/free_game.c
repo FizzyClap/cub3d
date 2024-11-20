@@ -17,6 +17,7 @@ int	close_game(t_game *game)
 	free_texture(game->texture);
 	free_map(game->map);
 	free(game->doors);
+	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);
 }

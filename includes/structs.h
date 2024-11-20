@@ -2,7 +2,9 @@
 # define STRUCTS_H
 
 # include "../libft/include/libft.h"
-
+# include "../sound/SDL2/include/SDL.h"
+# include "../sound/SDL2_mixer/include/SDL_mixer.h"
+# include "../sound/SDL2_mixer/src/codecs/music_wav.h"
 typedef struct s_coord
 {
 	int	x;
@@ -99,11 +101,7 @@ typedef struct s_ray
 	int		side;
 	double	wall_dist;
 	double	angle;
-	int		door_found;
-	double	door_x;
-	double	door_y;
 	int		end;
-	t_list	*alpha;
 }	t_ray;
 
 typedef struct s_player
@@ -132,6 +130,15 @@ typedef struct s_color
 	int	a;
 }	t_color;
 
+typedef struct s_music
+{
+	Mix_Music	*launcher;
+	Mix_Music	*moria;
+	Mix_Music	*morgul;
+	Mix_Chunk	*door;
+	Mix_Chunk	*step;
+}	t_music;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -158,6 +165,7 @@ typedef struct s_game
 	t_color		floor;
 	t_color		ceiling;
 	t_doors		*doors;
+	t_music		*music;
 }	t_game;
 
 #endif

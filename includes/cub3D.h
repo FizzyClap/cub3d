@@ -108,5 +108,9 @@ int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
 double	get_current_time(void);
-
+void	sound(t_game *game);
+void	init_sound(void);
+void	free_sound(t_game *game);
+void	struct_game_sound(t_game *game);
+void	init_sound_effects(t_game *game);
 #endif
