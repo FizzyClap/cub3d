@@ -37,6 +37,12 @@ int	keycode(int keycode, t_game *game)
 		close_game(game);
 	if (keycode == O)
 		shoot_ray_to_door(game);
+	if (keycode == R)
+	{
+		Mix_PlayChannel(-1, game->music->weapon, 0);
+		SDL_Delay(1000);
+		Mix_PlayChannel(-1, game->music->hit, 0);
+	}
 	if (keycode == W || keycode == UP)
 		game->player.action[0] = 1;
 	if (keycode == S || keycode == DOWN)

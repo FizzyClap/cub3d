@@ -137,6 +137,8 @@ typedef struct s_music
 	Mix_Music	*morgul;
 	Mix_Chunk	*door;
 	Mix_Chunk	*step;
+	Mix_Chunk	*weapon;
+	Mix_Chunk	*hit;
 }	t_music;
 
 typedef struct s_game
@@ -155,7 +157,7 @@ typedef struct s_game
 	t_image		raycast;
 	t_image		ring;
 	t_image		balrog;
-	t_image		door[20];
+	t_image		*door;
 	t_image		ceil;
 	t_image		floor_txt;
 	t_image		launcher;

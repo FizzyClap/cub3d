@@ -63,6 +63,10 @@ void	free_sound(t_game *game)
 		Mix_FreeMusic(game->music->morgul);
 	if (game->music->door)
 		Mix_FreeChunk(game->music->door);
+	if (game->music->step)
+		Mix_FreeChunk(game->music->step);
+	if (game->music->hit)
+		Mix_FreeChunk(game->music->hit);
 	if (game->music)
 		free(game->music);
 	Mix_CloseAudio();
@@ -76,6 +80,9 @@ void	init_sound_effects(t_game *game)
 		game->music->door = Mix_LoadWAV("sound/harrow.wav");
 		if (!game->music->door)
 			error_sdl("Error: Door chunk\n", NULL);
+		game->music->step = Mix_LoadWAV("sound/footstep.wav");
+		if (!game->music->step)
+			error_sdl("Error: Step chunk\n", NULL);
 	}
 	if (ft_strcmp(game->file, "maps/moria.cub") == 0)
 	{
@@ -83,8 +90,14 @@ void	init_sound_effects(t_game *game)
 		if (!game->music->door)
 			error_sdl("Error: Door chunk\n", NULL);
 		game->music->step = Mix_LoadWAV("sound/balrogstep.wav");
-		if (!game->music->door)
+		if (!game->music->step)
 			error_sdl("Error: Step chunk\n", NULL);
+		game->music->weapon = Mix_LoadWAV("sound/whip.wav");
+		if (!game->music->weapon)
+			error_sdl("Error: Weapon chunk\n", NULL);
+		game->music->hit = Mix_LoadWAV("sound/hit.wav");
+		if (!game->music->hit)
+			error_sdl("Error: Hit chunk\n", NULL);
 	}
 }
 
@@ -98,4 +111,6 @@ void	struct_game_sound(t_game *game)
 	game->music->morgul = NULL;
 	game->music->door = NULL;
 	game->music->step = NULL;
+	game->music->weapon = NULL;
+	game->music->hit = NULL;
 }

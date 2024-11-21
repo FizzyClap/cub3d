@@ -5,8 +5,8 @@ static void		cam_z(t_game *game, int y);
 
 void	mouse_move(t_game *game)
 {
-	int			x;
-	int			y;
+	int	x;
+	int	y;
 
 	x = 960;
 	y = 540;

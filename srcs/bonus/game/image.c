@@ -44,14 +44,6 @@ static int	load_walls(t_game *game)
 		game->texture->image[i].width = width;
 		game->texture->image[i].height = height;
 	}
-	//game->ring.img = mlx_xpm_file_to_image(game->mlx, "textures/ring.xpm",
-	//	&width, &height);
-	//if (!game->ring.img)
-	//	return (FAILURE);
-	//game->ring.color = \
-	//	(int *)mlx_get_data_addr(game->ring.img, &t, &t, &t);
-	//game->ring.width = width;
-	//game->ring.height = height;
 	return (SUCCESS);
 }
 
@@ -62,6 +54,9 @@ static int	load_doors(t_game *game, char **map)
 	int	t;
 	int	i;
 
+	game->door = malloc(sizeof(t_image) * (game->total_frames + 2));
+	if (!game->door)
+		return (FAILURE);
 	i = -1;
 	while (++i < game->total_frames + 2)
 		game->door[i].img = NULL;

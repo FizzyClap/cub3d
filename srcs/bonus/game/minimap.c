@@ -5,9 +5,12 @@ static t_coord	get_max(t_game *game, t_coord coord);
 
 void	minimap(t_game *game)
 {
+	int	t;
+
 	game->minimap.img = mlx_new_image(game->mlx, MMW, MMH);
-	game->minimap.addr = mlx_get_data_addr(game->minimap.img, &game->\
-	minimap.bpp, &game->minimap.line_len, &game->minimap.endian);
+	game->minimap.addr = mlx_get_data_addr(game->minimap.img, &t, &t, &t);
+	game->ring.img = mlx_new_image(game->mlx, MMW, MMH);
+	game->ring.addr = mlx_get_data_addr(game->ring.img, &t, &t, &t);
 	draw_minimap(game, game->minimap);
 }
 
