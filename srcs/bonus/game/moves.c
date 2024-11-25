@@ -14,7 +14,6 @@ void	move_up(t_game *game)
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
-
 }
 
 void	move_down(t_game *game)

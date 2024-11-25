@@ -8,80 +8,104 @@ int get_texture_color(t_image *texture, int tx, int ty)
 	return texture->color[index];
 }
 
-static double	rectify_angle(double angle)
-{
-	if (angle > 2 * PI)
-		return (angle - 2 * PI);
-	else if (angle < 0)
-		return (angle + 2 * PI);
-	else
-		return (angle);
-}
+// static double	rectify_angle(double angle)
+// {
+// 	if (angle > 2 * PI)
+// 		return (angle - 2 * PI);
+// 	else if (angle < 0)
+// 		return (angle + 2 * PI);
+// 	else
+// 		return (angle);
+// }
 
 void floor_raycast(t_game *game)
 {
-	t_image *floorTexture = &game->texture->image[NORTH];  // Texture du sol
+    t_image *floorTexture = &game->door[game->total_frames + 1];  // Texture du sol
 
-	// Calcul des directions initiales des rayons
-	double rayDirX0 = -cos(game->player.angle) + sin(game->player.angle);
-	double rayDirY0 = sin(game->player.angle) + cos(game->player.angle);
-	double rayDirX1 = -cos(game->player.angle) - sin(game->player.angle);
-	double rayDirY1 = sin(game->player.angle) - cos(game->player.angle);
+    // Calcul des directions initiales des rayons
+    double rayDirX0 = -cos(game->player.angle) + sin(game->player.angle);
+    double rayDirY0 = sin(game->player.angle) + cos(game->player.angle);
+    double rayDirX1 = -cos(game->player.angle) - sin(game->player.angle);
+    double rayDirY1 = sin(game->player.angle) - cos(game->player.angle);
 
-	// Variables pour l'incrémentation des coordonnées du sol
-	double floorX, floorY;
-	double floorStepX, floorStepY;
+    // Variables pour l'incrémentation des coordonnées du sol
+    double floorX, floorY;
+    double floorStepX, floorStepY;
 
-	for (int y = SCREEN_HEIGHT / 2 + game->player.z; y < SCREEN_HEIGHT; y++)
-	{
-		// Calcul des distances pour le sol
-		double dy = y - SCREEN_HEIGHT / 2.0 - game->player.z;
-		double rowDistance = rectify_angle((SCREEN_HEIGHT / (2.0 * dy)));  // Distance en fonction de y
-		floorStepX = rowDistance * (rayDirX1 - rayDirX0) / SCREEN_WIDTH;
-		floorStepY = rowDistance * (rayDirY1 - rayDirY0) / SCREEN_WIDTH;
+    // Position du joueur (sans prendre en compte le mouvement sur l'axe X pour le sol)
+    double centerX = game->player.x;  // Position du joueur en X
+    double centerY = game->player.y;  // Position du joueur en Y
 
-		// Position de départ des coordonnées du sol/plafond
-		floorX = rectify_angle(game->player.x + rowDistance * rayDirX0);
-		floorY = rectify_angle(game->player.y + rowDistance * rayDirY0);
+    // Calcul du décalage en X de la texture (proportionnel à la position du joueur en X)
+    // double offsetX = centerX - (int)centerX; // Ajuster ce facteur selon l'effet désiré
 
-		// Calcul du centre de la texture
-		double cx = floorTexture->width / 2.0;
-		double cy = floorTexture->height / 2.0;
+    // Boucle pour dessiner chaque ligne du sol, à partir du bas de l'écran
+    for (int y = SCREEN_HEIGHT / 2 + game->player.z; y < SCREEN_HEIGHT; y++)
+    {
+        double dy = y - SCREEN_HEIGHT / 2.0 - game->player.z;  // Distance verticale du rayon
+        double rowDistance = SCREEN_HEIGHT / (2.0 * dy);  // Calcul de la distance pour chaque ligne
 
-		// Application des textures pour chaque colonne de l'écran
-		for (int x = 0; x < SCREEN_WIDTH; ++x)
-		{
-			// Coordonnées de la texture pour le sol avant rotation
-			int tx = (int)(floorX * floorTexture->width) % floorTexture->width;
-			int ty = (int)(floorY * floorTexture->height) % floorTexture->height;
+        // Calcul des coordonnées du sol initiales
+        floorX = centerX + rowDistance * rayDirX0;
+        floorY = centerY + rowDistance * rayDirY0;
 
-			// Appliquer la rotation des coordonnées de la texture
-			double angle = game->player.angle;  // L'angle du joueur
-			double cosA = -cos(angle * 2);
-			double sinA = -sin(angle * 2);
+        // Appliquer le décalage en X en fonction de la position du joueur (décalage selon `offsetX`)
+        // floorX += centerX;  // Décalage des coordonnées de la texture en fonction de la position X du joueur
 
-			// Rotation de la texture autour de son centre
-			double newTx = cosA * (tx - cx) - sinA * (ty - cy) + cx;
-			double newTy = sinA * (tx - cx) + cosA * (ty - cy) + cy;
+        // Calcul des incréments pour chaque colonne
+        floorStepX = rowDistance * (rayDirX1 - rayDirX0) / SCREEN_WIDTH;
+        floorStepY = rowDistance * (rayDirY1 - rayDirY0) / SCREEN_WIDTH;
 
-			// Calcul du pixel à afficher pour le sol
-			int floorColor = get_texture_color(floorTexture, (int)newTx % floorTexture->width, (int)newTy % floorTexture->height);
+        // Parcours des colonnes de l'écran (affichage du sol)
+        for (int x = 0; x < SCREEN_WIDTH; ++x)
+        {
+            // Coordonnées de la texture avant rotation
+            int tx = (int)(floorX * floorTexture->width) % floorTexture->width;
+            int ty = (int)(floorY * floorTexture->height) % floorTexture->height;
 
-			// Affichage du pixel du sol
-			my_mlx_pixel_put(game->raycast, x, y, floorColor);
+            // Appliquer la rotation de la texture, mais en la maintenant fixe par rapport à sa position
+            double angle = game->player.angle;  // Utilisation de l'angle du joueur pour la rotation
+            double cosA = cos(angle);  // Cosinus de l'angle
+            double sinA = sin(angle);  // Sinus de l'angle
 
-			// Mise à jour des coordonnées du sol/plafond pour la prochaine itération
-			floorX += floorStepX;
-			floorY += floorStepY;
-		}
-	}
-	ceil_raycast(game);
+            // Centre de la texture du sol
+            double cx = floorTexture->width / 2.0;
+            double cy = floorTexture->height / 2.0;
+
+            // Calcul des coordonnées relatives de la texture
+            double relTx = tx - cx;  // Coordonnée locale x du carré
+            double relTy = ty - cy;  // Coordonnée locale y du carré
+
+            // Appliquer la rotation locale sur chaque pixel de la texture
+            double newTx = cosA * relTx - sinA * relTy + cx;
+            double newTy = sinA * relTx + cosA * relTy + cy;
+
+            // Assurer que les coordonnées restent dans les limites de la texture
+            if (newTx < 0) newTx = -newTx;  // Si coordonnée X < 0, prendre le symétrique
+            if (newTx >= floorTexture->width) newTx = 2 * floorTexture->width - newTx - 1;  // Si coordonnée X > width, faire l'inverse
+            if (newTy < 0) newTy = -newTy;  // Si coordonnée Y < 0, prendre le symétrique
+            if (newTy >= floorTexture->height) newTy = 2 * floorTexture->height - newTy - 1;  // Si coordonnée Y > height, faire l'inverse
+
+            // Calcul du pixel à afficher pour le sol avec les coordonnées de texture ajustées
+            int floorColor = get_texture_color(floorTexture, (int)newTx % floorTexture->width, (int)newTy % floorTexture->height);
+
+            // Affichage du pixel du sol
+            my_mlx_pixel_put(game->raycast, x, y, floorColor);
+
+            // Mise à jour des coordonnées du sol pour la prochaine itération
+            floorX += floorStepX;
+            floorY += floorStepY;
+        }
+    }
+
+    // Dessin du plafond (si nécessaire, peut être similaire à floor_raycast)
+    ceil_raycast(game);
 }
 
 
 void ceil_raycast(t_game *game)
 {
-	t_image *ceilTexture = &game->door;  // Texture du plafond
+	t_image *ceilTexture = &game->door[game->total_frames];  // Texture du plafond
 
 	for (int y = 0; y < (SCREEN_HEIGHT / 2 + game->player.z); y++)
 	{
@@ -124,3 +148,4 @@ void ceil_raycast(t_game *game)
 		// A ce niveau, on ne fait plus de rotation des textures, seulement des déplacements latéraux
 	}
 }
+
