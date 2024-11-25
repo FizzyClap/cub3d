@@ -5,6 +5,8 @@
 # include "../sound/SDL2/include/SDL.h"
 # include "../sound/SDL2_mixer/include/SDL_mixer.h"
 # include "../sound/SDL2_mixer/src/codecs/music_wav.h"
+# include "define.h"
+
 typedef struct s_coord
 {
 	int	x;
@@ -116,6 +118,8 @@ typedef struct s_player
 	double	y;
 	double	d_x;
 	double	d_y;
+	double	plane_x;
+	double	plane_y;
 	double	speed;
 	double	angle;
 	t_ray	*cross_ray;
@@ -141,22 +145,43 @@ typedef struct s_music
 	Mix_Chunk	*hit;
 }	t_music;
 
+typedef struct s_ring
+{
+	int		radius_inner;
+	int		radius_outer;
+	int		distance_squared;
+	t_coord	offset;
+	t_coord	center;
+	t_coord	pos;
+	t_coord	dist;
+}	t_ring;
+
+typedef struct s_ennemy
+{
+	double	x;
+	double	y;
+	double	distance;
+	t_image	texture;
+}	t_ennemy;
+
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	void		*select;
 	char		*file;
 	bool		launcher_is_running;
 	int			nb_doors;
 	char		**moria;
 	char		**morgul;
 	int			total_frames;
+	int			nb_ennemy;
 	double		time;
+	double		z_buffer[SCREEN_WIDTH];
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
 	t_image		balrog;
+	t_ennemy	*ennemy;
 	t_image		*door;
 	t_image		ceil;
 	t_image		floor_txt;

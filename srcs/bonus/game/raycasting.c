@@ -7,7 +7,6 @@ void	raycasting(t_ray *ray, t_game *game)
 	t_coord	loop;
 	double	ray_angle;
 
-	// draw_floor_ceiling(game, game->floor.color, game->ceiling.color);
 	floor_raycast(game);
 	ceil_raycast(game);
 	ray = malloc(sizeof(t_ray));
@@ -72,7 +71,7 @@ void	perform_dda(t_ray *ray, t_game *game)
 			ray->side = 1;
 		}
 		pos = game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x];
-		if (pos == '1' || pos == 'D')
+		if (pos == '1' || pos == 'D' || pos == 'A')
 			hit = 1;
 	}
 }
@@ -102,6 +101,7 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	tex->step = (double)tex->height / line_height;
 	tex->pos = (draw_start - 540 + (line_height - height_correct) / 2) * tex->step;
 	loop.y = draw_start - 1;
+	game->z_buffer[loop.x] = ray->wall_dist;;
 	while (++loop.y < draw_end)
 	{
 		tex->y = (int)tex->pos % (tex->height - 1);

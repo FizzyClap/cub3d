@@ -38,6 +38,7 @@ void	free_map(t_map *map);
 //FREE/FREE_TEXTURE
 void	free_texture(t_texture *texture);
 //GAME/ANIMATION
+double	get_current_time(void);
 t_image	*doors_animation(t_game *game, int idx, int start);
 //GAME/CHARACTER
 void	player_init(t_game *game);
@@ -61,16 +62,20 @@ void	init_doors(t_game *game);
 void	toggle_door(t_game *game, int y, int x);
 void	select_door_texture(t_game *game, t_ray *ray, t_image **tex);
 bool	is_door_open(t_game *game, double x, double y);
+//GAME/ENNEMY
+int		init_ennemy(t_game *game);
 //GAME/FLOORS_RAYCAST
 int		get_texture_color(t_image *texture, int tx, int ty);
 void	floor_raycast(t_game *game);
 void	ceil_raycast(t_game *game);
 //GAME/IMAGE
+int		load_xpm(t_game *game, t_image *texture, char *xpm_file);
 int		load_textures(t_game *game);
 //GAME/MINIMAP
 void	minimap(t_game *game);
 void	draw_minimap(t_game *game, t_image minimap);
 void	my_mlx_pixel_put(t_image img, int x, int y, int color);
+void	draw_ring(t_game *game);
 //GAME/MOUSE
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
@@ -92,6 +97,12 @@ void	raycasting(t_ray *ray, t_game *game);
 void	perform_dda(t_ray *ray, t_game *game);
 void	calculate_steps(t_ray *ray);
 void	calculate_wall_distance(t_ray *ray);
+//GAME/SOUND
+void	sound(t_game *game);
+void	init_sound(void);
+void	free_sound(t_game *game);
+void	struct_game_sound(t_game *game);
+void	init_sound_effects(t_game *game);
 //PARSING/CHECK_ARG
 int		check_arg(int argc, char **argv);
 int		open_map(char *file);
@@ -107,10 +118,5 @@ int		color_format(char *id, char *line);
 int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
-double	get_current_time(void);
-void	sound(t_game *game);
-void	init_sound(void);
-void	free_sound(t_game *game);
-void	struct_game_sound(t_game *game);
-void	init_sound_effects(t_game *game);
+
 #endif

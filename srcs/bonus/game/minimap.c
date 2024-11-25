@@ -93,3 +93,30 @@ static t_coord	get_max(t_game *game, t_coord coord)
 		result.y = TILE;
 	return (result);
 }
+
+void	draw_ring(t_game *game)
+{
+	t_ring	ring;
+
+	ring.offset.x = 20;
+	ring.offset.y = 20;
+	ring.center.x = ring.offset.x + MMW / 2;
+	ring.center.y = ring.offset.y + MMH / 2;
+	ring.radius_inner = MINIMAP_RADIUS - 5;
+	ring.radius_outer = MINIMAP_RADIUS + 7;
+	ring.pos.y = -1;
+	while (++ring.pos.y < SCREEN_HEIGHT)
+	{
+		ring.pos.x = -1;
+		while (++ring.pos.x < SCREEN_WIDTH)
+		{
+			ring.dist.x = ring.pos.x - ring.center.x;
+			ring.dist.y = ring.pos.y - ring.center.y;
+			ring.distance_squared = pow(ring.dist.x, 2) + pow(ring.dist.y, 2);
+			if (ring.distance_squared >= pow(ring.radius_inner, 2) && \
+				ring.distance_squared <= pow(ring.radius_outer, 2))
+				my_mlx_pixel_put(game->raycast, ring.pos.x, ring.pos.y, 0xFFFF00);
+		}
+	}
+}
+

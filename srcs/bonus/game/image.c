@@ -9,7 +9,7 @@ int	load_textures(t_game *game)
 {
 	char	**map;
 
-	if (load_walls(game) == FAILURE)
+	if (load_walls(game) == FAILURE || init_ennemy(game) == FAILURE)
 		return (FAILURE);
 	if (ft_strcmp(game->file, "maps/moria.cub") == 0)
 		map = create_moria_tab(game);
@@ -22,11 +22,8 @@ int	load_textures(t_game *game)
 
 static int	load_walls(t_game *game)
 {
-	int		width;
-	int		height;
 	int		i;
 	char	*file[4];
-	int		t;
 
 	file[NORTH] = game->texture->north_path;
 	file[SOUTH] = game->texture->south_path;
@@ -34,24 +31,13 @@ static int	load_walls(t_game *game)
 	file[EAST] = game->texture->east_path;
 	i = -1;
 	while (++i < 4)
-	{
-		game->texture->image[i].img = mlx_xpm_file_to_image(game->mlx, file[i],
-				&width, &height);
-		if (!game->texture->image[i].img)
+		if (load_xpm(game, &game->texture->image[i], file[i]) == FAILURE)
 			return (FAILURE);
-		game->texture->image[i].color = \
-			(int *)mlx_get_data_addr(game->texture->image[i].img, &t, &t, &t);
-		game->texture->image[i].width = width;
-		game->texture->image[i].height = height;
-	}
 	return (SUCCESS);
 }
 
 static int	load_doors(t_game *game, char **map)
 {
-	int	width;
-	int	height;
-	int	t;
 	int	i;
 
 	game->door = malloc(sizeof(t_image) * (game->total_frames + 2));
@@ -62,15 +48,8 @@ static int	load_doors(t_game *game, char **map)
 		game->door[i].img = NULL;
 	i = -1;
 	while (++i < game->total_frames + 2)
-	{
-		game->door[i].img = mlx_xpm_file_to_image(game->mlx, map[i], &width, &height);
-		if (!game->door[i].img)
+		if (load_xpm(game, &game->door[i], map[i]) == FAILURE)
 			return (FAILURE);
-		game->door[i].addr = mlx_get_data_addr(game->door[i].img, &t, &t, &t);
-		game->door[i].color = (int *)game->door[i].addr;
-		game->door[i].width = width;
-		game->door[i].height = height;
-	}
 	free(map);
 	return (SUCCESS);
 }
@@ -125,4 +104,20 @@ static char **create_morgul_tab(t_game *game)
 	game->morgul[19] = NULL;
 	game->total_frames = 17;
 	return (game->morgul);
+}
+
+int	load_xpm(t_game *game, t_image *texture, char *xpm_file)
+{
+	int	width;
+	int	height;
+	int	t;
+
+	texture->img = mlx_xpm_file_to_image(game->mlx, xpm_file, &width, &height);
+	if (!texture->img)
+		return (FAILURE);
+	texture->addr = mlx_get_data_addr(texture->img, &t, &t, &t);
+	texture->color = (int *)texture->addr;
+	texture->width = width;
+	texture->height = height;
+	return (SUCCESS);
 }

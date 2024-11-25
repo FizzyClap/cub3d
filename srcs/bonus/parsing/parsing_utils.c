@@ -78,7 +78,7 @@ int	nb_start_pos(t_map *map, int y, int x)
 
 int	char_is_valid(char c)
 {
-	if (ft_strchr("10NSWED ", c) || (c >= '\t' && c <= '\r'))
+	if (ft_strchr("10NSWEDA ", c) || (c >= '\t' && c <= '\r'))
 		return (SUCCESS);
 	ft_fprintf(STDERR_FILENO, "Error: %c is not a valid character\n", c);
 	return (FAILURE);

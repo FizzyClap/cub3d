@@ -37,6 +37,7 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 		struct_game_sound(game);
 	}
 	init_doors(game);
+	game->ennemy = NULL;
 	game->balrog.img = NULL;
 	game->launcher.img = NULL;
 	game->raycast.img = NULL;
@@ -47,10 +48,9 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 		game->texture->image[i].img = NULL;
 	get_color(&game->floor, game->texture->floor_color);
 	get_color(&game->ceiling, game->texture->ceiling_color);
-	game->ceiling.a = rgb_to_int(game->ceiling.r, \
-	game->ceiling.g, game->ceiling.b);
-	game->floor.a = rgb_to_int(game->floor.r, \
-	game->floor.g, game->floor.b);
+	game->ceiling.a = rgb_to_int(game->ceiling.r, game->ceiling.g, \
+	game->ceiling.b);
+	game->floor.a = rgb_to_int(game->floor.r, game->floor.g, game->floor.b);
 }
 
 void	init_ray(t_ray *ray, t_game *game, double angle)

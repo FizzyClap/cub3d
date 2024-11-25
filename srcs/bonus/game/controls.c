@@ -4,6 +4,7 @@ void	make_actions(t_game *game, t_ray *ray)
 {
 	raycasting(ray, game);
 	draw_minimap(game, game->raycast);
+	draw_ring(game);
 	if (game->player.action[MOVEUP] == 1)
 		move_up(game);
 	if (game->player.action[MOVEBACK] == 1)
