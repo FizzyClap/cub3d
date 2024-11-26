@@ -68,19 +68,16 @@ static int	hit_enemy(t_ray *ray, t_game *game)
 		move_ray(ray);
 		ray_pos.y = (int)floor(ray->pos_y);
 		ray_pos.x = (int)floor(ray->pos_x);
-		if (ray_pos.y >= 0 && ray_pos.y < game->map->y && ray_pos.x >= 0 && \
-			ray_pos.x < game->map->lines[ray_pos.y]->x)
-		{
-			if (game->map->lines[ray_pos.y]->content[ray_pos.x] == 'A')
-				hit = 1;
-			i = -1;
-			while (++i < game->nb_enemy)
-				if ((int)game->enemy[i].x == ray_pos.x && \
-					(int)game->enemy[i].y == ray_pos.y)
-					return (i);
-		}
-		else
+		if (ray_pos.y < 0 || ray_pos.y >= game->map->y - 1 ||
+		ray_pos.x < 0 || ray_pos.x >= game->map->lines[ray_pos.y]->x)
 			return (-1);
+		if (game->map->lines[ray_pos.y]->content[ray_pos.x] == 'A')
+			hit = 1;
+		i = -1;
+		while (++i < game->nb_enemy)
+			if ((int)game->enemy[i].x == ray_pos.x && \
+				(int)game->enemy[i].y == ray_pos.y)
+				return (i);
 	}
 	return (-1);
 }
