@@ -25,10 +25,16 @@ typedef struct s_doors
 	int		y;
 	bool	is_open;
 	bool	is_animating;
-	int		current_frames;
 	double	start_animation;
-	int		texture_id;
 }	t_doors;
+
+typedef struct s_weapon
+{
+	bool	is_animating;
+	int		current_frames;
+	bool	hit;
+	double	start_animation;
+}	t_weapon;
 
 typedef struct s_map
 {
@@ -145,24 +151,33 @@ typedef struct s_music
 	Mix_Chunk	*hit;
 }	t_music;
 
-typedef struct s_ring
-{
-	int		radius_inner;
-	int		radius_outer;
-	int		distance_squared;
-	t_coord	offset;
-	t_coord	center;
-	t_coord	pos;
-	t_coord	dist;
-}	t_ring;
-
-typedef struct s_ennemy
+typedef struct s_enemy
 {
 	double	x;
 	double	y;
 	double	distance;
 	t_image	texture;
-}	t_ennemy;
+}	t_enemy;
+
+typedef struct s_render
+{
+	double	sprite_x;
+	double	sprite_y;
+	double	inv_det;
+	double	transform_x;
+	double	transform_y;
+	int		sprite_screen_x;
+	int		sprite_height;
+	int		sprite_width;
+	int		draw_start_y;
+	int		draw_start_x;
+	int		draw_end_y;
+	int		draw_end_x;
+	int		stripe;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+}	t_render;
 
 typedef struct s_game
 {
@@ -172,16 +187,20 @@ typedef struct s_game
 	bool		launcher_is_running;
 	int			nb_doors;
 	char		**moria;
+	char		**weapon_map;
 	char		**morgul;
-	int			total_frames;
-	int			nb_ennemy;
+	int			doors_frames;
+	int			weapons_frames;
+	int			nb_enemy;
+	int			target;
 	double		time;
 	double		z_buffer[SCREEN_WIDTH];
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
-	t_image		balrog;
-	t_ennemy	*ennemy;
+	t_weapon	anim_weapons;
+	t_image		*weapon;
+	t_enemy		*enemy;
 	t_image		*door;
 	t_image		ceil;
 	t_image		floor_txt;

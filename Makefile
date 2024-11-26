@@ -51,7 +51,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/controls_utils.c\
 				srcs/bonus/game/controls.c\
 				srcs/bonus/game/doors.c\
-				srcs/bonus/game/ennemy.c\
+				srcs/bonus/game/enemy.c\
 				srcs/bonus/game/floor_raycast.c\
 				srcs/bonus/game/image.c\
 				srcs/bonus/game/launcher.c\
@@ -62,6 +62,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
 				srcs/bonus/game/sound.c\
+				srcs/bonus/game/weapon.c\
 				srcs/bonus/parsing/check_arg.c\
 				srcs/bonus/parsing/check_texture.c\
 				srcs/bonus/parsing/check_map.c\

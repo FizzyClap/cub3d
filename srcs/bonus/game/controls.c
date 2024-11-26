@@ -4,7 +4,6 @@ void	make_actions(t_game *game, t_ray *ray)
 {
 	raycasting(ray, game);
 	draw_minimap(game, game->raycast);
-	draw_ring(game);
 	if (game->player.action[MOVEUP] == 1)
 		move_up(game);
 	if (game->player.action[MOVEBACK] == 1)
@@ -37,12 +36,16 @@ int	keycode(int keycode, t_game *game)
 	if (keycode == ESC)
 		close_game(game);
 	if (keycode == O)
-		shoot_ray_to_door(game);
+		shoot_ray_to_center(game, true);
 	if (keycode == R)
 	{
-		Mix_PlayChannel(-1, game->music->weapon, 0);
-		SDL_Delay(1000);
-		Mix_PlayChannel(-1, game->music->hit, 0);
+		if (!Mix_Playing(-1) && game->anim_weapons.is_animating == false)
+		{
+			game->anim_weapons.is_animating = true;
+			game->anim_weapons.start_animation = get_current_time();
+			Mix_PlayChannel(-1, game->music->weapon, 0);
+			shoot_ray_to_center(game, false);
+		}
 	}
 	if (keycode == W || keycode == UP)
 		game->player.action[0] = 1;

@@ -9,8 +9,6 @@ void	minimap(t_game *game)
 
 	game->minimap.img = mlx_new_image(game->mlx, MMW, MMH);
 	game->minimap.addr = mlx_get_data_addr(game->minimap.img, &t, &t, &t);
-	game->ring.img = mlx_new_image(game->mlx, MMW, MMH);
-	game->ring.addr = mlx_get_data_addr(game->ring.img, &t, &t, &t);
 	draw_minimap(game, game->minimap);
 }
 
@@ -64,18 +62,40 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 			dist.y = (y + coord.y) - center.y;
 			if (pow(dist.x, 2) + pow(dist.y, 2) <= pow(MINIMAP_RADIUS, 2) && \
 			color != rgb_to_int(135, 206, 235))
-				my_mlx_pixel_put(image, x + 20 + coord.x, y + 20 + coord.y, color);
+				my_mlx_pixel_put(&image, x + 20 + coord.x, y + 20 + coord.y, color);
 		}
 	}
 }
 
-void	my_mlx_pixel_put(t_image img, int x, int y, int color)
+int is_color_close_to_magenta(int color, int tolerance)
+{
+	t_color	magenta;
+	t_color	col;
+	col.r = (color >> 16) & 0xFF;
+	col.g = (color >> 8) & 0xFF;
+	col.b = color & 0xFF;
+
+	magenta.r = 0xFC;
+	magenta.g = 0x00;
+	magenta.b = 0xFF;
+
+	if (abs(col.r - magenta.r) <= tolerance && \
+		abs(col.g - magenta.g) <= tolerance && \
+		abs(col.b - magenta.b) <= tolerance)
+		return (1);
+	return (0);
+}
+
+
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
 {
 	char	*dst;
 
 	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
 		return ;
-	dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
+	if (is_color_close_to_magenta(color, 100))
+		return ;
+	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(unsigned int *) dst = color;
 }
 
@@ -93,30 +113,3 @@ static t_coord	get_max(t_game *game, t_coord coord)
 		result.y = TILE;
 	return (result);
 }
-
-void	draw_ring(t_game *game)
-{
-	t_ring	ring;
-
-	ring.offset.x = 20;
-	ring.offset.y = 20;
-	ring.center.x = ring.offset.x + MMW / 2;
-	ring.center.y = ring.offset.y + MMH / 2;
-	ring.radius_inner = MINIMAP_RADIUS - 5;
-	ring.radius_outer = MINIMAP_RADIUS + 7;
-	ring.pos.y = -1;
-	while (++ring.pos.y < SCREEN_HEIGHT)
-	{
-		ring.pos.x = -1;
-		while (++ring.pos.x < SCREEN_WIDTH)
-		{
-			ring.dist.x = ring.pos.x - ring.center.x;
-			ring.dist.y = ring.pos.y - ring.center.y;
-			ring.distance_squared = pow(ring.dist.x, 2) + pow(ring.dist.y, 2);
-			if (ring.distance_squared >= pow(ring.radius_inner, 2) && \
-				ring.distance_squared <= pow(ring.radius_outer, 2))
-				my_mlx_pixel_put(game->raycast, ring.pos.x, ring.pos.y, 0xFFFF00);
-		}
-	}
-}
-

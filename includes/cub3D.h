@@ -40,6 +40,7 @@ void	free_texture(t_texture *texture);
 //GAME/ANIMATION
 double	get_current_time(void);
 t_image	*doors_animation(t_game *game, int idx, int start);
+t_image	*weapon_animation(t_game *game);
 //GAME/CHARACTER
 void	player_init(t_game *game);
 //GAME/COLORS
@@ -62,8 +63,10 @@ void	init_doors(t_game *game);
 void	toggle_door(t_game *game, int y, int x);
 void	select_door_texture(t_game *game, t_ray *ray, t_image **tex);
 bool	is_door_open(t_game *game, double x, double y);
-//GAME/ENNEMY
-int		init_ennemy(t_game *game);
+//GAME/ENEMY
+int		init_enemy(t_game *game);
+void	sort_enemies(t_game *game);
+void	render_enemies(t_game *game);
 //GAME/FLOORS_RAYCAST
 int		get_texture_color(t_image *texture, int tx, int ty);
 void	floor_raycast(t_game *game);
@@ -74,8 +77,7 @@ int		load_textures(t_game *game);
 //GAME/MINIMAP
 void	minimap(t_game *game);
 void	draw_minimap(t_game *game, t_image minimap);
-void	my_mlx_pixel_put(t_image img, int x, int y, int color);
-void	draw_ring(t_game *game);
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
 //GAME/MOUSE
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
@@ -91,7 +93,7 @@ void	move_right(t_game *game);
 //GAME/RAYCASTING_UTILS
 void	camera_angle_distortion(t_game *game, t_ray *ray);
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
-void	shoot_ray_to_door(t_game *game);
+void	shoot_ray_to_center(t_game *game, bool door);
 //GAME/RAYCASTING
 void	raycasting(t_ray *ray, t_game *game);
 void	perform_dda(t_ray *ray, t_game *game);
@@ -103,6 +105,8 @@ void	init_sound(void);
 void	free_sound(t_game *game);
 void	struct_game_sound(t_game *game);
 void	init_sound_effects(t_game *game);
+//GAME/WEAPON
+int		init_weapon(t_game *game);
 //PARSING/CHECK_ARG
 int		check_arg(int argc, char **argv);
 int		open_map(char *file);
@@ -118,5 +122,5 @@ int		color_format(char *id, char *line);
 int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
-
+void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset);
 #endif

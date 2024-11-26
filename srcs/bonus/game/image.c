@@ -9,13 +9,15 @@ int	load_textures(t_game *game)
 {
 	char	**map;
 
-	if (load_walls(game) == FAILURE || init_ennemy(game) == FAILURE)
+	if (!load_walls(game) || !init_enemy(game) || !init_weapon(game))
 		return (FAILURE);
 	if (ft_strcmp(game->file, "maps/moria.cub") == 0)
 		map = create_moria_tab(game);
 	else
 		map = create_morgul_tab(game);
 	if (load_doors(game, map) == FAILURE)
+		return (FAILURE);
+	if (load_xpm(game, &game->ring, "textures/ring.xpm") == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -40,14 +42,14 @@ static int	load_doors(t_game *game, char **map)
 {
 	int	i;
 
-	game->door = malloc(sizeof(t_image) * (game->total_frames + 2));
+	game->door = malloc(sizeof(t_image) * (game->doors_frames + 2));
 	if (!game->door)
 		return (FAILURE);
 	i = -1;
-	while (++i < game->total_frames + 2)
+	while (++i < game->doors_frames + 2)
 		game->door[i].img = NULL;
 	i = -1;
-	while (++i < game->total_frames + 2)
+	while (++i < game->doors_frames + 2)
 		if (load_xpm(game, &game->door[i], map[i]) == FAILURE)
 			return (FAILURE);
 	free(map);
@@ -73,7 +75,7 @@ static char **create_moria_tab(t_game *game)
 	game->moria[11] = "textures/moria_ceil.xpm";
 	game->moria[12] = "textures/moria_floor.xpm";
 	game->moria[13] = NULL;
-	game->total_frames = 11;
+	game->doors_frames = 11;
 	return (game->moria);
 }
 
@@ -102,7 +104,7 @@ static char **create_morgul_tab(t_game *game)
 	game->morgul[17] = "textures/morgul_ceil.xpm";
 	game->morgul[18] = "textures/morgul_floor.xpm";
 	game->morgul[19] = NULL;
-	game->total_frames = 17;
+	game->doors_frames = 17;
 	return (game->morgul);
 }
 
@@ -110,12 +112,12 @@ int	load_xpm(t_game *game, t_image *texture, char *xpm_file)
 {
 	int	width;
 	int	height;
-	int	t;
 
 	texture->img = mlx_xpm_file_to_image(game->mlx, xpm_file, &width, &height);
 	if (!texture->img)
 		return (FAILURE);
-	texture->addr = mlx_get_data_addr(texture->img, &t, &t, &t);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, \
+		&texture->line_len, &texture->endian);
 	texture->color = (int *)texture->addr;
 	texture->width = width;
 	texture->height = height;

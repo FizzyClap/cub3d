@@ -37,8 +37,8 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 		struct_game_sound(game);
 	}
 	init_doors(game);
-	game->ennemy = NULL;
-	game->balrog.img = NULL;
+	game->target = -1;
+	game->enemy = NULL;
 	game->launcher.img = NULL;
 	game->raycast.img = NULL;
 	game->minimap.img = NULL;

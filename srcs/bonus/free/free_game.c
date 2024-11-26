@@ -18,7 +18,7 @@ int	close_game(t_game *game)
 	free_map(game->map);
 	free(game->doors);
 	free(game->door);
-	free(game->ennemy);
+	free(game->enemy);
 	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);
@@ -44,16 +44,18 @@ static void	free_image(t_game *game)
 		mlx_destroy_image(game->mlx, game->minimap.img);
 	if (game->player.cursor.img)
 		mlx_destroy_image(game->mlx, game->player.cursor.img);
-	if (game->balrog.img)
-		mlx_destroy_image(game->mlx, game->balrog.img);
+	i = -1;
+	while (++i < game->weapons_frames)
+		if (game->weapon[i].img)
+			mlx_destroy_image(game->mlx, game->weapon[i].img);
 	if (game->launcher.img)
 		mlx_destroy_image(game->mlx, game->launcher.img);
 	i = -1;
-	while (++i < game->total_frames + 2)
+	while (++i < game->doors_frames + 2)
 		if (game->door[i].img)
 			mlx_destroy_image(game->mlx, game->door[i].img);
 	i = -1;
-	while (++i < game->nb_ennemy)
-		if (game->ennemy[i].texture.img)
-			mlx_destroy_image(game->mlx, game->ennemy[i].texture.img);
+	while (++i < game->nb_enemy)
+		if (game->enemy[i].texture.img)
+			mlx_destroy_image(game->mlx, game->enemy[i].texture.img);
 }

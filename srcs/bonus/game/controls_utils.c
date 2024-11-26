@@ -42,8 +42,8 @@ void	refresh_position(t_game *game, int action, double speed)
 {
 	if (action == DELTA)
 	{
-		game->player.d_x = cos(game->player.angle) * 5;
-		game->player.d_y = sin(game->player.angle) * 5;
+		game->player.d_x = cos(game->player.angle);
+		game->player.d_y = sin(game->player.angle);
 	}
 	else
 	{

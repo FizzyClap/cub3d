@@ -10,7 +10,7 @@ int get_texture_color(t_image *texture, int tx, int ty)
 
 void floor_raycast(t_game *game)
 {
-	t_image *floorTexture = &game->door[game->total_frames + 1];  // Texture du plafond
+	t_image *floorTexture = &game->door[game->doors_frames + 1];  // Texture du plafond
 
 	for (int y = SCREEN_HEIGHT / 2 + game->player.z; y < SCREEN_HEIGHT; y++)
 	{
@@ -41,7 +41,7 @@ void floor_raycast(t_game *game)
 			int floorColor = get_texture_color(floorTexture, tx, ty);
 
 			// Affichage du pixel du plafond
-			my_mlx_pixel_put(game->raycast, x, y, floorColor); // Sol
+			my_mlx_pixel_put(&game->raycast, x, y, floorColor); // Sol
 
 			// Mise à jour des coordonnées du sol/plafond pour la prochaine itération
 			// Le mouvement latéral est pris en compte ici, mais l'orientation de la texture est fixe
@@ -56,7 +56,7 @@ void floor_raycast(t_game *game)
 
 void ceil_raycast(t_game *game)
 {
-	t_image *ceilTexture = &game->door[game->total_frames];// Texture du plafond
+	t_image *ceilTexture = &game->door[game->doors_frames];// Texture du plafond
 
 	for (int y = 0; y < (SCREEN_HEIGHT / 2 + game->player.z); y++)
 	{
@@ -87,7 +87,7 @@ void ceil_raycast(t_game *game)
 			int ceilColor = get_texture_color(ceilTexture, tx, ty);
 
 			// Affichage du pixel du plafond
-			my_mlx_pixel_put(game->raycast, x, y, ceilColor); // Sol
+			my_mlx_pixel_put(&game->raycast, x, y, ceilColor); // Sol
 
 			// Mise à jour des coordonnées du sol/plafond pour la prochaine itération
 			// Le mouvement latéral est pris en compte ici, mais l'orientation de la texture est fixe

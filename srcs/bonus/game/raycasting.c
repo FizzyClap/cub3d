@@ -23,6 +23,8 @@ void	raycasting(t_ray *ray, t_game *game)
 		draw_wall(game, ray, loop);
 		loop.x++;
 	}
+	//sort_enemies(game);
+	render_enemies(game);
 	free(ray);
 }
 
@@ -71,7 +73,7 @@ void	perform_dda(t_ray *ray, t_game *game)
 			ray->side = 1;
 		}
 		pos = game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x];
-		if (pos == '1' || pos == 'D' || pos == 'A')
+		if (pos == '1' || pos == 'D')
 			hit = 1;
 	}
 }
@@ -108,7 +110,7 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 		tex->pos += tex->step;
 		if (tex->x >= 0 && tex->x < tex->width && tex->y >= 0 && tex->y < tex->height)
 			color = tex->color[tex->width * tex->y + tex->x];
-		my_mlx_pixel_put(game->raycast, loop.x, loop.y + game->player.z, color);
+		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, color);
 	}
 	ray->end = draw_end;
 }

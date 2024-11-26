@@ -10,13 +10,13 @@ void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color)
 	{
 		x = -1;
 		while (++x < SCREEN_WIDTH)
-			my_mlx_pixel_put(game->raycast, x, y, ceiling_color);
+			my_mlx_pixel_put(&game->raycast, x, y, ceiling_color);
 	}
 	while (++y < SCREEN_HEIGHT)
 	{
 		x = -1;
 		while (++x < SCREEN_WIDTH)
-			my_mlx_pixel_put(game->raycast, x, y, floor_color);
+			my_mlx_pixel_put(&game->raycast, x, y, floor_color);
 	}
 }
 
