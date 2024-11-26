@@ -23,7 +23,7 @@ void	raycasting(t_ray *ray, t_game *game)
 		draw_wall(game, ray, loop);
 		loop.x++;
 	}
-	//sort_enemies(game);
+	sort_enemies(game);
 	render_enemies(game);
 	free(ray);
 }

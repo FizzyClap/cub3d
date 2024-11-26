@@ -9,12 +9,20 @@ int	load_textures(t_game *game)
 {
 	char	**map;
 
-	if (!load_walls(game) || !init_enemy(game) || !init_weapon(game))
+	if (!load_walls(game) || !init_weapon(game))
 		return (FAILURE);
 	if (ft_strcmp(game->file, "maps/moria.cub") == 0)
+	{
+		if (init_enemy(game, "textures/dwarf.xpm") == FAILURE)
+			return (FAILURE);
 		map = create_moria_tab(game);
+	}
 	else
+	{
+		if (init_enemy(game, "textures/nazgul.xpm") == FAILURE)
+			return (FAILURE);
 		map = create_morgul_tab(game);
+	}
 	if (load_doors(game, map) == FAILURE)
 		return (FAILURE);
 	if (load_xpm(game, &game->ring, "textures/ring.xpm") == FAILURE)

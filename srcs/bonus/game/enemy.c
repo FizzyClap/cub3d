@@ -1,8 +1,8 @@
 #include "../includes/cub3D.h"
 
-static int	fill_struct_enemy(t_game *game);
+static int	fill_struct_enemy(t_game *game, char *path);
 
-int	init_enemy(t_game *game)
+int	init_enemy(t_game *game, char *path)
 {
 	int	y;
 	int	x;
@@ -25,12 +25,12 @@ int	init_enemy(t_game *game)
 	i = -1;
 	while (++i < game->nb_enemy)
 		game->enemy[i].texture.img = NULL;
-	if (fill_struct_enemy(game) == FAILURE)
+	if (fill_struct_enemy(game, path) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
-static int	fill_struct_enemy(t_game *game)
+static int	fill_struct_enemy(t_game *game, char *path)
 {
 	int	y;
 	int	x;
@@ -47,8 +47,7 @@ static int	fill_struct_enemy(t_game *game)
 			{
 				game->enemy[i].x = x + 0.5;
 				game->enemy[i].y = y + 0.5;
-				if (load_xpm(game, &game->enemy[i].texture,
-				"textures/dwarf.xpm") == FAILURE)
+				if (load_xpm(game, &game->enemy[i].texture, path) == FAILURE)
 					return (FAILURE);
 				i++;
 			}

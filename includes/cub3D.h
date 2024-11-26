@@ -64,7 +64,7 @@ void	toggle_door(t_game *game, int y, int x);
 void	select_door_texture(t_game *game, t_ray *ray, t_image **tex);
 bool	is_door_open(t_game *game, double x, double y);
 //GAME/ENEMY
-int		init_enemy(t_game *game);
+int		init_enemy(t_game *game, char *path);
 void	sort_enemies(t_game *game);
 void	render_enemies(t_game *game);
 //GAME/FLOORS_RAYCAST

@@ -47,13 +47,17 @@ void	shoot_ray_to_center(t_game *game, bool door)
 	init_ray(&ray, game, mid_ray);
 	calculate_steps(&ray);
 	if (door == true)
+	{
 		perform_dda(&ray, game);
+		if (game->map->lines[(int)ray.pos_y]->content[(int)ray.pos_x] == 'D')
+			toggle_door(game, (int)ray.pos_y, (int)ray.pos_x);
+	}
 	else
+	{
 		enemy_index = hit_enemy(&ray, game);
-	if (game->map->lines[(int)ray.pos_y]->content[(int)ray.pos_x] == 'D')
-		toggle_door(game, (int)ray.pos_y, (int)ray.pos_x);
-	else if (enemy_index != -1)
-		game->target = enemy_index;
+		if (enemy_index != -1)
+			game->target = enemy_index;
+	}
 }
 
 static int	hit_enemy(t_ray *ray, t_game *game)
