@@ -19,6 +19,7 @@ int	close_game(t_game *game)
 	free(game->doors);
 	free(game->door);
 	free(game->enemy);
+	free(game->weapon);
 	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);
@@ -58,4 +59,6 @@ static void	free_image(t_game *game)
 	while (++i < game->nb_enemy)
 		if (game->enemy[i].texture.img)
 			mlx_destroy_image(game->mlx, game->enemy[i].texture.img);
+	if (game->ring.img)
+		mlx_destroy_image(game->mlx, game->ring.img);
 }
