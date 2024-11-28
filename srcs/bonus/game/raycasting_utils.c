@@ -1,7 +1,6 @@
 #include "../includes/cub3D.h"
 
 static int	hit_enemy(t_ray *ray, t_game *game);
-static void	move_ray(t_ray *ray);
 
 void	camera_angle_distortion(t_game *game, t_ray *ray)
 {
@@ -17,7 +16,13 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
-	if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
+	if (ray->isDoor && game->doors[game->doorIdx].is_open)
+		*tex = doors_animation(game, game->doorIdx, game->doors_frames);
+	else if (ray->isDoor && !game->doors[game->doorIdx].is_open)
+		*tex = doors_animation(game, game->doorIdx, 0);
+	else if (ray->isDoor) // to fix
+		*tex = &game->door[0];
+	else if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
 		select_door_texture(game, ray, tex);
 	else if (ray->side == 1 && ray->step_y < 0)
 		*tex = &game->texture->image[NORTH];
@@ -48,7 +53,7 @@ void	shoot_ray_to_center(t_game *game, bool door)
 	calculate_steps(&ray);
 	if (door == true)
 	{
-		perform_dda(&ray, game);
+		perform_dda(&ray, game, true);
 		if (game->map->lines[(int)ray.pos_y]->content[(int)ray.pos_x] == 'D')
 			toggle_door(game, (int)ray.pos_y, (int)ray.pos_x);
 	}
@@ -86,7 +91,7 @@ static int	hit_enemy(t_ray *ray, t_game *game)
 	return (-1);
 }
 
-static void	move_ray(t_ray *ray)
+void	move_ray(t_ray *ray)
 {
 	if (ray->side_dist_x < ray->side_dist_y)
 	{

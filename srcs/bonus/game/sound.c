@@ -55,6 +55,8 @@ static void	error_sdl(const char *msg, Mix_Music *music)
 
 void	free_sound(t_game *game)
 {
+	Mix_HaltChannel(-1);
+	Mix_HaltMusic();
 	if (game->music->launcher)
 		Mix_FreeMusic(game->music->launcher);
 	if (game->music->moria)
@@ -72,6 +74,8 @@ void	free_sound(t_game *game)
 	if (game->music)
 		free(game->music);
 	Mix_CloseAudio();
+	Mix_Quit();
+	SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	SDL_Quit();
 }
 
@@ -91,14 +95,14 @@ void	init_sound_effects(t_game *game)
 		game->music->weapon = Mix_LoadWAV("sound/whip.wav");
 		game->music->hit = Mix_LoadWAV("sound/hit.wav");
 	}
-	if (!game->music->door)
-		error_sdl("Error: Door chunk\n", NULL);
-	if (!game->music->step)
-		error_sdl("Error: Step chunk\n", NULL);
-	if (!game->music->weapon)
-		error_sdl("Error: Weapon chunk\n", NULL);
-	if (!game->music->hit)
-		error_sdl("Error: Hit chunk\n", NULL);
+	//if (!game->music->door)
+	//	error_sdl("Error: Door chunk\n", NULL);
+	//if (!game->music->step)
+	//	error_sdl("Error: Step chunk\n", NULL);
+	//if (!game->music->weapon)
+	//	error_sdl("Error: Weapon chunk\n", NULL);
+	//if (!game->music->hit)
+	//	error_sdl("Error: Hit chunk\n", NULL);
 }
 
 void	struct_game_sound(t_game *game)

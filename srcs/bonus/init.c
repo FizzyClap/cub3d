@@ -31,13 +31,13 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	if (launcher == false)
 	{
 		game->launcher_is_running = false;
-		game->win = NULL;
 		game->texture = texture;
 		game->map = map;
 		struct_game_sound(game);
 	}
 	init_doors(game);
 	game->target = -1;
+	game->doorIdx = -1;
 	game->enemy = NULL;
 	game->launcher.img = NULL;
 	game->raycast.img = NULL;

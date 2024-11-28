@@ -13,6 +13,8 @@ int	main(int argc, char **argv)
 	if (parsing(&texture, &map, argc, argv) == FAILURE)
 		return (EXIT_FAILURE);
 	game = malloc(sizeof(t_game));
+	if (!game)
+		return (EXIT_FAILURE);
 	if (argc == 1 && open_launcher(game) == FAILURE)
 		return (EXIT_FAILURE);
 	else if (argc == 2)
@@ -67,7 +69,10 @@ int	parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool lau
 void	start_game(t_game *game, bool launcher)
 {
 	if (launcher == false)
+	{
 		game->mlx = mlx_init();
+		sound(game);
+	}
 	if (load_textures(game) == FAILURE)
 	{
 		ft_fprintf(STDERR_FILENO, "Error: textures can't be loaded\n");
@@ -75,7 +80,6 @@ void	start_game(t_game *game, bool launcher)
 	}
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
 	init_sound_effects(game);
-	sound(game);
 	player_init(game);
 	minimap(game);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);

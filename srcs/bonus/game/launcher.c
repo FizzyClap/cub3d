@@ -16,7 +16,6 @@ int	open_launcher(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->win, game->launcher.img, 0, 0);
 	if (game->launcher_is_running == true)
 	{
-		init_sound();
 		sound(game);
 		mlx_hook(game->win, KeyPress, KeyPressMask, keycode_launcher, game);
 		mlx_hook(game->win, DestroyNotify, NoEventMask, close_launcher, game);
@@ -76,5 +75,4 @@ static int	close_launcher(t_game *game)
 	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);
-	return (SUCCESS);
 }

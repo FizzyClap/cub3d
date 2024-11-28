@@ -1,8 +1,8 @@
 #include "../includes/cub3D.h"
 
 static int	load_weapons(t_game *game, char **map);
-static char	**balrog(t_game *game);
-static char	**staff(t_game *game);
+static char	**create_balrog_tab(t_game *game);
+static char	**create_staff_tab(t_game *game);
 
 int	init_weapon(t_game *game)
 {
@@ -10,13 +10,13 @@ int	init_weapon(t_game *game)
 
 	if (ft_strcmp(game->file, "maps/moria.cub") == 0)
 	{
-		weapon = balrog(game);
+		weapon = create_balrog_tab(game);
 		if (load_weapons(game, weapon) == FAILURE)
 			return (FAILURE);
 	}
 	else
 	{
-		weapon = staff(game);
+		weapon = create_staff_tab(game);
 		if (load_weapons(game, weapon) == FAILURE)
 			return (FAILURE);
 	}
@@ -42,7 +42,7 @@ static int	load_weapons(t_game *game, char **map)
 	return (SUCCESS);
 }
 
-static char	**balrog(t_game *game)
+static char	**create_balrog_tab(t_game *game)
 {
 	game->weapon_map = malloc(sizeof(char *) * 8);
 	if (!game->weapon_map)
@@ -59,7 +59,7 @@ static char	**balrog(t_game *game)
 	return (game->weapon_map);
 }
 
-static char	**staff(t_game *game)
+static char	**create_staff_tab(t_game *game)
 {
 	game->weapon_map = malloc(sizeof(char *) * 12);
 	if (!game->weapon_map)

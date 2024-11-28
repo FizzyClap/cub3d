@@ -110,6 +110,8 @@ typedef struct s_ray
 	double	wall_dist;
 	double	angle;
 	int		end;
+	int		isDoor;
+	t_list	*doors;
 }	t_ray;
 
 typedef struct s_player
@@ -179,6 +181,15 @@ typedef struct s_render
 	int		color;
 }	t_render;
 
+typedef struct s_draw
+{
+	int	color;
+	int	draw_start;
+	int	draw_end;
+	int	h_line;
+	int	h_correct;
+}	t_draw;
+
 typedef struct s_game
 {
 	void		*mlx;
@@ -186,6 +197,7 @@ typedef struct s_game
 	char		*file;
 	bool		launcher_is_running;
 	int			nb_doors;
+	int			doorIdx;
 	char		**moria;
 	char		**weapon_map;
 	char		**morgul;

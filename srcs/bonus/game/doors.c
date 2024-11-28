@@ -61,6 +61,7 @@ void	toggle_door(t_game *game, int y, int x)
 				Mix_PlayChannel(-1, game->music->door, 0);
 				game->doors[i].is_open = ft_change_bool(game->doors[i].is_open);
 				game->doors[i].is_animating = true;
+				game->doorIdx = i;
 				game->doors[i].start_animation = get_current_time();
 			}
 			return ;

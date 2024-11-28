@@ -94,9 +94,10 @@ void	move_right(t_game *game);
 void	camera_angle_distortion(t_game *game, t_ray *ray);
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
 void	shoot_ray_to_center(t_game *game, bool door);
+void	move_ray(t_ray *ray);
 //GAME/RAYCASTING
 void	raycasting(t_ray *ray, t_game *game);
-void	perform_dda(t_ray *ray, t_game *game);
+void	perform_dda(t_ray *ray, t_game *game, bool hitDoor);
 void	calculate_steps(t_ray *ray);
 void	calculate_wall_distance(t_ray *ray);
 //GAME/SOUND
@@ -105,6 +106,11 @@ void	init_sound(void);
 void	free_sound(t_game *game);
 void	struct_game_sound(t_game *game);
 void	init_sound_effects(t_game *game);
+//GAME/TRANSPARENCY
+void	draw_doors(t_game *game, t_ray *ray, t_coord loop);
+void	transparency(t_game *game, t_list **tmp, t_ray *ray, t_coord loop);
+void	add_doors_to_list(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst);
+
 //GAME/WEAPON
 int		init_weapon(t_game *game);
 //PARSING/CHECK_ARG
