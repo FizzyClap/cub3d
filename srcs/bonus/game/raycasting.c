@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
 
@@ -24,7 +24,7 @@ void	raycasting(t_ray *ray, t_game *game)
 		calculate_wall_distance(ray);
 		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
-		transparency(game, &tmp, ray, loop);
+		doors_transparency(game, &tmp, ray, loop);
 	}
 	sort_enemies(game);
 	render_enemies(game);
@@ -73,7 +73,7 @@ void	perform_dda(t_ray *ray, t_game *game, bool hitDoor)
 			hit = true;
 		else if (pos == 'D' || isLastDoor || (isFirst && game->map->lines\
 		[(int)game->player.y]->content[(int)game->player.x] == 'D'))
-			add_doors_to_list(game, ray, &isLastDoor, &isFirst);
+			add_doors(game, ray, &isLastDoor, &isFirst);
 		isFirst = false;
 	}
 }
@@ -100,6 +100,7 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	tex->pos = (d.draw_start - 540 + (d.h_line - d.h_correct) / 2) * tex->step;
 	loop.y = d.draw_start - 1;
 	game->z_buffer[loop.x] = ray->wall_dist;
+	d.color = 0;
 	while (++loop.y < d.draw_end)
 	{
 		tex->y = (int)tex->pos % (tex->height - 1);

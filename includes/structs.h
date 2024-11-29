@@ -110,7 +110,8 @@ typedef struct s_ray
 	double	wall_dist;
 	double	angle;
 	int		end;
-	int		isDoor;
+	int		is_door;
+	int		door_idx;
 	t_list	*doors;
 }	t_ray;
 
@@ -197,7 +198,7 @@ typedef struct s_game
 	char		*file;
 	bool		launcher_is_running;
 	int			nb_doors;
-	int			doorIdx;
+	int			door_idx;
 	char		**moria;
 	char		**weapon_map;
 	char		**morgul;

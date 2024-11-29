@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static double	cam_sensibility(int x);
 static void		cam_z(t_game *game, int y);

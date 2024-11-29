@@ -1,7 +1,5 @@
 #include "../includes/cub3D.h"
 
-static double	deg_to_rad(double degrees);
-
 void	init_map(t_map *map, char *file)
 {
 	map->file = ft_strdup(file);
@@ -63,7 +61,7 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->angle = angle;
 }
 
-static double	deg_to_rad(double degrees)
+double	deg_to_rad(double degrees)
 {
 	return (degrees * PI / 180);
 }

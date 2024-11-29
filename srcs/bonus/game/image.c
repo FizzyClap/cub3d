@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static int	load_walls(t_game *game);
 static int	load_doors(t_game *game, char **map);
@@ -7,23 +7,27 @@ static char	**create_morgul_tab(t_game *game);
 
 int	load_textures(t_game *game)
 {
-	char	**map;
+	static char	**map = NULL;
 
 	if (!load_walls(game) || !init_weapon(game))
 		return (FAILURE);
-	if (ft_strcmp(game->file, "maps/moria.cub") == 0)
+	if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0)
 	{
 		if (init_enemy(game, "textures/dwarf.xpm") == FAILURE)
 			return (FAILURE);
 		map = create_moria_tab(game);
+		if (!map)
+			return (FAILURE);
 	}
-	else
+	else if (ft_strcmp(game->file, "maps/morgul_bonus.cub") == 0)
 	{
 		if (init_enemy(game, "textures/nazgul.xpm") == FAILURE)
 			return (FAILURE);
 		map = create_morgul_tab(game);
+		if (!map)
+			return (FAILURE);
 	}
-	if (load_doors(game, map) == FAILURE)
+	if (map && load_doors(game, map) == FAILURE)
 		return (FAILURE);
 	if (load_xpm(game, &game->ring, "textures/ring.xpm") == FAILURE)
 		return (FAILURE);
@@ -64,7 +68,7 @@ static int	load_doors(t_game *game, char **map)
 	return (SUCCESS);
 }
 
-static char **create_moria_tab(t_game *game)
+static char	**create_moria_tab(t_game *game)
 {
 	game->moria = malloc(sizeof(char *) * 14);
 	if (!game->moria)
@@ -87,7 +91,7 @@ static char **create_moria_tab(t_game *game)
 	return (game->moria);
 }
 
-static char **create_morgul_tab(t_game *game)
+static char	**create_morgul_tab(t_game *game)
 {
 	game->morgul = malloc(sizeof(char *) * 20);
 	if (!game->morgul)
@@ -114,20 +118,4 @@ static char **create_morgul_tab(t_game *game)
 	game->morgul[19] = NULL;
 	game->doors_frames = 17;
 	return (game->morgul);
-}
-
-int	load_xpm(t_game *game, t_image *texture, char *xpm_file)
-{
-	int	width;
-	int	height;
-
-	texture->img = mlx_xpm_file_to_image(game->mlx, xpm_file, &width, &height);
-	if (!texture->img)
-		return (FAILURE);
-	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp, \
-		&texture->line_len, &texture->endian);
-	texture->color = (int *)texture->addr;
-	texture->width = width;
-	texture->height = height;
-	return (SUCCESS);
 }

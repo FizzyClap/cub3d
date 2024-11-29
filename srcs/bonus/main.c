@@ -1,7 +1,6 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static int	parsing(t_texture **texture, t_map **map, int argc, char **argv);
-void		start_game(t_game *game, bool launcher);
 static int	loop(t_game *game, t_ray *ray);
 
 int	main(int argc, char **argv)
@@ -107,29 +106,4 @@ static int	loop(t_game *game, t_ray *ray)
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
 		118, 118);
 	return (SUCCESS);
-}
-
-void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset)
-{
-	t_coord	pos;
-	int		color;
-	char	*pixel;
-	int		pixel_offset;
-	int		total_size;
-
-	pos.y = -1;
-	while (++pos.y < img->height)
-	{
-		pos.x = -1;
-		while (++pos.x < img->width)
-		{
-			pixel_offset = pos.y * img->line_len + pos.x * (img->bpp / 8);
-			total_size = img->height * img->line_len;
-			if (pixel_offset >= total_size)
-				return;
-			pixel = img->addr + pixel_offset;
-			color = *(int *)pixel;
-			my_mlx_pixel_put(&game->raycast, pos.x + x_offset, pos.y + y_offset, color);
-		}
-	}
 }

@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 void	init_map(t_map *map, char *file)
 {
@@ -37,7 +37,7 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	}
 	init_doors(game);
 	game->target = -1;
-	game->doorIdx = -1;
+	game->door_idx = -1;
 	game->enemy = NULL;
 	game->launcher.img = NULL;
 	game->raycast.img = NULL;

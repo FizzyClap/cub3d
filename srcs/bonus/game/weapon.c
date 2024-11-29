@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static int	load_weapons(t_game *game, char **map);
 static char	**create_balrog_tab(t_game *game);
@@ -8,13 +8,14 @@ int	init_weapon(t_game *game)
 {
 	char	**weapon;
 
-	if (ft_strcmp(game->file, "maps/moria.cub") == 0)
+	weapon = NULL;
+	if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0)
 	{
 		weapon = create_balrog_tab(game);
 		if (load_weapons(game, weapon) == FAILURE)
 			return (FAILURE);
 	}
-	else
+	else if (ft_strcmp(game->file, "maps/morgul_bonus.cub") == 0)
 	{
 		weapon = create_staff_tab(game);
 		if (load_weapons(game, weapon) == FAILURE)

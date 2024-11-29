@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 // static double	try_move_left(t_game *game, int move);
 // static double	try_move_right(t_game *game, int move);

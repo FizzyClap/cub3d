@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static void	kill_enemy(t_game *game);
 
@@ -53,7 +53,10 @@ t_image	*weapon_animation(t_game *game)
 		game->anim_weapons.is_animating = false;
 	}
 	if (current_frame == game->weapons_frames - 1)
+	{
+		shoot_ray_to_center(game, false);
 		kill_enemy(game);
+	}
 	return (&game->weapon[current_frame]);
 }
 

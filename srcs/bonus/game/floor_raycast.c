@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 int get_texture_color(t_image *texture, int tx, int ty)
 {

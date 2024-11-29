@@ -1,6 +1,4 @@
-#include "../includes/cub3D.h"
-
-static int	hit_enemy(t_ray *ray, t_game *game);
+#include "../includes/cub3D_bonus.h"
 
 void	camera_angle_distortion(t_game *game, t_ray *ray)
 {
@@ -16,11 +14,13 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
-	if (ray->isDoor && game->doors[game->doorIdx].is_open)
-		*tex = doors_animation(game, game->doorIdx, game->doors_frames);
-	else if (ray->isDoor && !game->doors[game->doorIdx].is_open)
-		*tex = doors_animation(game, game->doorIdx, 0);
-	else if (ray->isDoor) // to fix
+	if (ray->is_door && ray->door_idx == game->door_idx && game->doors[game->door_idx].is_open)
+		*tex = doors_animation(game, game->door_idx, game->doors_frames);
+	else if (ray->is_door && ray->door_idx == game->door_idx && !game->doors[game->door_idx].is_open)
+		*tex = doors_animation(game, game->door_idx, 0);
+	else if (ray->is_door && (game->doors[ray->door_idx].is_open || game->map->lines[(int)game->player.y]->content[(int)game->player.x] == 'D')) // to fix
+		*tex = &game->door[game->doors_frames - 1];
+	else if (ray->is_door && !game->doors[ray->door_idx].is_open) // to fix
 		*tex = &game->door[0];
 	else if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
 		select_door_texture(game, ray, tex);
@@ -63,32 +63,6 @@ void	shoot_ray_to_center(t_game *game, bool door)
 		if (enemy_index != -1)
 			game->target = enemy_index;
 	}
-}
-
-static int	hit_enemy(t_ray *ray, t_game *game)
-{
-	int		hit;
-	t_coord	ray_pos;
-	int		i;
-
-	hit = 0;
-	while (!hit)
-	{
-		move_ray(ray);
-		ray_pos.y = (int)floor(ray->pos_y);
-		ray_pos.x = (int)floor(ray->pos_x);
-		if (ray_pos.y < 0 || ray_pos.y >= game->map->y - 1 ||
-		ray_pos.x < 0 || ray_pos.x >= game->map->lines[ray_pos.y]->x)
-			return (-1);
-		if (game->map->lines[ray_pos.y]->content[ray_pos.x] == 'A')
-			hit = 1;
-		i = -1;
-		while (++i < game->nb_enemy)
-			if ((int)game->enemy[i].x == ray_pos.x && \
-				(int)game->enemy[i].y == ray_pos.y)
-				return (i);
-	}
-	return (-1);
 }
 
 void	move_ray(t_ray *ray)

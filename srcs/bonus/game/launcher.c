@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static int	keycode_launcher(int keycode, t_game *game);
 static void	launch_game(t_game *game);
@@ -7,6 +7,8 @@ static int	close_launcher(t_game *game);
 int	open_launcher(t_game *game)
 {
 	game->file = NULL;
+	game->texture = NULL;
+	game->map = NULL;
 	struct_game_sound(game);
 	game->launcher_is_running = true;
 	game->mlx = mlx_init();
@@ -28,7 +30,7 @@ static int	keycode_launcher(int keycode, t_game *game)
 {
 	if (keycode == LEFT)
 	{
-		game->file = "maps/moria.cub";
+		game->file = "maps/moria_bonus.cub";
 		mlx_destroy_image(game->mlx, game->launcher.img);
 		if (load_xpm(game, &game->launcher, "textures/launcher_moria.xpm") == FAILURE)
 			return (FAILURE);
@@ -36,7 +38,7 @@ static int	keycode_launcher(int keycode, t_game *game)
 	}
 	if (keycode == RIGHT)
 	{
-		game->file = "maps/morgul.cub";
+		game->file = "maps/morgul_bonus.cub";
 		mlx_destroy_image(game->mlx, game->launcher.img);
 		if (load_xpm(game, &game->launcher, "textures/launcher_morgul.xpm") == FAILURE)
 			return (FAILURE);
@@ -51,9 +53,12 @@ static int	keycode_launcher(int keycode, t_game *game)
 
 static void	launch_game(t_game *game)
 {
-	mlx_destroy_image(game->mlx, game->launcher.img);
 	game->texture = malloc(sizeof(t_texture));
+	if (!game->texture)
+		return ;
 	game->map = malloc(sizeof(t_map));
+	if (!game->map)
+		return ;
 	if (!parse_texture_and_map(&game->texture, &game->map, game->file, true))
 		close_launcher(game);
 	game->launcher_is_running = false;
@@ -64,7 +69,8 @@ static void	launch_game(t_game *game)
 
 static int	close_launcher(t_game *game)
 {
-	mlx_destroy_image(game->mlx, game->launcher.img);
+	if (game->launcher.img)
+		mlx_destroy_image(game->mlx, game->launcher.img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
@@ -72,6 +78,8 @@ static int	close_launcher(t_game *game)
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
+	if (game->map)
+		free(game->map);
 	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);

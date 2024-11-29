@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static t_ray	*dup_ray(t_ray *ray);
 
@@ -18,6 +18,7 @@ void	draw_doors(t_game *game, t_ray *ray, t_coord loop)
 	tex->pos = (d.draw_start - 540 + (d.h_line - d.h_correct) / 2) * tex->step;
 	loop.y = d.draw_start - 1;
 	game->z_buffer[loop.x] = ray->wall_dist;
+	d.color = 0;
 	while (++loop.y < d.draw_end)
 	{
 		tex->y = (int)tex->pos % (tex->height - 1);
@@ -29,7 +30,7 @@ void	draw_doors(t_game *game, t_ray *ray, t_coord loop)
 	}
 }
 
-void	transparency(t_game *game, t_list **tmp, t_ray *ray, t_coord loop)
+void	doors_transparency(t_game *game, t_list **tmp, t_ray *ray, t_coord loop)
 {
 	*tmp = ray->doors;
 	while (*tmp)
@@ -41,18 +42,25 @@ void	transparency(t_game *game, t_list **tmp, t_ray *ray, t_coord loop)
 	ray->doors = NULL;
 }
 
-void	add_doors_to_list(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
+void	add_doors(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
 {
 	t_ray	*transparency;
 	char	pos;
+	int		i;
 
 	pos = game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x];
 	transparency = dup_ray(ray);
-	transparency->isDoor = *isLastDoor || *isFirst;
+	transparency->is_door = *isLastDoor || *isFirst;
 	ft_lstadd_front(&ray->doors, ft_lstnew(transparency));
 	*isLastDoor = !*isLastDoor;
 	if (*isFirst && pos != 'D')
 		*isLastDoor = false;
+	i = -1;
+	while (++i < game->nb_doors)
+	{
+		if (game->doors[i].x == (int)ray->pos_x && game->doors[i].y == (int)ray->pos_y)
+			ray->door_idx = i;
+	}
 }
 
 static t_ray	*dup_ray(t_ray *ray)

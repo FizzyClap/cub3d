@@ -1,6 +1,7 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static void		draw_tile(t_coord coord, t_image image, t_coord max, int color);
+static int		minimap_color(t_game *game, t_coord pos);
 static t_coord	get_max(t_game *game, t_coord coord);
 
 void	minimap(t_game *game)
@@ -66,35 +67,29 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 	}
 }
 
-int is_color_close_to_magenta(int color, int tolerance)
+static int	minimap_color(t_game *game, t_coord pos)
 {
-	t_color	magenta;
-	t_color	col;
-	col.r = (color >> 16) & 0xFF;
-	col.g = (color >> 8) & 0xFF;
-	col.b = color & 0xFF;
+	int	i;
 
-	magenta.r = 0xFC;
-	magenta.g = 0x00;
-	magenta.b = 0xFF;
-
-	if (abs(col.r - magenta.r) <= tolerance && \
-		abs(col.g - magenta.g) <= tolerance && \
-		abs(col.b - magenta.b) <= tolerance)
-		return (1);
-	return (0);
-}
-
-void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
-		return ;
-	if (is_color_close_to_magenta(color, 100))
-		return ;
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *) dst = color;
+	i = -1;
+	if (pos.y > -1 && pos.x > -1 && pos.y < game->map->y && \
+	pos.x < game->map->lines[pos.y]->x)
+	{
+		if (game->map->lines[pos.y]->content[pos.x] == '1')
+			return (*game->texture->image[NORTH].color);
+		else if (game->map->lines[pos.y]->content[pos.x] == 'D')
+		{
+			while (++i < game->nb_doors)
+				if (game->doors[i].y == pos.y && game->doors[i].x == pos.x && \
+				game->doors[i].is_open == false)
+					return (*game->texture->image[NORTH].color);
+			return (game->floor.a);
+		}
+		else
+			return (game->floor.a);
+	}
+	else
+		return (game->ceiling.a);
 }
 
 static t_coord	get_max(t_game *game, t_coord coord)

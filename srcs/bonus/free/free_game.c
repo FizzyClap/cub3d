@@ -1,7 +1,8 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
-static void	free_image(t_game *game);
 static void	free_character(t_player player);
+static void	free_image(t_game *game);
+static void	free_images_in_tab(t_game *game);
 
 int	close_game(t_game *game)
 {
@@ -33,24 +34,31 @@ static void	free_character(t_player player)
 
 static void	free_image(t_game *game)
 {
-	int	i;
-
-	i = -1;
-	while (++i < 4)
-		if (game->texture->image[i].img)
-			mlx_destroy_image(game->mlx, game->texture->image[i].img);
 	if (game->raycast.img)
 		mlx_destroy_image(game->mlx, game->raycast.img);
 	if (game->minimap.img)
 		mlx_destroy_image(game->mlx, game->minimap.img);
 	if (game->player.cursor.img)
 		mlx_destroy_image(game->mlx, game->player.cursor.img);
+	if (game->launcher.img)
+		mlx_destroy_image(game->mlx, game->launcher.img);
+	if (game->ring.img)
+		mlx_destroy_image(game->mlx, game->ring.img);
+	free_images_in_tab(game);
+}
+
+static void	free_images_in_tab(t_game *game)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+		if (game->texture->image[i].img)
+			mlx_destroy_image(game->mlx, game->texture->image[i].img);
 	i = -1;
 	while (++i < game->weapons_frames)
 		if (game->weapon[i].img)
 			mlx_destroy_image(game->mlx, game->weapon[i].img);
-	if (game->launcher.img)
-		mlx_destroy_image(game->mlx, game->launcher.img);
 	i = -1;
 	while (++i < game->doors_frames + 2)
 		if (game->door[i].img)
@@ -59,6 +67,4 @@ static void	free_image(t_game *game)
 	while (++i < game->nb_enemy)
 		if (game->enemy[i].texture.img)
 			mlx_destroy_image(game->mlx, game->enemy[i].texture.img);
-	if (game->ring.img)
-		mlx_destroy_image(game->mlx, game->ring.img);
 }

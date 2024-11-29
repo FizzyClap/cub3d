@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static double	check_ray(t_game *game, t_ray ray);
 static double	ray_distance(t_game *game, t_ray ray);
@@ -69,9 +69,9 @@ static double	ray_distance(t_game *game, t_ray ray)
 void	jump(t_game *game)
 {
 	if (game->player.crouch == true)
-		game->player.speed = 0.005;
-	if (game->player.crouch == false && game->player.speed < 0.01)
-		game->player.speed += 0.01;
+		game->player.speed = 0.01;
+	if (game->player.crouch == false)
+		game->player.speed = 0.05;
 	if (game->player.jump == false && game->player.h > 0)
 		game->player.h -= 100;
 	if (game->player.jump == true && game->player.h < 400)
