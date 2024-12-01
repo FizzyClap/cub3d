@@ -10,6 +10,7 @@ void	raycasting(t_ray *ray, t_game *game)
 
 	floor_raycast(game);
 	ceil_raycast(game);
+	//draw_floor_ceiling(game, game->floor.a, game->ceiling.a);
 	ray = ft_calloc(1, sizeof(t_ray));
 	if (!ray)
 		return ;
