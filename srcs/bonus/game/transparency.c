@@ -1,6 +1,6 @@
 #include "../includes/cub3D_bonus.h"
 
-static t_ray	*dup_ray(t_ray *ray);
+static t_ray	*dup_ray(t_game *game, t_ray *ray);
 
 void	draw_doors(t_game *game, t_ray *ray, t_coord loop)
 {
@@ -46,35 +46,30 @@ void	add_doors(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
 {
 	t_ray	*transparency;
 	char	pos;
-	int		i;
 
 	pos = game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x];
-	transparency = dup_ray(ray);
-	transparency->is_door = *isLastDoor || *isFirst;
+	transparency = dup_ray(game, ray);
+	if (*isLastDoor == true || *isFirst == true)
+		transparency->is_door = true;
 	ft_lstadd_front(&ray->doors, ft_lstnew(transparency));
 	*isLastDoor = !*isLastDoor;
 	if (*isFirst && pos != 'D')
 		*isLastDoor = false;
-	i = -1;
-	while (++i < game->nb_doors)
-	{
-		if (game->doors[i].x == (int)floor(ray->pos_x) && game->doors[i].y == (int)floor(ray->pos_y))
-		{
-			ray->door_idx = i;
-			return ;
-		}
-	}
 }
 
-static t_ray	*dup_ray(t_ray *ray)
+static t_ray	*dup_ray(t_game *game, t_ray *ray)
 {
-	t_ray *dest;
-
+	t_ray	*dest;
+	int		i;
 	dest = ft_calloc(sizeof(t_ray), 1);
 	if (!dest)
 		return (NULL);
+	i = -1;
+	while (++i < game->nb_doors)
+		if (game->doors[i].x == (int)floor(ray->pos_x) && \
+			game->doors[i].y == (int)floor(ray->pos_y))
+			ray->door_idx = i;
 	ft_memcpy(dest, ray, sizeof(t_ray));
 	dest->doors = NULL;
-	dest->door_idx = ray->door_idx;
 	return (dest);
 }

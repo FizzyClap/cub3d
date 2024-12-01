@@ -91,7 +91,7 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	int		color;
 	t_image	*tex;
 
-	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
+	line_height = (int)(SCREEN_HEIGHT / ray->projected_dist);
 	draw_start = (SCREEN_HEIGHT - line_height) / 2;
 	if (draw_start < 0)
 		draw_start = 0;

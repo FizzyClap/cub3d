@@ -12,7 +12,7 @@ void	draw_vertical_line(t_game *game, int x, int start, int color)
 		end = SCREEN_HEIGHT - 1;
 	y = start - 1;
 	while (++y <= end)
-		my_mlx_pixel_put(game->raycast, x, y, color);
+		my_mlx_pixel_put(&game->raycast, x, y, color);
 }
 
 void	camera_angle_distortion(t_game *game, t_ray *ray)
@@ -24,7 +24,7 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 		camera_angle += 2 * PI;
 	if (camera_angle > 2 * PI)
 		camera_angle -= 2 * PI;
-	ray->wall_dist = ray->wall_dist * cos(camera_angle);
+	ray->projected_dist = ray->wall_dist * cos(camera_angle);
 }
 
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)

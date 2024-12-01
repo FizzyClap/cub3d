@@ -30,6 +30,7 @@ SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/game/controls_utils.c\
 		srcs/mandatory/game/image.c\
 		srcs/mandatory/game/minimap.c\
+		srcs/mandatory/game/mlx_functions.c\
 		srcs/mandatory/game/mouse_cam.c\
 		srcs/mandatory/game/moves.c\
 		srcs/mandatory/game/raycasting_utils.c\

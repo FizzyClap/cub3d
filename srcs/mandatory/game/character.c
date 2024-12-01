@@ -53,6 +53,6 @@ static void	paint_cursor(t_game *game)
 	{
 		paint.y = -1;
 		while (++paint.y < 5)
-			my_mlx_pixel_put(game->player.cursor, paint.x, paint.y, RED);
+			my_mlx_pixel_put(&game->player.cursor, paint.x, paint.y, RED);
 	}
 }

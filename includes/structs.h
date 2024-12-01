@@ -110,7 +110,7 @@ typedef struct s_ray
 	double	wall_dist;
 	double	angle;
 	int		end;
-	int		is_door;
+	bool	is_door;
 	int		door_idx;
 	t_list	*doors;
 }	t_ray;

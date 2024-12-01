@@ -31,7 +31,6 @@ void	player_init(t_game *game);
 void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color);
 void	get_color(t_color *type, char *path);
 int		rgb_to_int(int r, int g, int b);
-int		minimap_color(t_game *game, t_coord pos);
 //GAME/CONTROLS_UTILS
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
@@ -45,7 +44,9 @@ int		load_textures(t_game *game);
 //GAME/MINIMAP
 void	minimap(t_game *game);
 void	draw_minimap(t_game *game, t_image minimap);
-void	my_mlx_pixel_put(t_image img, int x, int y, int color);
+//GAME/MLX_FUNCTIONS
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
+int		load_xpm(t_game *game, t_image *texture, char *xpm_file);
 //GAME/MOUSE_CAM
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);

@@ -66,6 +66,7 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->side_dist_x = 0;
 	ray->side_dist_y = 0;
 	ray->angle = angle;
+	ray->is_door = false;
 }
 
 double	deg_to_rad(double degrees)
