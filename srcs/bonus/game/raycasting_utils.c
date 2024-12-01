@@ -1,5 +1,7 @@
 #include "../includes/cub3D_bonus.h"
 
+static void	calculate_tex_x_pos(t_ray *ray, t_image **tex);
+
 void	camera_angle_distortion(t_game *game, t_ray *ray)
 {
 	double	camera_angle;
@@ -14,13 +16,16 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
+	char	pos;
+
+	pos = game->map->lines[(int)game->player.y]->content[(int)game->player.x];
 	if (ray->is_door && ray->door_idx == game->door_idx && game->doors[game->door_idx].is_open)
 		*tex = doors_animation(game, game->door_idx, game->doors_frames);
 	else if (ray->is_door && ray->door_idx == game->door_idx && !game->doors[game->door_idx].is_open)
 		*tex = doors_animation(game, game->door_idx, 0);
-	else if (ray->is_door && (game->doors[ray->door_idx].is_open || game->map->lines[(int)game->player.y]->content[(int)game->player.x] == 'D')) // to fix
+	else if (ray->is_door && (game->doors[ray->door_idx].is_open || pos == 'D'))
 		*tex = &game->door[game->doors_frames - 1];
-	else if (ray->is_door && !game->doors[ray->door_idx].is_open) // to fix
+	else if (ray->is_door && !game->doors[ray->door_idx].is_open)
 		*tex = &game->door[0];
 	else if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
 		select_door_texture(game, ray, tex);
@@ -32,6 +37,11 @@ void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 		*tex = &game->texture->image[WEST];
 	else if (ray->side == 0 && ray->step_x > 0)
 		*tex = &game->texture->image[EAST];
+	calculate_tex_x_pos(ray, tex);
+}
+
+static void	calculate_tex_x_pos(t_ray *ray, t_image **tex)
+{
 	if (ray->side == 0)
 		(*tex)->wall_x = ray->pos_y + ray->wall_dist * ray->dir_y;
 	else

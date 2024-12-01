@@ -1,6 +1,6 @@
 #include "../includes/cub3D_bonus.h"
 
-static int is_color_close_to_magenta(int color, int tolerance);
+static int	is_color_close_to_magenta(int color, int tolerance);
 
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
 {
@@ -8,10 +8,10 @@ void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
 
 	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
 		return ;
-	if (is_color_close_to_magenta(color, 100))
+	if (is_color_close_to_magenta(color, 100) == FAILURE)
 		return ;
 	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *) dst = color;
+	*(unsigned int *)dst = color;
 }
 
 void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset)
@@ -31,7 +31,7 @@ void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset)
 			pixel_offset = pos.y * img->line_len + pos.x * (img->bpp / 8);
 			total_size = img->height * img->line_len;
 			if (pixel_offset >= total_size)
-				return;
+				return ;
 			pixel = img->addr + pixel_offset;
 			color = *(int *)pixel;
 			my_mlx_pixel_put(&game->raycast, pos.x + x_offset, \
@@ -40,23 +40,22 @@ void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset)
 	}
 }
 
-static int is_color_close_to_magenta(int color, int tolerance)
+static int	is_color_close_to_magenta(int color, int tolerance)
 {
 	t_color	magenta;
 	t_color	col;
+
 	col.r = (color >> 16) & 0xFF;
 	col.g = (color >> 8) & 0xFF;
 	col.b = color & 0xFF;
-
 	magenta.r = 0xFC;
 	magenta.g = 0x00;
 	magenta.b = 0xFF;
-
 	if (abs(col.r - magenta.r) <= tolerance && \
 		abs(col.g - magenta.g) <= tolerance && \
 		abs(col.b - magenta.b) <= tolerance)
-		return (1);
-	return (0);
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 int	load_xpm(t_game *game, t_image *texture, char *xpm_file)

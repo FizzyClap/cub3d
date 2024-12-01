@@ -1,14 +1,16 @@
 #include "../includes/cub3D_bonus.h"
 
-int get_texture_color(t_image *texture, int tx, int ty)
+int	get_texture_color(t_image *texture, int tx, int ty)
 {
+	int	index;
+
 	if (tx < 0 || tx >= texture->width || ty < 0 || ty >= texture->height)
 		return (0);  // Retourne une couleur par défaut (noir)
-	int index = ty * texture->width + tx;
-	return texture->color[index];
+	index = ty * texture->width + tx;
+	return (texture->color[index]);
 }
 
-void floor_raycast(t_game *game)
+void	floor_raycast(t_game *game)
 {
 	t_image *floorTexture = &game->door[game->doors_frames + 1];  // Texture du plafond
 
@@ -54,7 +56,7 @@ void floor_raycast(t_game *game)
 	}
 }
 
-void ceil_raycast(t_game *game)
+void	ceil_raycast(t_game *game)
 {
 	t_image *ceilTexture = &game->door[game->doors_frames];// Texture du plafond
 
@@ -88,13 +90,11 @@ void ceil_raycast(t_game *game)
 
 			// Affichage du pixel du plafond
 			my_mlx_pixel_put(&game->raycast, x, y, ceilColor); // Sol
-
 			// Mise à jour des coordonnées du sol/plafond pour la prochaine itération
 			// Le mouvement latéral est pris en compte ici, mais l'orientation de la texture est fixe
 			ceilX += ceilStepX;
 			ceilY += ceilStepY;
 		}
-
 		// Mise à jour des coordonnées du sol/plafond pour la prochaine itération
 		// A ce niveau, on ne fait plus de rotation des textures, seulement des déplacements latéraux
 	}

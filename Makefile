@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 -O2 -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -O2 #-fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -16,7 +16,7 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 BLUE = \033[38;5;153m
 NC = \033[0m
-CMD_TO_EXPORT= export LD_LIBRARY_PATH=$(pwd)/sound/SDL2/build/.libs:$(pwd)/sound/SDL2_mixer/build/.libs:$LD_LIBRARY_PATH
+CMD_TO_EXPORT = export LD_LIBRARY_PATH=$(pwd)/sound/SDL2/build/.libs:$(pwd)/sound/SDL2_mixer/build/.libs:$LD_LIBRARY_PATH
 
 SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/init.c\

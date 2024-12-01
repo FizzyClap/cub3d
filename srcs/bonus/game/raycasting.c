@@ -6,7 +6,7 @@ void	raycasting(t_ray *ray, t_game *game)
 {
 	t_coord	loop;
 	double	ray_angle;
-	t_list *tmp;
+	t_list	*tmp;
 
 	floor_raycast(game);
 	ceil_raycast(game);
