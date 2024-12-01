@@ -32,7 +32,7 @@ static int	keycode_launcher(int keycode, t_game *game)
 	{
 		game->file = "maps/moria_bonus.cub";
 		mlx_destroy_image(game->mlx, game->launcher.img);
-		if (load_xpm(game, &game->launcher, "textures/launcher_moria.xpm") == FAILURE)
+		if (!load_xpm(game, &game->launcher, "textures/launcher_moria.xpm"))
 			return (FAILURE);
 		mlx_put_image_to_window(game->mlx, game->win, game->launcher.img, 0, 0);
 	}
@@ -40,7 +40,7 @@ static int	keycode_launcher(int keycode, t_game *game)
 	{
 		game->file = "maps/morgul_bonus.cub";
 		mlx_destroy_image(game->mlx, game->launcher.img);
-		if (load_xpm(game, &game->launcher, "textures/launcher_morgul.xpm") == FAILURE)
+		if (!load_xpm(game, &game->launcher, "textures/launcher_morgul.xpm"))
 			return (FAILURE);
 		mlx_put_image_to_window(game->mlx, game->win, game->launcher.img, 0, 0);
 	}

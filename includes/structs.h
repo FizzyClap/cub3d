@@ -159,6 +159,8 @@ typedef struct s_enemy
 	double	x;
 	double	y;
 	double	distance;
+	bool	vision;
+	bool	check;
 	t_image	texture;
 }	t_enemy;
 

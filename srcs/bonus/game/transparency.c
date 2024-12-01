@@ -58,8 +58,11 @@ void	add_doors(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
 	i = -1;
 	while (++i < game->nb_doors)
 	{
-		if (game->doors[i].x == (int)ray->pos_x && game->doors[i].y == (int)ray->pos_y)
+		if (game->doors[i].x == (int)floor(ray->pos_x) && game->doors[i].y == (int)floor(ray->pos_y))
+		{
 			ray->door_idx = i;
+			return ;
+		}
 	}
 }
 
@@ -72,5 +75,6 @@ static t_ray	*dup_ray(t_ray *ray)
 		return (NULL);
 	ft_memcpy(dest, ray, sizeof(t_ray));
 	dest->doors = NULL;
+	dest->door_idx = ray->door_idx;
 	return (dest);
 }

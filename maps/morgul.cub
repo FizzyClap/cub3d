@@ -1,6 +1,6 @@
 NO 				textures/wall_morgul.xpm
-SO             textures/wall_morgul.xpm
-WE 				textures/wall_morgul.xpm
+SO             textures/wall_moria.xpm
+WE 				textures/wall_moria.xpm
 EA    textures/wall_morgul.xpm
 
 F 			12, 255, 255
@@ -17,6 +17,6 @@ F 			12, 255, 255
 11000000110101011100000010001
 10000000000000001100000010001
 10000000000000001101010010001
-10000011111010111110111000S11
+10000011111010111110111000N11
 11110111 1110101 101111010001
    11111 1111111 111111111111

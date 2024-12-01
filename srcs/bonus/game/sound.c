@@ -17,7 +17,6 @@ void	init_sound(void)
 
 void	sound(t_game *game)
 {
-	init_sound();
 	if (game->launcher_is_running == true)
 	{
 		game->music->launcher = Mix_LoadMUS("sound/TheBridge.mp3");

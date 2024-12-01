@@ -46,7 +46,6 @@ void	shoot_ray_to_center(t_game *game, bool door)
 {
 	t_ray	ray;
 	int		mid_ray;
-	int		enemy_index = -1;
 
 	mid_ray = (game->player.angle * CENT_PI) - 30 + FOV * (870 / (double)SCREEN_WIDTH);
 	init_ray(&ray, game, mid_ray);
@@ -58,11 +57,7 @@ void	shoot_ray_to_center(t_game *game, bool door)
 			toggle_door(game, (int)ray.pos_y, (int)ray.pos_x);
 	}
 	else
-	{
-		enemy_index = hit_enemy(&ray, game);
-		if (enemy_index != -1)
-			game->target = enemy_index;
-	}
+		game->target = hit_enemy(&ray, game);
 }
 
 void	move_ray(t_ray *ray)
