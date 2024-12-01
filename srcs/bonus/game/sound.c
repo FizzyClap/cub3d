@@ -15,13 +15,13 @@ void	init_sound(void)
 		error_sdl("Error: can't open audio\n", NULL);
 }
 
-void	sound(t_game *game)
+int	sound(t_game *game)
 {
 	if (game->launcher_is_running == true)
 	{
 		game->music->launcher = Mix_LoadMUS("sound/TheBridge.mp3");
 		if (!game->music->launcher)
-			error_sdl("Error: Launcher music\n", game->music->launcher);
+			return (ft_fprintf(2, "Error: Launcher music\n"), FAILURE);
 		if (Mix_PlayMusic(game->music->launcher, 0) != 0)
 			error_sdl("Error: Launcher music\n", game->music->launcher);
 	}
@@ -29,7 +29,7 @@ void	sound(t_game *game)
 	{
 		game->music->morgul = Mix_LoadMUS("sound/MinasMorgul.mp3");
 		if (!game->music->morgul)
-			error_sdl("Error: Morgul music\n", game->music->morgul);
+			return (ft_fprintf(2, "Error: Morgul music\n"), FAILURE);
 		if (Mix_PlayMusic(game->music->morgul, 0) != 0)
 			error_sdl("Error: Morgul music\n", game->music->morgul);
 	}
@@ -37,10 +37,11 @@ void	sound(t_game *game)
 	{
 		game->music->moria = Mix_LoadMUS("sound/TheBalrogSong.mp3");
 		if (!game->music->moria)
-			error_sdl("Error: Moria music\n", game->music->moria);
+			return (ft_fprintf(2, "Error: Moria music\n"), FAILURE);
 		if (Mix_PlayMusic(game->music->moria, 0) != 0)
 			error_sdl("Error: Moria music\n", game->music->moria);
 	}
+	return (SUCCESS);
 }
 
 static void	error_sdl(const char *msg, Mix_Music *music)
@@ -78,7 +79,7 @@ void	free_sound(t_game *game)
 	SDL_Quit();
 }
 
-void	init_sound_effects(t_game *game)
+int	init_sound_effects(t_game *game)
 {
 	if (ft_strcmp(game->file, "maps/morgul_bonus.cub") == 0)
 	{
@@ -86,6 +87,9 @@ void	init_sound_effects(t_game *game)
 		game->music->step = Mix_LoadWAV("sound/footstep.wav");
 		game->music->weapon = Mix_LoadWAV("sound/fireball.wav");
 		game->music->hit = Mix_LoadWAV("sound/firedeath.wav");
+		if (!game->music->door || !game->music->step || !game->music->weapon \
+		|| !game->music->hit)
+			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
 	}
 	else if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0)
 	{
@@ -93,7 +97,11 @@ void	init_sound_effects(t_game *game)
 		game->music->step = Mix_LoadWAV("sound/balrogstep.wav");
 		game->music->weapon = Mix_LoadWAV("sound/whip.wav");
 		game->music->hit = Mix_LoadWAV("sound/hit.wav");
+		if (!game->music->door || !game->music->step || !game->music->weapon \
+		|| !game->music->hit)
+			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
 	}
+	return (SUCCESS);
 }
 
 void	struct_game_sound(t_game *game)

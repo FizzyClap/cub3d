@@ -19,8 +19,9 @@
 # include <math.h>
 # include <limits.h>
 
+//MAIN
 int		parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher);
-void	start_game(t_game *game, bool launcher);
+int		start_game(t_game *game, bool launcher);
 //INIT
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
@@ -105,11 +106,11 @@ void	perform_dda(t_ray *ray, t_game *game, bool hitDoor);
 void	calculate_steps(t_ray *ray);
 void	calculate_wall_distance(t_ray *ray);
 //GAME/SOUND
-void	sound(t_game *game);
 void	init_sound(void);
-void	free_sound(t_game *game);
+int		sound(t_game *game);
+int		init_sound_effects(t_game *game);
 void	struct_game_sound(t_game *game);
-void	init_sound_effects(t_game *game);
+void	free_sound(t_game *game);
 //GAME/TRANSPARENCY
 void	draw_doors(t_game *game, t_ray *ray, t_coord loop);
 void	doors_transparency(t_game *game, t_list **tmp, t_ray *ray, t_coord loop);

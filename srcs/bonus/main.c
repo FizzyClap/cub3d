@@ -21,7 +21,8 @@ int	main(int argc, char **argv)
 	{
 		init_game(game, texture, map, false);
 		game->file = argv[1];
-		start_game(game, false);
+		if (start_game(game, false) == FAILURE)
+			return (close_game(game), EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -65,7 +66,7 @@ int	parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool lau
 	return (SUCCESS);
 }
 
-void	start_game(t_game *game, bool launcher)
+int	start_game(t_game *game, bool launcher)
 {
 	if (launcher == false)
 		game->mlx = mlx_init();
@@ -75,8 +76,10 @@ void	start_game(t_game *game, bool launcher)
 		close_game(game);
 	}
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
-	sound(game);
-	init_sound_effects(game);
+	if (sound(game) == FAILURE)
+		return (FAILURE);
+	if (init_sound_effects(game) == FAILURE)
+		return (FAILURE);
 	player_init(game);
 	minimap(game);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
@@ -89,6 +92,7 @@ void	start_game(t_game *game, bool launcher)
 	mlx_mouse_hide(game->mlx, game->win);
 	mlx_loop_hook(game->mlx, loop, game);
 	mlx_loop(game->mlx);
+	return (SUCCESS);
 }
 
 static int	loop(t_game *game, t_ray *ray)
