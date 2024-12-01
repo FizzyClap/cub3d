@@ -66,6 +66,7 @@ static int	launch_game(t_game *game)
 	game->launcher_is_running = false;
 	mlx_destroy_window(game->mlx, game->win);
 	init_game(game, game->texture, game->map, true);
+	get_map_type(game);
 	if (start_game(game, true) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
@@ -87,4 +88,13 @@ static int	close_launcher(t_game *game)
 	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);
+}
+
+void	get_map_type(t_game *game)
+{
+	if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0 || \
+		ft_strcmp(game->file, "maps/moria.cub") == 0)
+		game->map_type = "moria";
+	else
+		game->map_type = "morgul";
 }

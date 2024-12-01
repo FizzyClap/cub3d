@@ -9,13 +9,13 @@ int	init_weapon(t_game *game)
 	char	**weapon;
 
 	weapon = NULL;
-	if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0)
+	if (ft_strcmp(game->map_type, "moria") == 0)
 	{
 		weapon = create_balrog_tab(game);
 		if (load_weapons(game, weapon) == FAILURE)
 			return (FAILURE);
 	}
-	else if (ft_strcmp(game->file, "maps/morgul_bonus.cub") == 0)
+	else if (ft_strcmp(game->map_type, "morgul") == 0)
 	{
 		weapon = create_staff_tab(game);
 		if (load_weapons(game, weapon) == FAILURE)

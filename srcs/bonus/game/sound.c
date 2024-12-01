@@ -25,7 +25,7 @@ int	sound(t_game *game)
 		if (Mix_PlayMusic(game->music->launcher, 0) != 0)
 			error_sdl("Error: Launcher music\n", game->music->launcher);
 	}
-	else if (ft_strcmp(game->file, "maps/morgul_bonus.cub") == 0)
+	else if (ft_strcmp(game->map_type, "morgul") == 0)
 	{
 		game->music->morgul = Mix_LoadMUS("sound/MinasMorgul.mp3");
 		if (!game->music->morgul)
@@ -33,7 +33,7 @@ int	sound(t_game *game)
 		if (Mix_PlayMusic(game->music->morgul, 0) != 0)
 			error_sdl("Error: Morgul music\n", game->music->morgul);
 	}
-	else if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0)
+	else if (ft_strcmp(game->map_type, "moria") == 0)
 	{
 		game->music->moria = Mix_LoadMUS("sound/TheBalrogSong.mp3");
 		if (!game->music->moria)
@@ -81,7 +81,7 @@ void	free_sound(t_game *game)
 
 int	init_sound_effects(t_game *game)
 {
-	if (ft_strcmp(game->file, "maps/morgul_bonus.cub") == 0)
+	if (ft_strcmp(game->map_type, "morgul") == 0)
 	{
 		game->music->door = Mix_LoadWAV("sound/harrow.wav");
 		game->music->step = Mix_LoadWAV("sound/footstep.wav");
@@ -91,7 +91,7 @@ int	init_sound_effects(t_game *game)
 		|| !game->music->hit)
 			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
 	}
-	else if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0)
+	else if (ft_strcmp(game->map_type, "moria") == 0)
 	{
 		game->music->door = Mix_LoadWAV("sound/ancientdoor.wav");
 		game->music->step = Mix_LoadWAV("sound/balrogstep.wav");

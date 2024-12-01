@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 	{
 		init_game(game, texture, map, false);
 		game->file = argv[1];
+		get_map_type(game);
 		if (start_game(game, false) == FAILURE)
 			return (close_game(game), EXIT_FAILURE);
 	}

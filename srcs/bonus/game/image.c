@@ -11,7 +11,7 @@ int	load_textures(t_game *game)
 
 	if (!load_walls(game) || !init_weapon(game))
 		return (FAILURE);
-	if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0)
+	if (ft_strcmp(game->map_type, "moria") == 0)
 	{
 		if (init_enemy(game, "textures/dwarf.xpm") == FAILURE)
 			return (FAILURE);
@@ -19,7 +19,7 @@ int	load_textures(t_game *game)
 		if (!map)
 			return (FAILURE);
 	}
-	else if (ft_strcmp(game->file, "maps/morgul_bonus.cub") == 0)
+	else if (ft_strcmp(game->map_type, "morgul") == 0)
 	{
 		if (init_enemy(game, "textures/nazgul.xpm") == FAILURE)
 			return (FAILURE);

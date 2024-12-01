@@ -198,6 +198,7 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	char		*file;
+	char		*map_type;
 	bool		launcher_is_running;
 	int			nb_doors;
 	int			door_idx;

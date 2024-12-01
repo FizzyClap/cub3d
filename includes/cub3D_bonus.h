@@ -76,6 +76,7 @@ void	ceil_raycast(t_game *game);
 int		load_textures(t_game *game);
 //GAME/LAUNCHER
 int		open_launcher(t_game *game);
+void	get_map_type(t_game *game);
 //GAME/MINIMAP
 void	minimap(t_game *game);
 void	draw_minimap(t_game *game, t_image minimap);
