@@ -76,7 +76,29 @@ int	load_xpm(t_game *game, t_image *texture, char *xpm_file)
 
 int	mouse_click(int button, int x, int y, t_game *game)
 {
+	(void)button;
 	if (x >= 890 && x <= 1000 && y >= 50 && y <= 170 && !Mix_Playing(-1))
 		game->show_gollum = true;
+	else if (x >= 140 && x <= 700 && y >= 415 && y <= 755)
+	{
+		game->file = "maps/moria_bonus.cub";
+		free_launcher_image(game);
+		if (!create_launcher_images(game, "textures/launcher/launcher_moria"))
+			return (FAILURE);
+	}
+	else if (x >= 1220 && x <= 1785 && y >= 420 && y <= 750)
+	{
+		game->file = "maps/morgul_bonus.cub";
+		free_launcher_image(game);
+		if (!create_launcher_images(game, "textures/launcher/launcher_morgul"))
+			return (FAILURE);
+	}
+	else
+	{
+		game->file = NULL;
+		free_launcher_image(game);
+		if (!create_launcher_images(game, "textures/launcher/launcher"))
+			return (FAILURE);
+	}
 	return (SUCCESS);
 }
