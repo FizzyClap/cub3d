@@ -77,3 +77,22 @@ static void	kill_enemy(t_game *game)
 		game->map->lines[pos.y]->content[pos.x] = '0';
 	}
 }
+
+void	*gollum(t_game *game)
+{
+	int		current_frame;
+	double	elapsed_time;
+
+	elapsed_time = game->time - game->launcher_start_animation;
+	if (elapsed_time < 0)
+		elapsed_time = 0;
+	if (game->launcher_animation == false)
+		return (game->launcher[0].img);
+	current_frame = (int)(elapsed_time / 0.1);
+	if (current_frame >= game->launcher_frames)
+	{
+		current_frame = game->launcher_frames - 1;
+		game->launcher_animation = false;
+	}
+	return (game->launcher[current_frame].img);
+}

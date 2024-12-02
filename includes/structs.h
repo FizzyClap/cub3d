@@ -152,6 +152,7 @@ typedef struct s_music
 	Mix_Chunk	*step;
 	Mix_Chunk	*weapon;
 	Mix_Chunk	*hit;
+	Mix_Chunk	*gollum;
 }	t_music;
 
 typedef struct s_enemy
@@ -207,6 +208,9 @@ typedef struct s_game
 	char		**morgul;
 	int			doors_frames;
 	int			weapons_frames;
+	int			launcher_frames;
+	bool		launcher_animation;
+	double		launcher_start_animation;
 	int			nb_enemy;
 	int			target;
 	double		time;
@@ -220,7 +224,7 @@ typedef struct s_game
 	t_image		*door;
 	t_image		ceil;
 	t_image		floor_txt;
-	t_image		launcher;
+	t_image		*launcher;
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;

@@ -71,6 +71,8 @@ void	free_sound(t_game *game)
 		Mix_FreeChunk(game->music->weapon);
 	if (game->music->hit)
 		Mix_FreeChunk(game->music->hit);
+	if (game->music->gollum)
+		Mix_FreeChunk(game->music->gollum);
 	if (game->music)
 		free(game->music);
 	Mix_CloseAudio();
@@ -81,7 +83,9 @@ void	free_sound(t_game *game)
 
 int	init_sound_effects(t_game *game)
 {
-	if (ft_strcmp(game->map_type, "morgul") == 0)
+	if (!game->map_type)
+		game->music->gollum = Mix_LoadWAV("sound/My Precious.wav");
+	else if (ft_strcmp(game->map_type, "morgul") == 0)
 	{
 		game->music->door = Mix_LoadWAV("sound/harrow.wav");
 		game->music->step = Mix_LoadWAV("sound/footstep.wav");
@@ -116,4 +120,5 @@ void	struct_game_sound(t_game *game)
 	game->music->step = NULL;
 	game->music->weapon = NULL;
 	game->music->hit = NULL;
+	game->music->gollum = NULL;
 }

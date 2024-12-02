@@ -33,6 +33,7 @@ void	print_map(t_map *map, int fd);
 void	print_texture(t_texture *texture, int fd);
 //FREE/FREE_GAME
 int		close_game(t_game *game);
+void	free_gollum(t_game *game);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
 //FREE/FREE_TEXTURE
@@ -41,6 +42,7 @@ void	free_texture(t_texture *texture);
 double	get_current_time(void);
 t_image	*doors_animation(t_game *game, int idx, int start);
 t_image	*weapon_animation(t_game *game);
+void	*gollum(t_game *game);
 //GAME/CHARACTER
 void	player_init(t_game *game);
 //GAME/COLORS
