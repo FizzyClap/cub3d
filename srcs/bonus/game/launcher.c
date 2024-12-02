@@ -17,7 +17,6 @@ int	open_launcher(t_game *game)
 	game->file = NULL;
 	game->texture = NULL;
 	game->map = NULL;
-	game->map_type = NULL;
 	struct_game_sound(game);
 	game->launcher_animation = false;
 	game->launcher_is_running = true;
@@ -29,7 +28,6 @@ int	open_launcher(t_game *game)
 	{
 		if (sound(game) == FAILURE)
 			return (close_launcher(game));
-		init_sound_effects(game);
 		mlx_hook(game->win, KeyPress, KeyPressMask, keycode_launcher, game);
 		mlx_hook(game->win, DestroyNotify, NoEventMask, close_launcher, game);
 		mlx_loop_hook(game->mlx, loop_animation, game);
@@ -118,7 +116,7 @@ int	create_launcher_images(t_game *game, char *prefix)
 	char	**tab;
 	int		i;
 
-	tab = malloc(sizeof(char *) * 10);
+	tab = malloc(sizeof(char *) * 9);
 	if (!tab)
 		return (FAILURE);
 	tab[0] = ft_strjoin(prefix, ".xpm");
@@ -126,12 +124,11 @@ int	create_launcher_images(t_game *game, char *prefix)
 	tab[2] = ft_strjoin(prefix, "(2).xpm");
 	tab[3] = ft_strjoin(prefix, "(3).xpm");
 	tab[4] = ft_strjoin(prefix, "(4).xpm");
-	tab[5] = ft_strjoin(prefix, "(4).xpm");
-	tab[6] = ft_strjoin(prefix, "(3).xpm");
-	tab[7] = ft_strjoin(prefix, "(2).xpm");
-	tab[8] = ft_strjoin(prefix, "(1).xpm");
-	tab[9] = NULL;
-	game->launcher_frames = 9;
+	tab[5] = ft_strjoin(prefix, "(3).xpm");
+	tab[6] = ft_strjoin(prefix, "(2).xpm");
+	tab[7] = ft_strjoin(prefix, "(1).xpm");
+	tab[8] = NULL;
+	game->launcher_frames = 8;
 	game->launcher = ft_calloc(sizeof(t_image), (game->launcher_frames + 1));
 	if (!game->launcher)
 		return (ft_free_tab(tab), FAILURE);

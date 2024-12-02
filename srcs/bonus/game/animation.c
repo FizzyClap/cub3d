@@ -82,13 +82,20 @@ void	*gollum(t_game *game)
 {
 	int		current_frame;
 	double	elapsed_time;
+	double	adjusted_time;
 
 	elapsed_time = game->time - game->launcher_start_animation;
 	if (elapsed_time < 0)
 		elapsed_time = 0;
+	if (elapsed_time >= 4 * 0.1 && elapsed_time < (4 * 0.1 + 3.5))
+		adjusted_time = 4 * 0.1;
+	else if (elapsed_time >= (4 * 0.1 + 3.5))
+		adjusted_time = elapsed_time - 3.5;
+	else
+		adjusted_time = elapsed_time;
 	if (game->launcher_animation == false)
 		return (game->launcher[0].img);
-	current_frame = (int)(elapsed_time / 0.1);
+	current_frame = (int)(adjusted_time / 0.1);
 	if (current_frame >= game->launcher_frames)
 	{
 		current_frame = game->launcher_frames - 1;
@@ -96,3 +103,4 @@ void	*gollum(t_game *game)
 	}
 	return (game->launcher[current_frame].img);
 }
+

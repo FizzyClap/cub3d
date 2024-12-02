@@ -29,12 +29,9 @@ static int	load_weapons(t_game *game, char **map)
 {
 	int	i;
 
-	game->weapon = malloc(sizeof(t_image) * game->weapons_frames);
+	game->weapon = ft_calloc(sizeof(t_image), game->weapons_frames);
 	if (!game->weapon)
 		return (FAILURE);
-	i = -1;
-	while (++i < game->weapons_frames)
-		game->weapon[i].img = NULL;
 	i = -1;
 	while (++i < game->weapons_frames)
 		if (load_xpm(game, &game->weapon[i], map[i]) == FAILURE)

@@ -54,12 +54,9 @@ static int	load_doors(t_game *game, char **map)
 {
 	int	i;
 
-	game->door = malloc(sizeof(t_image) * (game->doors_frames + 2));
+	game->door = ft_calloc(sizeof(t_image), (game->doors_frames + 2));
 	if (!game->door)
 		return (FAILURE);
-	i = -1;
-	while (++i < game->doors_frames + 2)
-		game->door[i].img = NULL;
 	i = -1;
 	while (++i < game->doors_frames + 2)
 		if (load_xpm(game, &game->door[i], map[i]) == FAILURE)
