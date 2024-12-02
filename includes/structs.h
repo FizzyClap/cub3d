@@ -200,16 +200,15 @@ typedef struct s_game
 	void		*win;
 	char		*file;
 	char		*map_type;
-	bool		launcher_is_running;
+	bool		show_gollum;
 	int			nb_doors;
 	int			door_idx;
-	char		**moria;
-	char		**weapon_map;
 	char		**morgul;
 	int			doors_frames;
 	int			weapons_frames;
 	int			launcher_frames;
 	bool		launcher_animation;
+	bool		launcher_is_running;
 	double		launcher_start_animation;
 	int			nb_enemy;
 	int			target;

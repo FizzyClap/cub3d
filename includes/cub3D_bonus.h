@@ -33,11 +33,13 @@ void	print_map(t_map *map, int fd);
 void	print_texture(t_texture *texture, int fd);
 //FREE/FREE_GAME
 int		close_game(t_game *game);
-void	free_gollum(t_game *game);
+int		close_launcher(t_game *game);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
 //FREE/FREE_TEXTURE
 void	free_texture(t_texture *texture);
+void	free_image(t_game *game);
+void	free_launcher_image(t_game *game);
 //GAME/ANIMATION
 double	get_current_time(void);
 t_image	*doors_animation(t_game *game, int idx, int start);
@@ -86,6 +88,7 @@ void	draw_minimap(t_game *game, t_image minimap);
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
 void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset);
 int		load_xpm(t_game *game, t_image *texture, char *xpm_file);
+int		mouse_click(int button, int x, int y, t_game *game);
 //GAME/MOUSE
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
@@ -114,6 +117,12 @@ int		sound(t_game *game);
 int		init_sound_effects(t_game *game);
 void	struct_game_sound(t_game *game);
 void	free_sound(t_game *game);
+//GAME/TAB_IMAGES
+char	**create_moria_tab(t_game *game);
+char	**create_morgul_tab(t_game *game);
+char	**create_balrog_tab(t_game *game);
+char	**create_staff_tab(t_game *game);
+int		create_launcher_images(t_game *game, char *prefix);
 //GAME/TRANSPARENCY
 void	draw_doors(t_game *game, t_ray *ray, t_coord loop);
 void	doors_transparency(t_game *game, t_list **tmp, t_ray *ray, t_coord loop);

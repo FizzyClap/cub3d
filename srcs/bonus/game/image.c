@@ -2,8 +2,6 @@
 
 static int	load_walls(t_game *game);
 static int	load_doors(t_game *game, char **map);
-static char	**create_moria_tab(t_game *game);
-static char	**create_morgul_tab(t_game *game);
 
 int	load_textures(t_game *game)
 {
@@ -63,56 +61,4 @@ static int	load_doors(t_game *game, char **map)
 			return (FAILURE);
 	free(map);
 	return (SUCCESS);
-}
-
-static char	**create_moria_tab(t_game *game)
-{
-	game->moria = malloc(sizeof(char *) * 14);
-	if (!game->moria)
-		return (NULL);
-	game->moria[0] = "textures/doors/moria.xpm";
-	game->moria[1] = "textures/doors/moria(1).xpm";
-	game->moria[2] = "textures/doors/moria(2).xpm";
-	game->moria[3] = "textures/doors/moria(3).xpm";
-	game->moria[4] = "textures/doors/moria(4).xpm";
-	game->moria[5] = "textures/doors/moria(5).xpm";
-	game->moria[6] = "textures/doors/moria(6).xpm";
-	game->moria[7] = "textures/doors/moria(7).xpm";
-	game->moria[8] = "textures/doors/moria(8).xpm";
-	game->moria[9] = "textures/doors/moria(9).xpm";
-	game->moria[10] = "textures/doors/door_open_test.xpm";
-	game->moria[11] = "textures/moria_ceil.xpm";
-	game->moria[12] = "textures/moria_floor.xpm";
-	game->moria[13] = NULL;
-	game->doors_frames = 11;
-	return (game->moria);
-}
-
-static char	**create_morgul_tab(t_game *game)
-{
-	game->morgul = malloc(sizeof(char *) * 20);
-	if (!game->morgul)
-		return (NULL);
-	game->morgul[0] = "textures/doors/morgul.xpm";
-	game->morgul[1] = "textures/doors/morgul(1).xpm";
-	game->morgul[2] = "textures/doors/morgul(2).xpm";
-	game->morgul[3] = "textures/doors/morgul(3).xpm";
-	game->morgul[4] = "textures/doors/morgul(4).xpm";
-	game->morgul[5] = "textures/doors/morgul(5).xpm";
-	game->morgul[6] = "textures/doors/morgul(6).xpm";
-	game->morgul[7] = "textures/doors/morgul(7).xpm";
-	game->morgul[8] = "textures/doors/morgul(8).xpm";
-	game->morgul[9] = "textures/doors/morgul(9).xpm";
-	game->morgul[10] = "textures/doors/morgul(10).xpm";
-	game->morgul[11] = "textures/doors/morgul(11).xpm";
-	game->morgul[12] = "textures/doors/morgul(12).xpm";
-	game->morgul[13] = "textures/doors/morgul(13).xpm";
-	game->morgul[14] = "textures/doors/morgul(14).xpm";
-	game->morgul[15] = "textures/doors/morgul(15).xpm";
-	game->morgul[16] = "textures/doors/morgul_open.xpm";
-	game->morgul[17] = "textures/morgul_ceil.xpm";
-	game->morgul[18] = "textures/morgul_floor.xpm";
-	game->morgul[19] = NULL;
-	game->doors_frames = 17;
-	return (game->morgul);
 }

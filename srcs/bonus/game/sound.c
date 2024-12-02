@@ -35,34 +35,6 @@ int	sound(t_game *game)
 	return (SUCCESS);
 }
 
-void	free_sound(t_game *game)
-{
-	Mix_HaltChannel(-1);
-	Mix_HaltMusic();
-	if (game->music->launcher)
-		Mix_FreeMusic(game->music->launcher);
-	if (game->music->moria)
-		Mix_FreeMusic(game->music->moria);
-	if (game->music->morgul)
-		Mix_FreeMusic(game->music->morgul);
-	if (game->music->door)
-		Mix_FreeChunk(game->music->door);
-	if (game->music->step)
-		Mix_FreeChunk(game->music->step);
-	if (game->music->weapon)
-		Mix_FreeChunk(game->music->weapon);
-	if (game->music->hit)
-		Mix_FreeChunk(game->music->hit);
-	if (game->music->gollum)
-		Mix_FreeChunk(game->music->gollum);
-	if (game->music)
-		free(game->music);
-	Mix_CloseAudio();
-	Mix_Quit();
-	SDL_QuitSubSystem(SDL_INIT_AUDIO);
-	SDL_Quit();
-}
-
 int	init_sound_effects(t_game *game)
 {
 	if (ft_strcmp(game->map_type, "morgul") == 0)
@@ -101,4 +73,32 @@ void	struct_game_sound(t_game *game)
 	game->music->weapon = NULL;
 	game->music->hit = NULL;
 	game->music->gollum = NULL;
+}
+
+void	free_sound(t_game *game)
+{
+	Mix_HaltChannel(-1);
+	Mix_HaltMusic();
+	if (game->music->launcher)
+		Mix_FreeMusic(game->music->launcher);
+	if (game->music->gollum)
+		Mix_FreeChunk(game->music->gollum);
+	if (game->music->moria)
+		Mix_FreeMusic(game->music->moria);
+	if (game->music->morgul)
+		Mix_FreeMusic(game->music->morgul);
+	if (game->music->door)
+		Mix_FreeChunk(game->music->door);
+	if (game->music->step)
+		Mix_FreeChunk(game->music->step);
+	if (game->music->weapon)
+		Mix_FreeChunk(game->music->weapon);
+	if (game->music->hit)
+		Mix_FreeChunk(game->music->hit);
+	if (game->music)
+		free(game->music);
+	Mix_CloseAudio();
+	Mix_Quit();
+	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	SDL_Quit();
 }

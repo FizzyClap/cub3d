@@ -73,3 +73,10 @@ int	load_xpm(t_game *game, t_image *texture, char *xpm_file)
 	texture->height = height;
 	return (SUCCESS);
 }
+
+int	mouse_click(int button, int x, int y, t_game *game)
+{
+	if (x >= 890 && x <= 1000 && y >= 50 && y <= 170 && !Mix_Playing(-1))
+		game->show_gollum = true;
+	return (SUCCESS);
+}

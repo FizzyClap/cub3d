@@ -66,6 +66,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
 				srcs/bonus/game/sound.c\
+				srcs/bonus/game/tab_images.c\
 				srcs/bonus/game/transparency.c\
 				srcs/bonus/game/weapon.c\
 				srcs/bonus/parsing/check_arg.c\
