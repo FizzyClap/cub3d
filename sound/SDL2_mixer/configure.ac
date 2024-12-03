@@ -217,7 +217,7 @@ CheckWarnAll()
     if test x$have_gcc_Wall = xyes; then
         EXTRA_CFLAGS="$EXTRA_CFLAGS -Wall"
 
-dnl Haiku headers use multicharacter constants all over the place. Ignore these warnings when using -Wall.
+dnl Haiku headers use multicharacter constants all over the place. Ignore these warnings when using -wall_moria.
         AC_MSG_CHECKING(for necessary GCC -Wno-multichar option)
         need_gcc_Wno_multichar=no
         case "$host" in

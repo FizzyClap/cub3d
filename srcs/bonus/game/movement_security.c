@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static double	check_ray(t_game *game, t_ray ray);
 static double	ray_distance(t_game *game, t_ray ray);
@@ -61,7 +61,7 @@ static double	ray_distance(t_game *game, t_ray ray)
 	ray.side_dist_y = 0;
 	ray.angle = angle;
 	calculate_steps(&ray);
-	perform_dda(&ray, game);
+	perform_dda(&ray, game, false);
 	calculate_wall_distance(&ray);
 	return (ray.wall_dist);
 }
@@ -69,9 +69,9 @@ static double	ray_distance(t_game *game, t_ray ray)
 void	jump(t_game *game)
 {
 	if (game->player.crouch == true)
-		game->player.speed = 0.005;
-	if (game->player.crouch == false && game->player.speed < 0.01)
-		game->player.speed += 0.01;
+		game->player.speed = 0.01;
+	if (game->player.crouch == false)
+		game->player.speed = 0.05;
 	if (game->player.jump == false && game->player.h > 0)
 		game->player.h -= 100;
 	if (game->player.jump == true && game->player.h < 400)
@@ -82,4 +82,11 @@ void	jump(t_game *game)
 		game->player.h -= 50;
 	if (game->player.crouch == false && game->player.h < 0)
 		game->player.h += 50;
+}
+
+int	enemy_collision(t_game *game, double x, double y)
+{
+	if (game->map->lines[(int)y]->content[(int)x] == 'A')
+		return (SUCCESS);
+	return (FAILURE);
 }

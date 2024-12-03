@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static int	get_texture(t_texture *texture, char *line);
 static int	right_order(t_texture *texture);

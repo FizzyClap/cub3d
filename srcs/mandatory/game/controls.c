@@ -1,20 +1,29 @@
 #include "../includes/cub3D.h"
 
-static void	move_left(t_game *game);
-static void	move_right(t_game *game);
-
-int	keycode(int keycode, t_game *game)
+void	make_actions(t_game *game, t_ray *ray)
 {
-	if (keycode == ESC)
-		close_game(game);
-	if (keycode == W || keycode == UP)
+	raycasting(ray, game);
+	draw_minimap(game, game->raycast);
+	if (game->player.action[MOVEUP] == 1)
 		move_up(game);
-	if (keycode == A)
-		move_left(game);
-	if (keycode == S || keycode == DOWN)
+	if (game->player.action[MOVEBACK] == 1)
 		move_down(game);
-	if (keycode == D)
+	if (game->player.action[MOVELEFT] == 1)
+		move_left(game);
+	if (game->player.action[MOVERIGHT] == 1)
 		move_right(game);
+}
+
+int	keyrelease(int keycode, t_game *game)
+{
+	if (keycode == W || keycode == UP)
+		game->player.action[MOVEUP] = 0;
+	if (keycode == A)
+		game->player.action[MOVELEFT] = 0;
+	if (keycode == S || keycode == DOWN)
+		game->player.action[MOVEBACK] = 0;
+	if (keycode == D)
+		game->player.action[MOVERIGHT] = 0;
 	if (keycode == RIGHT)
 		right_cam(game, 970);
 	if (keycode == LEFT)
@@ -22,73 +31,37 @@ int	keycode(int keycode, t_game *game)
 	return (SUCCESS);
 }
 
-void	move_up(t_game *game)
+int	keycode(int keycode, t_game *game)
 {
-	int	x;
-	int	y;
-
-	x = (game->player.x + game->player.d_x * (game->player.speed * 2));
-	y = (game->player.y + game->player.d_y * (game->player.speed * 2));
-	if (check_backroom(game, x, y) == FAILURE)
-	{
-		check_move(game);
-		return ;
-	}
-	refresh_position(game, MOVE, game->player.speed);
-	if (game->player.speed < 0.01)
-		game->player.speed += 0.0005;
+	if (keycode == ESC)
+		close_game(game);
+	if (keycode == W || keycode == UP)
+		game->player.action[0] = 1;
+	if (keycode == S || keycode == DOWN)
+		game->player.action[1] = 1;
+	if (keycode == A)
+		game->player.action[2] = 1;
+	if (keycode == D)
+		game->player.action[3] = 1;
+	if (keycode == RIGHT)
+		right_cam(game, 970);
+	if (keycode == LEFT)
+		left_cam(game, 950);
+	return (SUCCESS);
 }
 
-void	move_down(t_game *game)
+void	move_div(t_game *game)
 {
-	int	x;
-	int	y;
+	int	result;
 
-	game->player.angle -= PI;
-	correct_angle(game);
-	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * game->player.speed);
-	y = (game->player.y - game->player.d_y * game->player.speed);
-	if (check_backroom(game, x, y) == FAILURE)
-		check_move(game);
-	move_up(game);
-	game->player.angle += PI;
-	correct_angle(game);
-	refresh_position(game, DELTA, 0);
-}
-
-static void	move_left(t_game *game)
-{
-	int	x;
-	int	y;
-
-	game->player.angle -= (D_PI);
-	correct_angle(game);
-	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * game->player.speed);
-	y = (game->player.y - game->player.d_y * game->player.speed);
-	if (check_backroom(game, x, y) == FAILURE)
-		check_move(game);
-	move_up(game);
-	game->player.angle += (D_PI);
-	correct_angle(game);
-	refresh_position(game, DELTA, 0);
-}
-
-static void	move_right(t_game *game)
-{
-	int	x;
-	int	y;
-
-	game->player.angle += (D_PI);
-	correct_angle(game);
-	refresh_position(game, DELTA, 0);
-	x = (game->player.x - game->player.d_x * game->player.speed);
-	y = (game->player.y - game->player.d_y * game->player.speed);
-	if (check_backroom(game, x, y) == FAILURE)
-		check_move(game);
-	move_up(game);
-	game->player.angle -= (D_PI);
-	correct_angle(game);
-	refresh_position(game, DELTA, 0);
+	result = 0;
+	if (game->player.action[MOVEUP] == 1)
+		result++;
+	if (game->player.action[MOVELEFT] == 1)
+		result++;
+	if (game->player.action[MOVERIGHT] == 1)
+		result++;
+	if (game->player.action[MOVEBACK] == 1)
+		result++;
+	game->player.move_div = result;
 }

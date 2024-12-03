@@ -24,6 +24,7 @@ int	main(int argc, char **argv)
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
+	mlx_hook(game->win, KeyRelease, KeyReleaseMask, keyrelease, game);
 	mlx_hook(game->win, KeyPress, KeyPressMask, keycode, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, close_game, game);
 	mlx_mouse_hide(game->mlx, game->win);
@@ -56,7 +57,7 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	return (SUCCESS);
 }
 
-static void	clear_image(char *address, int height, int width)
+void	clear_image(char *address, int height, int width)
 {
 	int		*image_data;
 	int		pixels;
@@ -74,13 +75,10 @@ static void	clear_image(char *address, int height, int width)
 
 static int	loop(t_game *game, t_ray *ray)
 {
-	clear_image(game->raycast.addr, SCREEN_HEIGHT, SCREEN_WIDTH);
-	raycasting(ray, game);
-	clear_image(game->minimap.addr, MMH, MMW);
-	draw_minimap(game, game->minimap);
+	move_div(game);
+	make_actions(game, ray);
 	mouse_move(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->minimap.img, 20, 20);
+	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);;
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
 		118, 118);
 	return (SUCCESS);

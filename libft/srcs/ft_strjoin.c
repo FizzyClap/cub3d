@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 14:02:56 by roespici          #+#    #+#             */
-/*   Updated: 2024/09/14 14:14:43 by roespici         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:28:26 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = -1;
 	while (s2[++i])
 		dest[s1_len + i] = s2[i];
-	free(s1);
 	return (dest);
 }

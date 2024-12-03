@@ -1,12 +1,12 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static double	cam_sensibility(int x);
 static void		cam_z(t_game *game, int y);
 
 void	mouse_move(t_game *game)
 {
-	int			x;
-	int			y;
+	int	x;
+	int	y;
 
 	x = 960;
 	y = 540;
@@ -18,6 +18,10 @@ void	mouse_move(t_game *game)
 	if (y != 540)
 		cam_z(game, y);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
+	game->player.plane_x = -0.66 * sin(game->player.angle);
+	game->player.plane_y = 0.66 * cos(game->player.angle);
+	game->player.d_x = cos(game->player.angle);
+	game->player.d_y = sin(game->player.angle);
 }
 
 static void	cam_z(t_game *game, int y)

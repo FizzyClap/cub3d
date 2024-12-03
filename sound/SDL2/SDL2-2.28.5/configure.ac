@@ -1639,7 +1639,7 @@ CheckWarnAll()
     if test x$have_gcc_Wall = xyes; then
         EXTRA_CFLAGS="$EXTRA_CFLAGS -Wall"
 
-dnl Haiku headers use multicharacter constants all over the place. Ignore these warnings when using -Wall.
+dnl Haiku headers use multicharacter constants all over the place. Ignore these warnings when using -wall_moria.
         AC_MSG_CHECKING(for necessary GCC -Wno-multichar option)
         need_gcc_Wno_multichar=no
         case "$host" in
@@ -2551,7 +2551,7 @@ CheckOpenGL()
          #include <GL/glext.h>
         ]],[])], [video_opengl=yes],[])
         AC_MSG_RESULT($video_opengl)
-        if test x$video_opengl = xyes; then 
+        if test x$video_opengl = xyes; then
             AC_DEFINE(SDL_VIDEO_OPENGL, 1, [ ])
             AC_DEFINE(SDL_VIDEO_RENDER_OGL, 1, [ ])
             SUMMARY_video="${SUMMARY_video} opengl"
@@ -4935,7 +4935,7 @@ if test x$enable_static = xyes; then
     SUMMARY="${SUMMARY}Building Static Libraries\n"
 fi
 SUMMARY="${SUMMARY}Enabled modules :${SUMMARY_modules}\n"
-SUMMARY="${SUMMARY}Assembly Math   :${SUMMARY_math}\n" 
+SUMMARY="${SUMMARY}Assembly Math   :${SUMMARY_math}\n"
 SUMMARY="${SUMMARY}Audio drivers   :${SUMMARY_audio}\n"
 SUMMARY="${SUMMARY}Video drivers   :${SUMMARY_video}\n"
 if test x$have_x = xyes; then

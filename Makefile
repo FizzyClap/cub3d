@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 -O2 -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -O2 #-fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -16,7 +16,7 @@ GREEN = \033[0;32m
 RED = \033[0;31m
 BLUE = \033[38;5;153m
 NC = \033[0m
-CMD_TO_EXPORT= export LD_LIBRARY_PATH=$(pwd)/sound/SDL2/build/.libs:$(pwd)/sound/SDL2_mixer/build/.libs:$LD_LIBRARY_PATH
+CMD_TO_EXPORT = export LD_LIBRARY_PATH=$(pwd)/sound/SDL2/build/.libs:$(pwd)/sound/SDL2_mixer/build/.libs:$LD_LIBRARY_PATH
 
 SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/init.c\
@@ -30,7 +30,9 @@ SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/game/controls_utils.c\
 		srcs/mandatory/game/image.c\
 		srcs/mandatory/game/minimap.c\
+		srcs/mandatory/game/mlx_functions.c\
 		srcs/mandatory/game/mouse_cam.c\
+		srcs/mandatory/game/moves.c\
 		srcs/mandatory/game/raycasting_utils.c\
 		srcs/mandatory/game/raycasting.c\
 		srcs/mandatory/parsing/check_arg.c\
@@ -40,7 +42,6 @@ SRCS =	srcs/mandatory/main.c\
 		srcs/mandatory/parsing/parsing_utils.c\
 
 SRCS_BONUS =	srcs/bonus/main.c\
-				srcs/bonus/game/test.c\
 				srcs/bonus/init.c\
 				srcs/bonus/debug/print.c\
 				srcs/bonus/free/free_game.c\
@@ -52,16 +53,21 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/controls_utils.c\
 				srcs/bonus/game/controls.c\
 				srcs/bonus/game/doors.c\
+				srcs/bonus/game/enemy.c\
 				srcs/bonus/game/floor_raycast.c\
 				srcs/bonus/game/image.c\
 				srcs/bonus/game/launcher.c\
 				srcs/bonus/game/minimap.c\
+				srcs/bonus/game/mlx_functions.c\
 				srcs/bonus/game/mouse_cam.c\
 				srcs/bonus/game/movement_security.c\
 				srcs/bonus/game/moves.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
 				srcs/bonus/game/sound.c\
+				srcs/bonus/game/tab_images.c\
+				srcs/bonus/game/transparency.c\
+				srcs/bonus/game/weapon.c\
 				srcs/bonus/parsing/check_arg.c\
 				srcs/bonus/parsing/check_texture.c\
 				srcs/bonus/parsing/check_map.c\

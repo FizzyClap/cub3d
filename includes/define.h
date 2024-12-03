@@ -44,6 +44,7 @@
 # define SPACE 32
 # define SHIFT 65505
 # define O 111
+# define R 114
 //COLORS
 # define BLUE 0x000000FF
 # define RED 0x00FF0000
@@ -55,10 +56,5 @@
 # define MOVEBACK 1
 # define MOVELEFT 2
 # define MOVERIGHT 3
-
-#define screenWidth 1920
-#define screenHeight 1080
-#define mapWidth 24
-#define mapHeight 24
 
 #endif

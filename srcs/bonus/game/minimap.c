@@ -1,13 +1,14 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static void		draw_tile(t_coord coord, t_image image, t_coord max, int color);
+static int		minimap_color(t_game *game, t_coord pos);
 static t_coord	get_max(t_game *game, t_coord coord);
 
 void	minimap(t_game *game)
 {
 	game->minimap.img = mlx_new_image(game->mlx, MMW, MMH);
-	game->minimap.addr = mlx_get_data_addr(game->minimap.img, &game->\
-	minimap.bpp, &game->minimap.line_len, &game->minimap.endian);
+	game->minimap.addr = mlx_get_data_addr(game->minimap.img, \
+	&game->minimap.bpp, &game->minimap.line_len, &game->minimap.endian);
 	draw_minimap(game, game->minimap);
 }
 
@@ -61,20 +62,35 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 			dist.y = (y + coord.y) - center.y;
 			if (pow(dist.x, 2) + pow(dist.y, 2) <= pow(MINIMAP_RADIUS, 2) && \
 			color != rgb_to_int(135, 206, 235))
-				my_mlx_pixel_put(image, x + 20 + coord.x, y + 20 + coord.y, color);
+				my_mlx_pixel_put(&image, x + 20 + coord.x, y + 20 + coord.y, color);
 		}
 	}
 }
 
-// void	my_mlx_pixel_put(t_image img, int x, int y, int color)
-// {
-// 	char	*dst;
+static int	minimap_color(t_game *game, t_coord pos)
+{
+	int	i;
 
-// 	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
-// 		return ;
-// 	dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
-// 	*(unsigned int *) dst = color;
-// }
+	i = -1;
+	if (pos.y > -1 && pos.x > -1 && pos.y < game->map->y && \
+	pos.x < game->map->lines[pos.y]->x)
+	{
+		if (game->map->lines[pos.y]->content[pos.x] == '1')
+			return (*game->texture->image[NORTH].color);
+		else if (game->map->lines[pos.y]->content[pos.x] == 'D')
+		{
+			while (++i < game->nb_doors)
+				if (game->doors[i].y == pos.y && game->doors[i].x == pos.x && \
+				game->doors[i].is_open == false)
+					return (*game->texture->image[NORTH].color);
+			return (game->floor.a);
+		}
+		else
+			return (game->floor.a);
+	}
+	else
+		return (game->ceiling.a);
+}
 
 static t_coord	get_max(t_game *game, t_coord coord)
 {

@@ -5,34 +5,13 @@
 # include "../sound/SDL2/include/SDL.h"
 # include "../sound/SDL2_mixer/include/SDL_mixer.h"
 # include "../sound/SDL2_mixer/src/codecs/music_wav.h"
+# include "define.h"
+
 typedef struct s_coord
 {
 	int	x;
 	int	y;
 }	t_coord;
-
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-}	t_vector;
-
-typedef struct s_new_ray
-{
-	t_vector	pos;
-	t_vector	dir;
-	t_vector	plane;
-	t_vector	side_dist;
-	t_vector	delta_dist;
-	t_coord		map;
-	t_coord		step;
-	double		perp_wall_dist;
-	int			hit;
-	int			side;
-	int			line_height;
-	int			draw_start;
-	int			draw_end;
-}	t_new_ray;
 
 typedef struct s_line
 {
@@ -46,10 +25,16 @@ typedef struct s_doors
 	int		y;
 	bool	is_open;
 	bool	is_animating;
-	int		current_frames;
 	double	start_animation;
-	int		texture_id;
 }	t_doors;
+
+typedef struct s_weapon
+{
+	bool	is_animating;
+	int		current_frames;
+	bool	hit;
+	double	start_animation;
+}	t_weapon;
 
 typedef struct s_map
 {
@@ -125,16 +110,13 @@ typedef struct s_ray
 	double	wall_dist;
 	double	angle;
 	int		end;
+	bool	is_door;
+	int		door_idx;
+	t_list	*doors;
 }	t_ray;
 
 typedef struct s_player
 {
-	double	posX;
-	double	posY;
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
 	bool	jump;
 	bool	crouch;
 	int		*action;
@@ -145,11 +127,10 @@ typedef struct s_player
 	double	y;
 	double	d_x;
 	double	d_y;
+	double	plane_x;
+	double	plane_y;
 	double	speed;
 	double	angle;
-	double	initial_angle;
-	double	rotSpeed;
-	double	moveSpeed;
 	t_ray	*cross_ray;
 	t_image	cursor;
 }	t_player;
@@ -167,31 +148,86 @@ typedef struct s_music
 	Mix_Music	*launcher;
 	Mix_Music	*moria;
 	Mix_Music	*morgul;
+	Mix_Music	*game_over;
 	Mix_Chunk	*door;
 	Mix_Chunk	*step;
+	Mix_Chunk	*weapon;
+	Mix_Chunk	*hit;
+	Mix_Chunk	*fire;
+	Mix_Chunk	*gollum;
 }	t_music;
+
+typedef struct s_enemy
+{
+	double	x;
+	double	y;
+	double	distance;
+	t_image	*texture;
+	bool	is_animating;
+	double	start_animation;
+}	t_enemy;
+
+typedef struct s_render
+{
+	double	sprite_x;
+	double	sprite_y;
+	double	inv_det;
+	double	transform_x;
+	double	transform_y;
+	int		sprite_screen_x;
+	int		sprite_height;
+	int		sprite_width;
+	int		draw_start_y;
+	int		draw_start_x;
+	int		draw_end_y;
+	int		draw_end_x;
+	int		stripe;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+}	t_render;
+
+typedef struct s_draw
+{
+	int	color;
+	int	draw_start;
+	int	draw_end;
+	int	h_line;
+	int	h_correct;
+}	t_draw;
 
 typedef struct s_game
 {
 	void		*mlx;
 	void		*win;
-	void		*select;
 	char		*file;
-	bool		launcher_is_running;
+	char		*map_type;
+	bool		show_gollum;
 	int			nb_doors;
-	char		**moria;
+	int			door_idx;
 	char		**morgul;
-	int			total_frames;
+	int			enemy_frames;
+	int			doors_frames;
+	int			weapons_frames;
+	int			launcher_frames;
+	bool		launcher_animation;
+	bool		launcher_is_running;
+	double		launcher_start_animation;
+	int			nb_enemy;
+	int			target;
 	double		time;
-	double		oldTime;
+	double		z_buffer[SCREEN_WIDTH];
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
-	t_image		balrog;
-	t_image		door[20];
+	t_weapon	anim_weapons;
+	t_image		*weapon;
+	t_enemy		*enemy;
+	t_image		*door;
+	t_image		game_over;
 	t_image		ceil;
 	t_image		floor_txt;
-	t_image		launcher;
+	t_image		*launcher;
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;

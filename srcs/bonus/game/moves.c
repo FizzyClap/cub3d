@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 static void	check_collision(t_game *game, double x, double y);
 
@@ -14,6 +14,8 @@ void	move_up(t_game *game)
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 void	move_down(t_game *game)
@@ -28,6 +30,8 @@ void	move_down(t_game *game)
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 void	move_left(t_game *game)
@@ -48,6 +52,8 @@ void	move_left(t_game *game)
 	game->player.angle += D_PI;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 void	move_right(t_game *game)
@@ -68,6 +74,8 @@ void	move_right(t_game *game)
 	game->player.angle -= D_PI;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 static void	check_collision(t_game *game, double x, double y)

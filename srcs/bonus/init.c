@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../includes/cub3D_bonus.h"
 
 void	init_map(t_map *map, char *file)
 {
@@ -31,26 +31,26 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	if (launcher == false)
 	{
 		game->launcher_is_running = false;
-		game->win = NULL;
 		game->texture = texture;
 		game->map = map;
-		// struct_game_sound(game);
+		init_struct_game_sound(game);
 	}
-	// init_doors(game);
-	game->balrog.img = NULL;
-	game->launcher.img = NULL;
+	init_doors(game);
+	game->target = -1;
+	game->door_idx = -1;
+	game->enemy = NULL;
 	game->raycast.img = NULL;
 	game->minimap.img = NULL;
 	game->player.cursor.img = NULL;
+	game->game_over.img = NULL;
 	i = -1;
 	while (++i < 4)
 		game->texture->image[i].img = NULL;
 	get_color(&game->floor, game->texture->floor_color);
 	get_color(&game->ceiling, game->texture->ceiling_color);
-	game->ceiling.a = rgb_to_int(game->ceiling.r, \
-	game->ceiling.g, game->ceiling.b);
-	game->floor.a = rgb_to_int(game->floor.r, \
-	game->floor.g, game->floor.b);
+	game->ceiling.a = rgb_to_int(game->ceiling.r, game->ceiling.g, \
+	game->ceiling.b);
+	game->floor.a = rgb_to_int(game->floor.r, game->floor.g, game->floor.b);
 }
 
 void	init_ray(t_ray *ray, t_game *game, double angle)
@@ -66,6 +66,7 @@ void	init_ray(t_ray *ray, t_game *game, double angle)
 	ray->side_dist_x = 0;
 	ray->side_dist_y = 0;
 	ray->angle = angle;
+	ray->is_door = false;
 }
 
 double	deg_to_rad(double degrees)

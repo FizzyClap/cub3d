@@ -10,7 +10,7 @@ void	raycasting(t_ray *ray, t_game *game)
 	t_coord	loop;
 	double	ray_angle;
 
-	draw_floor_ceiling(game, game->floor.color, game->ceiling.color);
+	draw_floor_ceiling(game, game->floor.a, game->ceiling.a);
 	ray = malloc(sizeof(t_ray));
 	loop.x = -1;
 	while (++loop.x < SCREEN_WIDTH)
@@ -91,7 +91,7 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	int		color;
 	t_image	*tex;
 
-	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
+	line_height = (int)(SCREEN_HEIGHT / ray->projected_dist);
 	draw_start = (SCREEN_HEIGHT - line_height) / 2;
 	if (draw_start < 0)
 		draw_start = 0;
