@@ -22,6 +22,7 @@ void	raycasting(t_game *game)
 {
 	t_coord	loop;
 	t_ray	*ray;
+	t_list	*tmp;
 
 	floor_raycast(game);
 	ray = ft_calloc(sizeof(t_ray), 1);
@@ -35,6 +36,7 @@ void	raycasting(t_game *game)
 		perform_dda(game, ray, true);
 		calculate_wall_distance(ray);
 		draw_wall(game, ray, loop);
+		doors_transparency(game, &tmp, ray, loop);
 	}
 }
 
@@ -71,12 +73,16 @@ void	perform_dda(t_game *game, t_ray *ray, bool hitDoor)
 	int	hit;
 	int	map_x;
 	int	map_y;
+	bool	isLastDoor;
+	bool	isFirst;
+	char	pos;
 
-	(void)hitDoor;
 	hit = 0;
 	map_x = (int)game->player.posX;
 	map_y = (int)game->player.posY;
-	while (hit == 0)
+	isLastDoor = false;
+	isFirst = true;
+	while (!hit)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
@@ -90,8 +96,19 @@ void	perform_dda(t_game *game, t_ray *ray, bool hitDoor)
 			map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (!ft_strchr("NSEW0D", game->map->lines[map_y]->content[map_x]))
+		pos = game->map->lines[map_y]->content[map_x];
+		if (pos == '1' || (pos == 'D' && hitDoor == true))
+		{
+			ray->pos_door = pos;
+			ray->door_x = map_x;
+			ray->door_y = map_y;
 			hit = 1;
+		}
+		else if (pos == 'D' || isLastDoor || (isFirst && game->map->lines[(int)game->player.posY]->content[(int)game->player.posX] == 'D'))
+		{
+			ray->pos_door = pos;
+			add_doors(game, ray, &isLastDoor, &isFirst);
+		}
 	}
 }
 

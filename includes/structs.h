@@ -112,6 +112,9 @@ typedef struct s_ray
 	int		end;
 	bool	is_door;
 	int		door_idx;
+	char	pos_door;
+	int		door_y;
+	int		door_x;
 	t_list	*doors;
 }	t_ray;
 

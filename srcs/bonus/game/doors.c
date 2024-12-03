@@ -77,8 +77,8 @@ void	select_door_texture(t_game *game, t_ray *ray, t_image **tex)
 	i = -1;
 	while (++i < game->nb_doors)
 	{
-		if (game->doors[i].y == (int)ray->pos_y && \
-		game->doors[i].x == (int)ray->pos_x)
+		if (game->doors[i].y == ray->door_y && \
+		game->doors[i].x == ray->door_x)
 		{
 			if (game->doors[i].is_open == false)
 				start = 0;
