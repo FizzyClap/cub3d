@@ -66,6 +66,10 @@ void raycast(t_game *game)
 		double cameraX = 2 * x / (double)SCREEN_WIDTH - 1; //x-coordinate in camera space
 		double rayDirX = game->player.dirX + game->player.planeX * cameraX;
 		double rayDirY = game->player.dirY + game->player.planeY * cameraX;
+		printf("ray->dir_y = %f\n", rayDirY);
+		printf("game->player.plane_x = %f\n", game->player.planeX);
+		printf("game->player.plane_y = %f\n", game->player.planeY);
+		printf("ray->pos_x = %f\n", cameraX);
 		//which box of the map we're in
 		int mapX = (int)game->player.posX;
 		int mapY = (int)game->player.posY;
@@ -130,7 +134,7 @@ void raycast(t_game *game)
 				side = 1;
 			}
 			//Check if ray has hit a wall
-			if(game->map->lines[mapY]->content[mapX] == '1')
+			if(!ft_strchr("NSWE0D" ,game->map->lines[mapY]->content[mapX]))
 				hit = 1;
 		}
 
@@ -151,7 +155,14 @@ void raycast(t_game *game)
 			drawEnd = SCREEN_HEIGHT - 1;
 
 		t_image *tex;
-
+		printf("ray->pos_x = %f\n", cameraX);
+		printf("ray->dir_x = %f\n", rayDirX);
+		printf("ray->dir_y = %f\n", rayDirY);
+		printf("ray->delta_x = %f\n", deltaDistX);
+		printf("ray->delta_y = %f\n", deltaDistY);
+		printf("ray->wall_dist = %f\n", perpWallDist);
+		printf("ray->side = %d\n", side);
+		exit(0);
 		tex = &game->texture->image[NORTH];
 
 		double  wallX;

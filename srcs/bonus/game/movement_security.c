@@ -60,8 +60,8 @@ static double	ray_distance(t_game *game, t_ray ray)
 	ray.side_dist_x = 0;
 	ray.side_dist_y = 0;
 	ray.angle = angle;
-	calculate_steps(&ray);
-	perform_dda(&ray, game, false);
+	calculate_steps(game, &ray);
+	perform_dda(game, &ray, false);
 	calculate_wall_distance(&ray);
 	return (ray.wall_dist);
 }

@@ -105,7 +105,8 @@ static int	loop(t_game *game)
 	make_actions(game);
 	// mouse_move(game);
 	// jump(game);
-	raycast(game);
+	raycasting(game);
+	//raycast(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	my_put_image(game, &game->ring, -37, -35);
 	my_put_image(game, weapon_animation(game), 0, 0);
@@ -114,7 +115,7 @@ static int	loop(t_game *game)
 	game->oldTime = game->time;
 	game->time = get_current_time();
 	frameTime = (game->time - game->oldTime);
-	game->player.rotSpeed = frameTime * 3.0;
-	game->player.moveSpeed = frameTime * 5.0;
+	game->player.rotSpeed = frameTime * 0.3;
+	game->player.moveSpeed = frameTime * 0.5;
 	return (SUCCESS);
 }

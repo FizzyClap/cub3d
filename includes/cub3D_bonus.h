@@ -19,7 +19,8 @@
 # include <math.h>
 # include <limits.h>
 
-void	raycast(t_game *game);
+void	raycasting(t_game *game);
+void raycast(t_game *game);
 //MAIN
 int		parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher);
 int		start_game(t_game *game, bool launcher);
@@ -27,7 +28,7 @@ int		start_game(t_game *game, bool launcher);
 void	init_map(t_map *map, char *file);
 void	init_texture(t_texture *texture);
 void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher);
-void	init_ray(t_ray *ray, t_game *game, double angle);
+void	init_ray(t_game *game, t_ray *ray, int x);
 double	deg_to_rad(double degrees);
 //DEBUG/PRINT
 void	print_map(t_map *map, int fd);
@@ -109,9 +110,8 @@ void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
 void	shoot_ray_to_center(t_game *game, bool door);
 void	move_ray(t_ray *ray);
 //GAME/RAYCASTING
-void	raycasting(t_ray *ray, t_game *game);
-void	perform_dda(t_ray *ray, t_game *game, bool hitDoor);
-void	calculate_steps(t_ray *ray);
+void	perform_dda(t_game *game, t_ray *ray, bool hitDoor);
+void	calculate_steps(t_game *game, t_ray *ray);
 void	calculate_wall_distance(t_ray *ray);
 //GAME/SOUND
 void	init_sound(void);

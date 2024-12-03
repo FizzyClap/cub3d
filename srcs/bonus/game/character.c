@@ -8,8 +8,8 @@ void	player_init(t_game *game)
 
 	game->oldTime = 0;
 	paint_cursor(game);
-	game->player.posX = (double)game->map->start_x;
-	game->player.posY = (double)game->map->start_y;  //x and y start position
+	game->player.posX = (double)game->map->start_x + 0.5;
+	game->player.posY = (double)game->map->start_y + 0.5;  //x and y start position
 	game->player.dirX = 1;
 	game->player.dirY = 0; //initial direction vector
 	game->player.planeX = 0;

@@ -7,10 +7,10 @@ void	make_actions(t_game *game)
 		move_up(game);
 	if (game->player.action[MOVEBACK] == 1)
 		move_down(game);
-	// if (game->player.action[MOVELEFT] == 1)
-	// 	move_left(game);
-	// if (game->player.action[MOVERIGHT] == 1)
-	// 	move_right(game);
+	 if (game->player.action[MOVELEFT] == 1)
+	 	move_left(game);
+	 if (game->player.action[MOVERIGHT] == 1)
+	 	move_right(game);
 }
 
 int	keyrelease(int keycode, t_game *game)

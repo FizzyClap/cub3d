@@ -1,6 +1,6 @@
 #include "../includes/cub3D_bonus.h"
 
-static void	calculate_tex_x_pos(t_ray *ray, t_image **tex);
+static void	calculate_tex_x_pos(t_game *game, t_ray *ray, t_image **tex);
 
 void	camera_angle_distortion(t_game *game, t_ray *ray)
 {
@@ -16,40 +16,22 @@ void	camera_angle_distortion(t_game *game, t_ray *ray)
 
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
-	char	pos;
-
-	pos = game->map->lines[(int)game->player.y]->content[(int)game->player.x];
-	if (ray->is_door && ray->door_idx == game->door_idx && game->doors[game->door_idx].is_open)
-		*tex = doors_animation(game, game->door_idx, game->doors_frames);
-	else if (ray->is_door && ray->door_idx == game->door_idx && !game->doors[game->door_idx].is_open)
-		*tex = doors_animation(game, game->door_idx, 0);
-	else if (ray->is_door && (game->doors[ray->door_idx].is_open || pos == 'D'))
-		*tex = &game->door[game->doors_frames - 1];
-	else if (ray->is_door && !game->doors[ray->door_idx].is_open)
-		*tex = &game->door[0];
-	else if (game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x] == 'D')
-		select_door_texture(game, ray, tex);
-	else if (ray->side == 1 && ray->step_y < 0)
-		*tex = &game->texture->image[NORTH];
-	else if (ray->side == 1 && ray->step_y > 0)
-		*tex = &game->texture->image[SOUTH];
-	else if (ray->side == 0 && ray->step_x < 0)
-		*tex = &game->texture->image[WEST];
-	else if (ray->side == 0 && ray->step_x > 0)
-		*tex = &game->texture->image[EAST];
-	calculate_tex_x_pos(ray, tex);
+	*tex = &game->texture->image[NORTH];
+	calculate_tex_x_pos(game, ray, tex);
 }
 
-static void	calculate_tex_x_pos(t_ray *ray, t_image **tex)
+static void	calculate_tex_x_pos(t_game *game, t_ray *ray, t_image **tex)
 {
 	if (ray->side == 0)
-		(*tex)->wall_x = ray->pos_y + ray->wall_dist * ray->dir_y;
+		(*tex)->wall_x = game->player.posY + ray->wall_dist * ray->dir_y;
 	else
-		(*tex)->wall_x = ray->pos_x + ray->wall_dist * ray->dir_x;
+		(*tex)->wall_x = game->player.posX + ray->wall_dist * ray->dir_x;
 	(*tex)->wall_x -= floor((*tex)->wall_x);
+	(*tex)->x = (int)((*tex)->wall_x * (double)(*tex)->width);
 	if (ray->side == 0 && ray->dir_x > 0)
-		(*tex)->wall_x = 1.0 - (*tex)->wall_x;
-	(*tex)->x = (int)((*tex)->wall_x * (*tex)->width);
+		(*tex)->x = (*tex)->width - (*tex)->x - 1;
+	if (ray->side == 1 && ray->dir_y < 0)
+		(*tex)->x = (*tex)->width - (*tex)->x - 1;
 }
 
 void	shoot_ray_to_center(t_game *game, bool door)
@@ -58,11 +40,11 @@ void	shoot_ray_to_center(t_game *game, bool door)
 	int		mid_ray;
 
 	mid_ray = (game->player.angle * CENT_PI) - 30 + FOV * (870 / (double)SCREEN_WIDTH);
-	init_ray(&ray, game, mid_ray);
-	calculate_steps(&ray);
+	init_ray(game, &ray, SCREEN_WIDTH / 2);
+	calculate_steps(game, &ray);
 	if (door == true)
 	{
-		perform_dda(&ray, game, true);
+		perform_dda(game, &ray, true);
 		if (game->map->lines[(int)ray.pos_y]->content[(int)ray.pos_x] == 'D')
 			toggle_door(game, (int)ray.pos_y, (int)ray.pos_x);
 	}
