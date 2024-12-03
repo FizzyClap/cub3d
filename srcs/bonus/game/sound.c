@@ -43,10 +43,10 @@ int	init_sound_effects(t_game *game)
 		game->music->step = Mix_LoadWAV("sound/footstep.wav");
 		game->music->weapon = Mix_LoadWAV("sound/fireball.wav");
 		game->music->hit = Mix_LoadWAV("sound/nazgul.wav");
-		game->music->fire = Mix_LoadWAV("sound/firedeath.wav");
+		game->music->game_over = Mix_LoadMUS("sound/Gandalf's fall.mp3");
 		if (!game->music->door || !game->music->step || !game->music->weapon \
-		|| !game->music->hit)
-			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
+		|| !game->music->hit || !game->music->game_over)
+			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n"), FAILURE);
 	}
 	else if (ft_strcmp(game->map_type, "moria") == 0)
 	{
@@ -57,7 +57,7 @@ int	init_sound_effects(t_game *game)
 		game->music->game_over = Mix_LoadMUS("sound/ShallNotPass.mp3");
 		if (!game->music->door || !game->music->step || !game->music->weapon \
 		|| !game->music->hit || !game->music->game_over)
-			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
+			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n"), FAILURE);
 	}
 	return (SUCCESS);
 }

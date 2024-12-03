@@ -64,20 +64,25 @@ t_image	*enemy_animation(t_game *game, int target, t_coord pos)
 {
 	int		current_frame;
 	double	elapsed_time;
+	double	adjusted_time;
 	int		i;
 
+	if (game->enemy[target].is_animating == false)
+		return (&game->enemy[target].texture[0]);
 	elapsed_time = game->time - game->enemy[target].start_animation;
 	if (elapsed_time < 0)
 		elapsed_time = 0;
-	if (game->enemy[target].is_animating == false)
-		return (&game->enemy[target].texture[0]);
-	current_frame = (int)(elapsed_time / 0.1);
+	if (elapsed_time >= 4 * 0.1 && elapsed_time < (4 * 0.1 + 0.3))
+		adjusted_time = 4 * 0.1;
+	else
+		adjusted_time = elapsed_time;
+	current_frame = (int)(adjusted_time / 0.1);
 	if (current_frame >= game->enemy_frames)
 	{
 		current_frame = game->enemy_frames - 1;
 		game->enemy[target].is_animating = false;
 	}
-	if (current_frame == game->enemy_frames - 1)
+	if (current_frame == game->enemy_frames - 1 && !game->enemy[target].is_animating)
 	{
 		i = -1;
 		while (++i < game->enemy_frames)
@@ -93,6 +98,7 @@ t_image	*enemy_animation(t_game *game, int target, t_coord pos)
 	return (&game->enemy[target].texture[current_frame]);
 }
 
+
 static void	kill_enemy(t_game *game)
 {
 	t_coord	pos;
@@ -103,6 +109,7 @@ static void	kill_enemy(t_game *game)
 	{
 		pos.y = (int)game->enemy[target].y;
 		pos.x = (int)game->enemy[target].x;
+		Mix_VolumeChunk(game->music->hit, MIX_MAX_VOLUME / 4);
 		Mix_PlayChannel(-1, game->music->hit, 0);
 		game->enemy[target].is_animating = true;
 		game->enemy[target].start_animation = get_current_time();
@@ -115,6 +122,8 @@ void	*gollum(t_game *game)
 	double	elapsed_time;
 	double	adjusted_time;
 
+	if (game->launcher_animation == false)
+		return (game->launcher[0].img);
 	elapsed_time = game->time - game->launcher_start_animation;
 	if (elapsed_time < 0)
 		elapsed_time = 0;
@@ -124,8 +133,6 @@ void	*gollum(t_game *game)
 		adjusted_time = elapsed_time - 3.5;
 	else
 		adjusted_time = elapsed_time;
-	if (game->launcher_animation == false)
-		return (game->launcher[0].img);
 	current_frame = (int)(adjusted_time / 0.1);
 	if (current_frame >= game->launcher_frames)
 	{
