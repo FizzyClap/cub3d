@@ -66,15 +66,15 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 	}
 }
 
-void	my_mlx_pixel_put(t_image img, int x, int y, int color)
-{
-	char	*dst;
+// void	my_mlx_pixel_put(t_image img, int x, int y, int color)
+// {
+// 	char	*dst;
 
-	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
-		return ;
-	dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
-	*(unsigned int *) dst = color;
-}
+// 	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
+// 		return ;
+// 	dst = img.addr + (y * img.line_len + x * (img.bpp / 8));
+// 	*(unsigned int *) dst = color;
+// }
 
 static t_coord	get_max(t_game *game, t_coord coord)
 {

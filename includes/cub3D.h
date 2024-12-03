@@ -19,17 +19,11 @@
 # include <math.h>
 # include <limits.h>
 
-void ceil_raycast(t_game *game);
-int get_texture_color(t_image *texture, int tx, int ty);
+void    new(t_game *game);
+
+void    ceil_raycast(t_game *game);
+int     get_texture_color(t_image *texture, int tx, int ty);
 void	floor_raycast(t_game *game);
-void	raycast(t_game *game);
-void	start_ray_cast(t_game *game, t_new_ray *ray);
-void	init_new_ray(t_game *game, t_new_ray *ray);
-void	step_calc(t_new_ray *ray);
-void	dna_algo(t_game *game, t_new_ray *ray);
-void	height_calc(t_new_ray *ray);
-void	select_wall_tex(t_game *game, t_new_ray *ray, t_image **tex);
-void	draw_new_wall(t_game *game, t_new_ray *ray, t_image *tex, int x);
 
 // void	draw_floor(t_game *game, t_ray *ray, t_coord loop);
 int		parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher);
@@ -65,7 +59,7 @@ t_color	get_alpha_blended_color(t_color prev, t_color new);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS
-void	make_actions(t_game *game, t_ray *);
+void	make_actions(t_game *game);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
@@ -126,4 +120,5 @@ void	init_sound(void);
 void	free_sound(t_game *game);
 void	struct_game_sound(t_game *game);
 void	init_sound_effects(t_game *game);
+
 #endif

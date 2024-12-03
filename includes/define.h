@@ -56,4 +56,9 @@
 # define MOVELEFT 2
 # define MOVERIGHT 3
 
+#define screenWidth 1920
+#define screenHeight 1080
+#define mapWidth 24
+#define mapHeight 24
+
 #endif

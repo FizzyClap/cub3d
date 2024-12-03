@@ -129,6 +129,12 @@ typedef struct s_ray
 
 typedef struct s_player
 {
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
 	bool	jump;
 	bool	crouch;
 	int		*action;
@@ -142,6 +148,8 @@ typedef struct s_player
 	double	speed;
 	double	angle;
 	double	initial_angle;
+	double	rotSpeed;
+	double	moveSpeed;
 	t_ray	*cross_ray;
 	t_image	cursor;
 }	t_player;
@@ -175,6 +183,7 @@ typedef struct s_game
 	char		**morgul;
 	int			total_frames;
 	double		time;
+	double		oldTime;
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;

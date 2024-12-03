@@ -54,7 +54,7 @@ void floor_raycast(t_game *game)
 
         // Calcul des incréments pour chaque colonne
         floorStepX = rowDistance * (rayDirX1 - rayDirX0) / SCREEN_WIDTH;
-        floorStepY = rowDistance * (rayDirY1 - rayDirY0) / SCREEN_WIDTH;
+        floorStepY = rowDistance * (rayDirY1 - rayDirY0) / SCREEN_HEIGHT;
 
         // Parcours des colonnes de l'écran (affichage du sol)
         for (int x = 0; x < SCREEN_WIDTH; ++x)
@@ -86,13 +86,13 @@ void floor_raycast(t_game *game)
             if (newTy < 0) newTy = -newTy;  // Si coordonnée Y < 0, prendre le symétrique
             if (newTy >= floorTexture->height) newTy = 2 * floorTexture->height - newTy - 1;  // Si coordonnée Y > height, faire l'inverse
 
-            // Calcul du pixel à afficher pour le sol avec les coordonnées de texture ajustées
-            int floorColor = get_texture_color(floorTexture, (int)newTx % floorTexture->width, (int)newTy % floorTexture->height);
+    // Calcul du pixel à afficher pour le sol avec les coordonnées de texture ajustées
+	int floorColor = get_texture_color(floorTexture, (int)newTx % floorTexture->width, (int)newTy % floorTexture->height);
 
             // Affichage du pixel du sol
             my_mlx_pixel_put(game->raycast, x, y, floorColor);
 
-            // Mise à jour des coordonnées du sol pour la prochaine itération
+    // Mise à jour des coordonnées du sol pour la prochaine itération
             floorX += floorStepX;
             floorY += floorStepY;
         }
@@ -106,7 +106,7 @@ void floor_raycast(t_game *game)
 void ceil_raycast(t_game *game)
 {
 	t_image *ceilTexture = &game->door[game->total_frames];  // Texture du plafond
-
+ 
 	for (int y = 0; y < (SCREEN_HEIGHT / 2 + game->player.z); y++)
 	{
 		// Calcul des distances pour le sol et le plafond

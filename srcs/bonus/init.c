@@ -34,9 +34,9 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 		game->win = NULL;
 		game->texture = texture;
 		game->map = map;
-		struct_game_sound(game);
+		// struct_game_sound(game);
 	}
-	init_doors(game);
+	// init_doors(game);
 	game->balrog.img = NULL;
 	game->launcher.img = NULL;
 	game->raycast.img = NULL;

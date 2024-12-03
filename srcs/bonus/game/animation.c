@@ -1,12 +1,12 @@
 #include "../includes/cub3D.h"
 
-double	get_current_time(void)
-{
-	struct timeval	time;
+// double	get_current_time(void)
+// {
+// 	struct timeval	time;
 
-	gettimeofday(&time, NULL);
-	return (time.tv_sec + time.tv_usec / 1000000.0);
-}
+// 	gettimeofday(&time, NULL);
+// 	return (time.tv_sec + time.tv_usec / 1000000.0);
+// }
 
 t_image	*doors_animation(t_game *game, int idx, int start)
 {

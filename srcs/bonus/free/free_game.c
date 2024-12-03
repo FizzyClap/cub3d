@@ -1,7 +1,6 @@
 #include "../includes/cub3D.h"
 
 static void	free_image(t_game *game);
-static void	free_character(t_player player);
 
 int	close_game(t_game *game)
 {
@@ -13,19 +12,14 @@ int	close_game(t_game *game)
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
-	free_character(game->player);
+	// free_character(game->player);
+	free(game->player.action);
 	free_texture(game->texture);
 	free_map(game->map);
-	free(game->doors);
+	// free(game->doors);
 	free_sound(game);
 	free(game);
 	exit(EXIT_SUCCESS);
-}
-
-static void	free_character(t_player player)
-{
-	free(player.action);
-	free(player.cross_ray);
 }
 
 static void	free_image(t_game *game)

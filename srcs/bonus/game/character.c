@@ -20,10 +20,10 @@ void	player_init(t_game *game)
 		game->player.angle = PI;
 	else if (game->map->orientation == 'W')
 		game->player.angle = 0;
-	game->player.d_x = cos(game->player.angle) * 5;
-	game->player.d_y = sin(game->player.angle) * 5;
+	game->player.d_x = cos(game->player.angle);
+	game->player.d_y = sin(game->player.angle);
 	game->player.initial_angle = game->player.angle;
-	game->player.speed = 0.01;
+	game->player.speed = 0.05;
 	game->player.z = 0;
 	game->player.h = 0;
 	game->player.jump = false;

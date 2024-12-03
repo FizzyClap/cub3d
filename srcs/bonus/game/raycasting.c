@@ -7,7 +7,7 @@ void	raycasting(t_ray *ray, t_game *game)
 	t_coord	loop;
 	double	ray_angle;
 
-	// draw_floor_ceiling(game, game->floor.color, game->ceiling.color);
+	draw_floor_ceiling(game, RED, BLUE);
 	floor_raycast(game);
 	ray = malloc(sizeof(t_ray));
 	loop.x = 0;
@@ -22,8 +22,8 @@ void	raycasting(t_ray *ray, t_game *game)
 		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
 		loop.x++;
-		// draw_wall(game, ray, loop);
-		// loop.x++;
+		draw_wall(game, ray, loop);
+		loop.x++;
 	}
 	free(ray);
 }
@@ -113,7 +113,5 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 			color = tex->color[tex->width * tex->y + tex->x];
 		my_mlx_pixel_put(game->raycast, loop.x, loop.y + game->player.z, color);
 	}
-	ray->end = draw_end;
-	ray->end = draw_end;
 }
 
