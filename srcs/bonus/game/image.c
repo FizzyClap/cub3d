@@ -2,16 +2,17 @@
 
 static int	load_walls(t_game *game);
 static int	load_doors(t_game *game, char **map);
+static int	load_game_over(t_game *game);
 
 int	load_textures(t_game *game)
 {
 	static char	**map = NULL;
 
-	if (!load_walls(game) || !init_weapon(game))
+	if (!load_walls(game) || !init_weapon(game) || !load_game_over(game))
 		return (FAILURE);
 	if (ft_strcmp(game->map_type, "moria") == 0)
 	{
-		if (init_enemy(game, "textures/dwarf.xpm") == FAILURE)
+		if (init_enemy(game, "textures/enemy/dwarf") == FAILURE)
 			return (FAILURE);
 		map = create_moria_tab(game);
 		if (!map)
@@ -19,7 +20,7 @@ int	load_textures(t_game *game)
 	}
 	else if (ft_strcmp(game->map_type, "morgul") == 0)
 	{
-		if (init_enemy(game, "textures/nazgul.xpm") == FAILURE)
+		if (init_enemy(game, "textures/enemy/nazgul") == FAILURE)
 			return (FAILURE);
 		map = create_morgul_tab(game);
 		if (!map)
@@ -61,4 +62,31 @@ static int	load_doors(t_game *game, char **map)
 			return (FAILURE);
 	free(map);
 	return (SUCCESS);
+}
+
+static int	load_game_over(t_game *game)
+{
+	if (ft_strcmp(game->map_type, "moria") == 0)
+	{
+		if (!load_xpm(game, &game->game_over, "textures/end_moria.xpm"))
+			return (FAILURE);
+	}
+	else
+	{
+		if (!load_xpm(game, &game->game_over, "textures/end_morgul.xpm"))
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+void	game_over(t_game *game)
+{
+	Mix_HaltChannel(-1);
+	Mix_HaltMusic();
+	Mix_PlayMusic(game->music->game_over, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->game_over.img, 0, 0);
+	mlx_do_sync(game->mlx);
+	usleep(4500000);
+	close_game(game);
+	exit(EXIT_SUCCESS);
 }

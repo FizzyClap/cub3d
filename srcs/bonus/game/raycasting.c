@@ -15,8 +15,6 @@ void	raycasting(t_ray *ray, t_game *game)
 	if (!ray)
 		return ;
 	loop.x = -1;
-	for (int i = 0; i < game->nb_enemy; i++)
-		game->enemy[i].check = false;
 	while (++loop.x < SCREEN_WIDTH)
 	{
 		ray_angle = ((game->player.angle) * 180 / PI) - FOV / 2 + \
@@ -29,10 +27,6 @@ void	raycasting(t_ray *ray, t_game *game)
 		draw_wall(game, ray, loop);
 		doors_transparency(game, &tmp, ray, loop);
 	}
-	for (int i = 0; i < game->nb_enemy; i++)
-		if (game->enemy[i].check == false)
-			game->enemy[i].vision = false;
-	enemy_vision(game);
 	sort_enemies(game);
 	render_enemies(game);
 	free(ray);
@@ -68,7 +62,6 @@ void	perform_dda(t_ray *ray, t_game *game, bool hitDoor)
 	bool	isLastDoor;
 	bool	isFirst;
 	char	pos;
-	int		i;
 
 	hit = false;
 	isLastDoor = false;
@@ -82,18 +75,6 @@ void	perform_dda(t_ray *ray, t_game *game, bool hitDoor)
 		else if (pos == 'D' || isLastDoor || (isFirst && game->map->lines\
 		[(int)game->player.y]->content[(int)game->player.x] == 'D'))
 			add_doors(game, ray, &isLastDoor, &isFirst);
-		else if (pos == 'A')
-		{
-			i = -1;
-			while (++i < game->nb_enemy)
-			{
-				if (game->enemy[i].x == ray->pos_x && game->enemy[i].y == ray->pos_y)
-				{
-					game->enemy[i].vision = true;
-					game->enemy[i].check = true;
-				}
-			}
-		}
 		isFirst = false;
 	}
 }

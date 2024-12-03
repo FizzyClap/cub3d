@@ -42,7 +42,8 @@ int	init_sound_effects(t_game *game)
 		game->music->door = Mix_LoadWAV("sound/harrow.wav");
 		game->music->step = Mix_LoadWAV("sound/footstep.wav");
 		game->music->weapon = Mix_LoadWAV("sound/fireball.wav");
-		game->music->hit = Mix_LoadWAV("sound/firedeath.wav");
+		game->music->hit = Mix_LoadWAV("sound/nazgul.wav");
+		game->music->fire = Mix_LoadWAV("sound/firedeath.wav");
 		if (!game->music->door || !game->music->step || !game->music->weapon \
 		|| !game->music->hit)
 			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
@@ -53,14 +54,15 @@ int	init_sound_effects(t_game *game)
 		game->music->step = Mix_LoadWAV("sound/balrogstep.wav");
 		game->music->weapon = Mix_LoadWAV("sound/whip.wav");
 		game->music->hit = Mix_LoadWAV("sound/hit.wav");
+		game->music->game_over = Mix_LoadMUS("sound/ShallNotPass.mp3");
 		if (!game->music->door || !game->music->step || !game->music->weapon \
-		|| !game->music->hit)
+		|| !game->music->hit || !game->music->game_over)
 			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
 	}
 	return (SUCCESS);
 }
 
-void	struct_game_sound(t_game *game)
+void	init_struct_game_sound(t_game *game)
 {
 	game->music = malloc(sizeof(t_music));
 	if (!game->music)
@@ -72,7 +74,9 @@ void	struct_game_sound(t_game *game)
 	game->music->step = NULL;
 	game->music->weapon = NULL;
 	game->music->hit = NULL;
+	game->music->fire = NULL;
 	game->music->gollum = NULL;
+	game->music->game_over = NULL;
 }
 
 void	free_sound(t_game *game)
@@ -95,6 +99,8 @@ void	free_sound(t_game *game)
 		Mix_FreeChunk(game->music->weapon);
 	if (game->music->hit)
 		Mix_FreeChunk(game->music->hit);
+	if (game->music->game_over)
+		Mix_FreeMusic(game->music->game_over);
 	if (game->music)
 		free(game->music);
 	Mix_CloseAudio();

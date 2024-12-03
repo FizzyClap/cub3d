@@ -12,7 +12,7 @@ int	open_launcher(t_game *game)
 	game->launcher_animation = false;
 	game->launcher_is_running = true;
 	game->show_gollum = false;
-	struct_game_sound(game);
+	init_struct_game_sound(game);
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Cub3D Launcher");
 	if (!create_launcher_images(game, "textures/launcher/launcher"))
@@ -65,6 +65,8 @@ static int	launch_game(t_game *game)
 	if (!parse_texture_and_map(&game->texture, &game->map, game->file, true))
 		close_launcher(game);
 	game->launcher_is_running = false;
+	Mix_HaltChannel(-1);
+	Mix_HaltMusic();
 	mlx_destroy_window(game->mlx, game->win);
 	init_game(game, game->texture, game->map, true);
 	get_map_type(game);

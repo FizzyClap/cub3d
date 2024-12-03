@@ -83,3 +83,10 @@ void	jump(t_game *game)
 	if (game->player.crouch == false && game->player.h < 0)
 		game->player.h += 50;
 }
+
+int	enemy_collision(t_game *game, double x, double y)
+{
+	if (game->map->lines[(int)y]->content[(int)x] == 'A')
+		return (SUCCESS);
+	return (FAILURE);
+}

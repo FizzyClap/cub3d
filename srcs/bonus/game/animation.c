@@ -60,6 +60,39 @@ t_image	*weapon_animation(t_game *game)
 	return (&game->weapon[current_frame]);
 }
 
+t_image	*enemy_animation(t_game *game, int target, t_coord pos)
+{
+	int		current_frame;
+	double	elapsed_time;
+	int		i;
+
+	elapsed_time = game->time - game->enemy[target].start_animation;
+	if (elapsed_time < 0)
+		elapsed_time = 0;
+	if (game->enemy[target].is_animating == false)
+		return (&game->enemy[target].texture[0]);
+	current_frame = (int)(elapsed_time / 0.1);
+	if (current_frame >= game->enemy_frames)
+	{
+		current_frame = game->enemy_frames - 1;
+		game->enemy[target].is_animating = false;
+	}
+	if (current_frame == game->enemy_frames - 1)
+	{
+		i = -1;
+		while (++i < game->enemy_frames)
+		{
+			if (game->enemy[target].texture[i].img)
+				mlx_destroy_image(game->mlx, game->enemy[target].texture[i].img);
+			game->enemy[target].texture[i].img = NULL;
+			game->enemy[target].x = -1;
+			game->enemy[target].y = -1;
+		}
+		game->map->lines[pos.y]->content[pos.x] = '0';
+	}
+	return (&game->enemy[target].texture[current_frame]);
+}
+
 static void	kill_enemy(t_game *game)
 {
 	t_coord	pos;
@@ -71,10 +104,8 @@ static void	kill_enemy(t_game *game)
 		pos.y = (int)game->enemy[target].y;
 		pos.x = (int)game->enemy[target].x;
 		Mix_PlayChannel(-1, game->music->hit, 0);
-		if (game->enemy[target].texture.img)
-			mlx_destroy_image(game->mlx, game->enemy[target].texture.img);
-		game->enemy[target].texture.img = NULL;
-		game->map->lines[pos.y]->content[pos.x] = '0';
+		game->enemy[target].is_animating = true;
+		game->enemy[target].start_animation = get_current_time();
 	}
 }
 

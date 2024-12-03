@@ -13,9 +13,13 @@ int	close_game(t_game *game)
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
+	free_texture(game->texture);
 	free_character(game->player);
 	free_map(game->map);
 	free_sound(game);
+	free(game->enemy);
+	free(game->doors);
+	free(game->weapon);
 	free(game->door);
 	free(game);
 	exit(EXIT_SUCCESS);

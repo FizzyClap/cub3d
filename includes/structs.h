@@ -148,10 +148,12 @@ typedef struct s_music
 	Mix_Music	*launcher;
 	Mix_Music	*moria;
 	Mix_Music	*morgul;
+	Mix_Music	*game_over;
 	Mix_Chunk	*door;
 	Mix_Chunk	*step;
 	Mix_Chunk	*weapon;
 	Mix_Chunk	*hit;
+	Mix_Chunk	*fire;
 	Mix_Chunk	*gollum;
 }	t_music;
 
@@ -160,9 +162,9 @@ typedef struct s_enemy
 	double	x;
 	double	y;
 	double	distance;
-	bool	vision;
-	bool	check;
-	t_image	texture;
+	t_image	*texture;
+	bool	is_animating;
+	double	start_animation;
 }	t_enemy;
 
 typedef struct s_render
@@ -204,6 +206,7 @@ typedef struct s_game
 	int			nb_doors;
 	int			door_idx;
 	char		**morgul;
+	int			enemy_frames;
 	int			doors_frames;
 	int			weapons_frames;
 	int			launcher_frames;
@@ -221,6 +224,7 @@ typedef struct s_game
 	t_image		*weapon;
 	t_enemy		*enemy;
 	t_image		*door;
+	t_image		game_over;
 	t_image		ceil;
 	t_image		floor_txt;
 	t_image		*launcher;

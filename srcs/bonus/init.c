@@ -33,7 +33,7 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 		game->launcher_is_running = false;
 		game->texture = texture;
 		game->map = map;
-		struct_game_sound(game);
+		init_struct_game_sound(game);
 	}
 	init_doors(game);
 	game->target = -1;
@@ -42,6 +42,7 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	game->raycast.img = NULL;
 	game->minimap.img = NULL;
 	game->player.cursor.img = NULL;
+	game->game_over.img = NULL;
 	i = -1;
 	while (++i < 4)
 		game->texture->image[i].img = NULL;
