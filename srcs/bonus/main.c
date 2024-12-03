@@ -1,7 +1,7 @@
 #include "../includes/cub3D_bonus.h"
 
 static int	parsing(t_texture **texture, t_map **map, int argc, char **argv);
-static int	loop(t_game *game, t_ray *ray);
+static int	loop(t_game *game);
 
 int	main(int argc, char **argv)
 {
@@ -96,17 +96,25 @@ int	start_game(t_game *game, bool launcher)
 	return (SUCCESS);
 }
 
-static int	loop(t_game *game, t_ray *ray)
+static int	loop(t_game *game)
 {
+	double	frameTime;
+
 	game->time = get_current_time();
 	move_div(game);
-	make_actions(game, ray);
-	mouse_move(game);
-	jump(game);
+	make_actions(game);
+	// mouse_move(game);
+	// jump(game);
+	raycast(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	my_put_image(game, &game->ring, -37, -35);
 	my_put_image(game, weapon_animation(game), 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
 		118, 118);
+	game->oldTime = game->time;
+	game->time = get_current_time();
+	frameTime = (game->time - game->oldTime);
+	game->player.rotSpeed = frameTime * 3.0;
+	game->player.moveSpeed = frameTime * 5.0;
 	return (SUCCESS);
 }

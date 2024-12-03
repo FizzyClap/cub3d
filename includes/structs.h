@@ -133,6 +133,15 @@ typedef struct s_player
 	double	angle;
 	t_ray	*cross_ray;
 	t_image	cursor;
+	// new wave
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+	double	posX;
+	double	posY;
+	double	rotSpeed;
+	double	moveSpeed;
 }	t_player;
 
 typedef struct s_color
@@ -198,6 +207,7 @@ typedef struct s_draw
 
 typedef struct s_game
 {
+	int			oldTime;
 	void		*mlx;
 	void		*win;
 	char		*file;

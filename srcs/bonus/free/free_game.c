@@ -1,7 +1,5 @@
 #include "../includes/cub3D_bonus.h"
 
-static void	free_character(t_player player);
-
 int	close_game(t_game *game)
 {
 	free_image(game);
@@ -14,7 +12,7 @@ int	close_game(t_game *game)
 		free(game->mlx);
 	}
 	free_texture(game->texture);
-	free_character(game->player);
+	free(game->player.action);;
 	free_map(game->map);
 	free_sound(game);
 	free(game->enemy);
@@ -42,8 +40,3 @@ int	close_launcher(t_game *game)
 	exit(EXIT_SUCCESS);
 }
 
-static void	free_character(t_player player)
-{
-	free(player.action);
-	free(player.cross_ray);
-}

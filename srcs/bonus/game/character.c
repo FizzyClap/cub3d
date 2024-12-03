@@ -1,43 +1,28 @@
 #include "../includes/cub3D_bonus.h"
 
 static void	paint_cursor(t_game *game);
-static void	init_moves(t_game *game);
 
 void	player_init(t_game *game)
 {
+	int	i;
+
+	game->oldTime = 0;
 	paint_cursor(game);
-	game->player.x = game->map->start_x + 0.5;
-	game->player.y = game->map->start_y + 0.5;
-	if (game->map->orientation == 'N')
-		game->player.angle = 3 * D_PI;
-	else if (game->map->orientation == 'S')
-		game->player.angle = D_PI;
-	else if (game->map->orientation == 'E')
-		game->player.angle = PI;
-	else if (game->map->orientation == 'W')
-		game->player.angle = 0;
-	game->player.plane_x = -0.66 * sin(game->player.angle);
-	game->player.plane_y = 0.66 * cos(game->player.angle);
-	game->player.d_x = cos(game->player.angle);
-	game->player.d_y = sin(game->player.angle);
-	game->player.speed = 0.05;
+	game->player.posX = (double)game->map->start_x;
+	game->player.posY = (double)game->map->start_y;  //x and y start position
+	game->player.dirX = 1;
+	game->player.dirY = 0; //initial direction vector
+	game->player.planeX = 0;
+	game->player.planeY = 0.66; //the 2d raycaster version of camera plane
+	i = -1;
+	game->player.action = malloc(sizeof(int) * 4);
+	while (++i < 4)
+		game->player.action[i] = 0;
 	game->player.z = 0;
 	game->player.h = 0;
 	game->player.jump = false;
 	game->player.crouch = false;
 	game->player.move_div = 0;
-	init_moves(game);
-}
-
-static void	init_moves(t_game *game)
-{
-	int	i;
-
-	i = -1;
-	game->player.action = malloc(sizeof(int) * 4);
-	while (++i < 4)
-		game->player.action[i] = 0;
-	game->player.cross_ray = malloc(sizeof(t_ray));
 }
 
 static void	paint_cursor(t_game *game)

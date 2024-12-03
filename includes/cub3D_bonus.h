@@ -19,6 +19,7 @@
 # include <math.h>
 # include <limits.h>
 
+void	raycast(t_game *game);
 //MAIN
 int		parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher);
 int		start_game(t_game *game, bool launcher);
@@ -57,7 +58,7 @@ void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color);
 void	correct_angle(t_game *game);
 void	refresh_position(t_game *game, int action, double speed);
 //GAME/CONTROLS
-void	make_actions(t_game *game, t_ray *ray);
+void	make_actions(t_game *game);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
@@ -91,8 +92,8 @@ int		load_xpm(t_game *game, t_image *texture, char *xpm_file);
 int		mouse_click(int button, int x, int y, t_game *game);
 //GAME/MOUSE
 void	mouse_move(t_game *game);
-void	left_cam(t_game *game, int x);
-void	right_cam(t_game *game, int x);
+void	left_cam(t_game *game);
+void	right_cam(t_game *game);
 //GAME/MOVEMENT_SECURITY
 double	check_backroom(t_game *game, int move);
 void	jump(t_game *game);

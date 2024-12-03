@@ -1,6 +1,5 @@
 #include "../includes/cub3D_bonus.h"
 
-static double	cam_sensibility(int x);
 static void		cam_z(t_game *game, int y);
 
 void	mouse_move(t_game *game)
@@ -12,9 +11,9 @@ void	mouse_move(t_game *game)
 	y = 540;
 	mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
 	if (x < 960)
-		left_cam(game, x);
+		left_cam(game);
 	if (x > 960)
-		right_cam(game, x);
+		right_cam(game);
 	if (y != 540)
 		cam_z(game, y);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
@@ -36,26 +35,37 @@ static void	cam_z(t_game *game, int y)
 		game->player.z = -3000;
 }
 
-void	left_cam(t_game *game, int x)
+void	left_cam(t_game *game)
 {
-	game->player.angle -= cam_sensibility(x);
-	if (game->player.angle < 0)
-		game->player.angle += DD_PI;
-	refresh_position(game, DELTA, 0);
+	double	oldDirX;
+	double oldPlaneX;
+
+	oldDirX = game->player.dirX;
+	game->player.dirX = game->player.dirX * cos(-game->player.rotSpeed) \
+	- game->player.dirY * sin(-game->player.rotSpeed);
+	game->player.dirY = oldDirX * sin(-game->player.rotSpeed) \
+	+ game->player.dirY * cos(-game->player.rotSpeed);
+	oldPlaneX = game->player.planeX;
+	game->player.planeX = game->player.planeX * cos(-game->player.rotSpeed) \
+	- game->player.planeY * sin(-game->player.rotSpeed);
+	game->player.planeY = oldPlaneX * sin(-game->player.rotSpeed) \
+	+ game->player.planeY * cos(-game->player.rotSpeed);
 }
 
-void	right_cam(t_game *game, int x)
+void	right_cam(t_game *game)
 {
-	game->player.angle += cam_sensibility(x);
-	if (game->player.angle > DD_PI)
-		game->player.angle -= DD_PI;
-	refresh_position(game, DELTA, 0);
+	double	oldDirX;
+	double oldPlaneX;
+
+	oldDirX = game->player.dirX;
+	game->player.dirX = game->player.dirX * cos(game->player.rotSpeed) \
+	- game->player.dirY * sin(game->player.rotSpeed);
+	game->player.dirY = oldDirX * sin(game->player.rotSpeed) \
+	+ game->player.dirY * cos(game->player.rotSpeed);
+	oldPlaneX = game->player.planeX;
+	game->player.planeX = game->player.planeX * cos(game->player.rotSpeed) \
+	- game->player.planeY * sin(game->player.rotSpeed);
+	game->player.planeY = oldPlaneX * sin(game->player.rotSpeed) \
+	+ game->player.planeY * cos(game->player.rotSpeed);
 }
 
-static double	cam_sensibility(int x)
-{
-	x -= 960;
-	if (x < 0)
-		x *= -1;
-	return ((double)(x * 0.001));
-}
