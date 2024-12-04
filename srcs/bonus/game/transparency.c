@@ -47,7 +47,6 @@ void	add_doors(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
 {
 	t_ray	*transparency;
 
-	printf("ALLOOOOO\n");
 	transparency = dup_ray(game, ray);
 	if (*isLastDoor == true || *isFirst == true)
 		transparency->is_door = true;

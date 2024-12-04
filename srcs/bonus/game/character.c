@@ -18,6 +18,8 @@ void	player_init(t_game *game)
 	game->player.action = malloc(sizeof(int) * 4);
 	while (++i < 4)
 		game->player.action[i] = 0;
+	game->player.rotSpeed = 0.025;
+	game->player.moveSpeed = 0.05;
 	game->player.z = 0;
 	game->player.h = 0;
 	game->player.jump = false;

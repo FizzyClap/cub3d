@@ -97,7 +97,7 @@ void	perform_dda(t_game *game, t_ray *ray, bool hitDoor)
 			ray->side = 1;
 		}
 		pos = game->map->lines[map_y]->content[map_x];
-		if (pos == '1' || (pos == 'D' && hitDoor == true))
+		if (pos == '1' || (pos == 'D' && hitDoor == false))
 		{
 			ray->pos_door = pos;
 			ray->door_x = map_x;
@@ -155,7 +155,6 @@ void	floor_raycast(t_game *game)
 		row_distance = pos_z / p;
 		floor_step_x = row_distance * (rayDirX1 - rayDirX0) / SCREEN_WIDTH;
 		floor_step_y = row_distance * (rayDirY1 - rayDirY0) / SCREEN_WIDTH;
-		floor_step_x = row_distance * (rayDirX1 - rayDirX0) / SCREEN_WIDTH;
 		floor_x = game->player.posX + row_distance * rayDirX0;
 		floor_y = game->player.posY + row_distance * rayDirY0;
 		x = -1;
