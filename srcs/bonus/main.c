@@ -81,9 +81,9 @@ int	start_game(t_game *game, bool launcher)
 		return (FAILURE);
 	if (init_sound_effects(game) == FAILURE)
 		return (FAILURE);
+	mlx_mouse_move(game->mlx, game->win, 960, 540);
 	player_init(game);
 	minimap(game);
-	mlx_mouse_move(game->mlx, game->win, 960, 540);
 	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
@@ -98,20 +98,26 @@ int	start_game(t_game *game, bool launcher)
 
 static int	loop(t_game *game)
 {
-	game->time = get_current_time();
-	move_div(game);
-	make_actions(game);
-	// mouse_move(game);
-	// jump(game);
-	raycasting(game);
-	//raycast(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
-	my_put_image(game, &game->ring, -37, -35);
-	my_put_image(game, weapon_animation(game), 0, 0);
-	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
-		118, 118);
-	game->oldTime = game->time;
-	game->time = get_current_time();
+	int	x;
+	int	y;
 
+	game->time = get_current_time();
+	// printf("%f\n", game->time);
+	if ((long long)(game->time * 1000) - (long long)(game->oldTime * 1000) > 15)
+	{
+		mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
+		raycasting(game);
+		move_div(game);
+		make_actions(game);
+		mouse_move(game);
+		// jump(game);
+		mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
+		my_put_image(game, &game->ring, -37, -35);
+		my_put_image(game, weapon_animation(game), 0, 0);
+		mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
+			118, 118);
+		game->time = get_current_time();
+		game->oldTime = get_current_time();
+	}
 	return (SUCCESS);
 }

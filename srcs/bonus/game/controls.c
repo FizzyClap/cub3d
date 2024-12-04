@@ -24,9 +24,9 @@ int	keyrelease(int keycode, t_game *game)
 	if (keycode == D)
 		game->player.action[MOVERIGHT] = 0;
 	if (keycode == RIGHT)
-		right_cam(game);
+		right_cam(game, 970);
 	if (keycode == LEFT)
-		left_cam(game);
+		left_cam(game, 950);
 	return (SUCCESS);
 }
 
@@ -53,10 +53,10 @@ int	keycode(int keycode, t_game *game)
 		game->player.action[2] = 1;
 	if (keycode == D)
 		game->player.action[3] = 1;
-	// if (keycode == RIGHT)
-	// 	right_cam(game, 970);
-	// if (keycode == LEFT)
-	// 	left_cam(game, 950);
+	if (keycode == RIGHT)
+		right_cam(game, 970);
+	if (keycode == LEFT)
+		left_cam(game, 950);
 	// if (keycode == SPACE && game->player.h <= 0)
 	// {
 	// 	game->player.crouch = false;

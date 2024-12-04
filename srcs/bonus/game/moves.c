@@ -7,8 +7,8 @@ void	move_up(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.posX + game->player.dirX * game->player.moveSpeed;
-	y = game->player. posY + game->player.dirY * game->player.moveSpeed;
+	x = game->player.posX + game->player.dirX * (game->player.moveSpeed / game->player.move_div);
+	y = game->player. posY + game->player.dirY * (game->player.moveSpeed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -21,8 +21,8 @@ void	move_down(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.posX - game->player.dirX * game->player.moveSpeed;
-	y = game->player.posY - game->player.dirY * game->player.moveSpeed;
+	x = game->player.posX - game->player.dirX * (game->player.moveSpeed / game->player.move_div);
+	y = game->player.posY - game->player.dirY * (game->player.moveSpeed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -35,8 +35,8 @@ void	move_left(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.posX + game->player.dirX * game->player.moveSpeed;
-	y = game->player. posY - game->player.dirY * game->player.moveSpeed;
+	x = game->player.posX + game->player.dirY * (game->player.moveSpeed / game->player.move_div);
+	y = game->player.posY - game->player.dirX * (game->player.moveSpeed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -44,13 +44,14 @@ void	move_left(t_game *game)
 		game_over(game);
 }
 
+
 void	move_right(t_game *game)
 {
 	double	x;
 	double	y;
 
-	x = game->player.posX - game->player.dirX * game->player.moveSpeed;
-	y = game->player. posY + game->player.dirY * game->player.moveSpeed;
+	x = game->player.posX - game->player.dirY * (game->player.moveSpeed / game->player.move_div);
+	y = game->player.posY + game->player.dirX * (game->player.moveSpeed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);

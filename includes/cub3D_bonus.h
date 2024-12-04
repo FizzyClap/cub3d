@@ -92,8 +92,8 @@ int		load_xpm(t_game *game, t_image *texture, char *xpm_file);
 int		mouse_click(int button, int x, int y, t_game *game);
 //GAME/MOUSE
 void	mouse_move(t_game *game);
-void	left_cam(t_game *game);
-void	right_cam(t_game *game);
+void	left_cam(t_game *game, int x);
+void	right_cam(t_game *game, int x);
 //GAME/MOVEMENT_SECURITY
 double	check_backroom(t_game *game, int move);
 void	jump(t_game *game);
