@@ -18,7 +18,7 @@ void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
 	char	pos;
 
-	pos = game->map->lines[(int)game->player.y]->content[(int)game->player.x];
+	pos = game->map->lines[(int)game->player.posY]->content[(int)game->player.posX];
 	if (ray->is_door && ray->door_idx == game->door_idx && game->doors[game->door_idx].is_open)
 		*tex = doors_animation(game, game->door_idx, game->doors_frames);
 	else if (ray->is_door && ray->door_idx == game->door_idx && !game->doors[game->door_idx].is_open)
@@ -57,33 +57,15 @@ static void	calculate_tex_x_pos(t_game *game, t_ray *ray, t_image **tex)
 void	shoot_ray_to_center(t_game *game, bool door)
 {
 	t_ray	ray;
-	int		mid_ray;
 
-	mid_ray = (game->player.angle * CENT_PI) - 30 + FOV * (870 / (double)SCREEN_WIDTH);
 	init_ray(game, &ray, SCREEN_WIDTH / 2);
 	calculate_steps(game, &ray);
 	if (door == true)
 	{
 		perform_dda(game, &ray, true);
-		if (game->map->lines[(int)ray.pos_y]->content[(int)ray.pos_x] == 'D')
-			toggle_door(game, (int)ray.pos_y, (int)ray.pos_x);
+		if (game->map->lines[ray.door_y]->content[ray.door_x] == 'D')
+			toggle_door(game, ray.door_y, ray.door_x);
 	}
 	else
 		game->target = hit_enemy(&ray, game);
-}
-
-void	move_ray(t_ray *ray)
-{
-	if (ray->side_dist_x < ray->side_dist_y)
-	{
-		ray->side_dist_x += ray->delta_x;
-		ray->pos_x += ray->step_x;
-		ray->side = 0;
-	}
-	else
-	{
-		ray->side_dist_y += ray->delta_y;
-		ray->pos_y += ray->step_y;
-		ray->side = 1;
-	}
 }

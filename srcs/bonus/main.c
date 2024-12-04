@@ -98,8 +98,6 @@ int	start_game(t_game *game, bool launcher)
 
 static int	loop(t_game *game)
 {
-	double	frameTime;
-
 	game->time = get_current_time();
 	move_div(game);
 	make_actions(game);
@@ -114,8 +112,6 @@ static int	loop(t_game *game)
 		118, 118);
 	game->oldTime = game->time;
 	game->time = get_current_time();
-	frameTime = (game->time - game->oldTime);
-	game->player.rotSpeed = frameTime * 0.3;
-	game->player.moveSpeed = frameTime * 0.5;
+
 	return (SUCCESS);
 }

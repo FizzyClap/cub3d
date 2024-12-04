@@ -12,8 +12,8 @@ void	move_up(t_game *game)
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
-	//if (enemy_collision(game, x, y))
-		//game_over(game);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 void	move_down(t_game *game)
@@ -26,8 +26,8 @@ void	move_down(t_game *game)
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
-	//if (enemy_collision(game, x, y))
-	//	game_over(game);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 void	move_left(t_game *game)
@@ -40,8 +40,8 @@ void	move_left(t_game *game)
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
-	//if (enemy_collision(game, x, y))
-		//game_over(game);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 void	move_right(t_game *game)
@@ -54,8 +54,8 @@ void	move_right(t_game *game)
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
-	//if (enemy_collision(game, x, y))
-		//game_over(game);
+	if (enemy_collision(game, x, y))
+		game_over(game);
 }
 
 static void	check_collision(t_game *game, double x, double y)
@@ -66,15 +66,23 @@ static void	check_collision(t_game *game, double x, double y)
 	py = (int)(game->player.posY);
 	px = (int)(game->player.posX);
 	if (x > game->player.posX && \
-	ft_strchr("NSWE0", game->map->lines[py]->content[(int)(x)]))
+	game->map->lines[py]->content[(int)(x + RADIUS)] != '1' && \
+	(game->map->lines[py]->content[(int)(x + RADIUS)] != 'D' || \
+	is_door_open(game, (int)(x + RADIUS), py)))
 		game->player.posX = x;
 	else if (x < game->player.posX && \
-	ft_strchr("NSWE0", game->map->lines[py]->content[(int)(x)]))
+	game->map->lines[py]->content[(int)(x - RADIUS)] != '1' && \
+	(game->map->lines[py]->content[(int)(x - RADIUS)] != 'D' || \
+	is_door_open(game, (int)(x - RADIUS), py)))
 		game->player.posX = x;
 	if (y > game->player.posY && \
-	ft_strchr("NSWE0", game->map->lines[(int)(y)]->content[px]))
+	game->map->lines[(int)(y + RADIUS)]->content[px] != '1' && \
+	(game->map->lines[(int)(y + RADIUS)]->content[px] != 'D' || \
+	is_door_open(game, px, (int)(y + RADIUS))))
 		game->player.posY = y;
 	else if (y < game->player.posY && \
-	ft_strchr("NSWE0", game->map->lines[(int)(y)]->content[px]))
+	game->map->lines[(int)(y - RADIUS)]->content[px] != '1' && \
+	(game->map->lines[(int)(y - RADIUS)]->content[px] != 'D' || \
+	is_door_open(game, px, (int)(y - RADIUS))))
 		game->player.posY = y;
 }

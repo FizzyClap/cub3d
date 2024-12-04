@@ -73,10 +73,9 @@ int		init_enemy(t_game *game, char *prefix);
 void	sort_enemies(t_game *game);
 void	render_enemies(t_game *game);
 int		hit_enemy(t_ray *ray, t_game *game);
+void	move_ray(t_game *game, t_ray *ray);
 //GAME/FLOORS_RAYCAST
-int		get_texture_color(t_image *texture, int tx, int ty);
-void	floor_raycast(t_game *game);
-void	ceil_raycast(t_game *game);
+void	floor_ceil_raycast(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/LAUNCHER
@@ -108,7 +107,6 @@ void	move_right(t_game *game);
 void	camera_angle_distortion(t_game *game, t_ray *ray);
 void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex);
 void	shoot_ray_to_center(t_game *game, bool door);
-void	move_ray(t_ray *ray);
 //GAME/RAYCASTING
 void	perform_dda(t_game *game, t_ray *ray, bool hitDoor);
 void	calculate_steps(t_game *game, t_ray *ray);

@@ -11,11 +11,10 @@ int	sound(t_game *game)
 	if (game->launcher_is_running == true)
 	{
 		game->music->launcher = Mix_LoadMUS("sound/TheBridge.mp3");
-		if (!game->music->launcher)
-			return (ft_fprintf(2, "Error: Launcher music\n"), FAILURE);
-		Mix_PlayMusic(game->music->launcher, 0);
+		Mix_PlayMusic(game->music->launcher, -1);
 		game->music->gollum = Mix_LoadWAV("sound/My_Precious.wav");
-		if (!game->music->gollum)
+		game->music->gollum_song = Mix_LoadMUS("sound/Gollum's song.mp3");
+		if (!game->music->gollum || !game->music->launcher)
 			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n"), FAILURE);
 	}
 	else if (ft_strcmp(game->map_type, "morgul") == 0)
@@ -23,14 +22,14 @@ int	sound(t_game *game)
 		game->music->morgul = Mix_LoadMUS("sound/MinasMorgul.mp3");
 		if (!game->music->morgul)
 			return (ft_fprintf(2, "Error: Morgul music\n"), FAILURE);
-		Mix_PlayMusic(game->music->morgul, 0);
+		Mix_PlayMusic(game->music->morgul, -1);
 	}
 	else if (ft_strcmp(game->map_type, "moria") == 0)
 	{
 		game->music->moria = Mix_LoadMUS("sound/TheBalrogSong.mp3");
 		if (!game->music->moria)
 			return (ft_fprintf(2, "Error: Moria music\n"), FAILURE);
-		Mix_PlayMusic(game->music->moria, 0);
+		Mix_PlayMusic(game->music->moria, -1);
 	}
 	return (SUCCESS);
 }
@@ -43,9 +42,9 @@ int	init_sound_effects(t_game *game)
 		game->music->step = Mix_LoadWAV("sound/footstep.wav");
 		game->music->weapon = Mix_LoadWAV("sound/fireball.wav");
 		game->music->hit = Mix_LoadWAV("sound/nazgul.wav");
-		game->music->fire = Mix_LoadWAV("sound/firedeath.wav");
+		game->music->game_over = Mix_LoadMUS("sound/Gandalf's fall.mp3");
 		if (!game->music->door || !game->music->step || !game->music->weapon \
-		|| !game->music->hit)
+		|| !game->music->hit || !game->music->game_over)
 			return (ft_fprintf(STDERR_FILENO, "Error: Sound error\n", FAILURE));
 	}
 	else if (ft_strcmp(game->map_type, "moria") == 0)
@@ -74,9 +73,13 @@ void	init_struct_game_sound(t_game *game)
 	game->music->step = NULL;
 	game->music->weapon = NULL;
 	game->music->hit = NULL;
-	game->music->fire = NULL;
 	game->music->gollum = NULL;
 	game->music->game_over = NULL;
+	game->music->gollum_song = NULL;
+	game->restart_music = false;
+	game->show_gollum = false;
+	game->nb_gollum = 0;
+	game->gollum_time = DBL_MAX;
 }
 
 void	free_sound(t_game *game)
@@ -85,6 +88,8 @@ void	free_sound(t_game *game)
 	Mix_HaltMusic();
 	if (game->music->launcher)
 		Mix_FreeMusic(game->music->launcher);
+	if (game->music->gollum_song)
+		Mix_FreeMusic(game->music->gollum_song);
 	if (game->music->gollum)
 		Mix_FreeChunk(game->music->gollum);
 	if (game->music->moria)

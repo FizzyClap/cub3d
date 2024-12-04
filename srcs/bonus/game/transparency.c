@@ -47,7 +47,6 @@ void	add_doors(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
 {
 	t_ray	*transparency;
 
-	printf("ALLOOOOO\n");
 	transparency = dup_ray(game, ray);
 	if (*isLastDoor == true || *isFirst == true)
 		transparency->is_door = true;
@@ -60,11 +59,18 @@ void	add_doors(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
 static t_ray	*dup_ray(t_game *game, t_ray *ray)
 {
 	t_ray	*dest;
-	(void)game;
+	int		i;
 
 	dest = ft_calloc(sizeof(t_ray), 1);
 	if (!dest)
 		return (NULL);
+	i = -1;
+	while (++i < game->nb_doors)
+	{
+		if (game->doors[i].x == ray->door_x && \
+			game->doors[i].y == ray->door_y)
+				ray->door_idx = i;
+	}
 	ft_memcpy(dest, ray, sizeof(t_ray));
 	dest->doors = NULL;
 	return (dest);
