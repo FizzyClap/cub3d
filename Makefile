@@ -54,6 +54,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/controls.c\
 				srcs/bonus/game/doors.c\
 				srcs/bonus/game/enemy.c\
+				srcs/bonus/game/floor_ceil_raycast.c\
 				srcs/bonus/game/image.c\
 				srcs/bonus/game/launcher.c\
 				srcs/bonus/game/minimap.c\
