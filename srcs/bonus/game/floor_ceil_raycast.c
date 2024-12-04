@@ -57,7 +57,7 @@ static void	floor_calcul(t_game *game, t_data *d, t_coord loop)
 static void	ceil_calcul(t_game *game, t_data *d, t_coord loop)
 {
 	d->rayDirX0 = game->player.dirX - game->player.planeX;
-	d->rayDirY0 = game->player.dirY - game->player.planeY;
+	d->rayDirY0 = game->player.dirY + game->player.planeY;
 	d->rayDirX1 = game->player.dirX + game->player.planeX;
 	d->rayDirY1 = game->player.dirY - game->player.planeY;
 	d->p = loop.y - SCREEN_HEIGHT / 2 + game->player.z;
