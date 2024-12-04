@@ -27,7 +27,7 @@ void	draw_doors(t_game *game, t_ray *ray, t_coord loop)
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
 		color = tex->color[tex->height * tex->y + tex->x];
-		my_mlx_pixel_put(&game->raycast, loop.x, loop.y, color);
+		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, color);
 	}
 }
 

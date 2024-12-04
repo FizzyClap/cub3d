@@ -23,7 +23,8 @@ void	raycasting(t_game *game)
 	t_ray	*ray;
 	t_list	*tmp;
 
-	floor_ceil_raycast(game);
+	floor_raycast(game);
+	ceil_raycast(game);
 	ray = ft_calloc(sizeof(t_ray), 1);
 	if (!ray)
 		return ;
@@ -127,6 +128,6 @@ void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
 		color = tex->color[tex->height * tex->y + tex->x];
-		my_mlx_pixel_put(&game->raycast, loop.x, loop.y, color);
+		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, color);
 	}
 }

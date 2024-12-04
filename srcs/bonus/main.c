@@ -102,7 +102,6 @@ static int	loop(t_game *game)
 	int	y;
 
 	game->time = get_current_time();
-	// printf("%f\n", game->time);
 	if ((long long)(game->time * 1000) - (long long)(game->oldTime * 1000) > 15)
 	{
 		mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
