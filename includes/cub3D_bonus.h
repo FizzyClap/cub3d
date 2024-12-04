@@ -75,7 +75,8 @@ void	render_enemies(t_game *game);
 int		hit_enemy(t_ray *ray, t_game *game);
 void	move_ray(t_game *game, t_ray *ray);
 //GAME/FLOORS_RAYCAST
-void	floor_ceil_raycast(t_game *game);
+void	floor_raycast(t_game *game);
+void	ceil_raycast(t_game *game);
 //GAME/IMAGE
 int		load_textures(t_game *game);
 //GAME/LAUNCHER
