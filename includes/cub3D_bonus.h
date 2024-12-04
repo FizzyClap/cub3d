@@ -34,6 +34,7 @@ void	print_texture(t_texture *texture, int fd);
 //FREE/FREE_GAME
 int		close_game(t_game *game);
 int		close_launcher(t_game *game);
+void	free_sound(t_game *game);
 //FREE/FREE_MAP
 void	free_map(t_map *map);
 //FREE/FREE_TEXTURE
@@ -43,6 +44,7 @@ void	free_launcher_image(t_game *game);
 //GAME/ANIMATION_UTILS
 double	get_current_time(void);
 void	kill_enemy(t_game *game);
+void	destroy_enemy(t_game *game, int target, t_coord pos);
 //GAME/ANIMATION
 t_image	*doors_animation(t_game *game, int idx, int start);
 t_image	*weapon_animation(t_game *game);
@@ -111,7 +113,6 @@ void	init_sound(void);
 int		sound(t_game *game);
 int		init_sound_effects(t_game *game);
 void	init_struct_game_sound(t_game *game);
-void	free_sound(t_game *game);
 //GAME/TAB_IMAGES
 char	**create_moria_tab(t_game *game);
 char	**create_morgul_tab(t_game *game);

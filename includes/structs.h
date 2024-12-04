@@ -93,6 +93,7 @@ typedef struct s_texture
 
 typedef struct s_ray
 {
+	double	projected_dist;
 	double	pos_x;
 	double	pos_y;
 	double	plane_x;
@@ -119,6 +120,9 @@ typedef struct s_ray
 
 typedef struct s_player
 {
+	double	x;
+	double	y;
+	double	angle;
 	bool	jump;
 	bool	crouch;
 	int		*action;

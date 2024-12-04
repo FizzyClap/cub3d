@@ -38,7 +38,8 @@ static int	parsing(t_texture **texture, t_map **map, int argc, char **argv)
 	return (SUCCESS);
 }
 
-int	parse_texture_and_map(t_texture **texture, t_map **map, char *file, bool launcher)
+int	parse_texture_and_map(t_texture **texture, t_map **map, char *file,
+	bool launcher)
 {
 	int	fd;
 
@@ -102,7 +103,8 @@ static int	loop(t_game *game)
 	int	y;
 
 	game->time = get_current_time();
-	if ((long long)(game->time * 1000) - (long long)(game->old_time * 1000) > 15)
+	if ((long long)(game->time * 1000) - \
+		(long long)(game->old_time * 1000) > 15)
 	{
 		mlx_mouse_get_pos(game->mlx, game->win, &x, &y);
 		raycasting(game);

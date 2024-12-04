@@ -6,10 +6,13 @@ void	select_wall_texture(t_game *game, t_ray *ray, t_image **tex)
 {
 	char	pos;
 
-	pos = game->map->lines[(int)game->player.pos_y]->content[(int)game->player.pos_x];
-	if (ray->is_door && ray->door_idx == game->door_idx && game->doors[game->door_idx].is_open)
+	pos = game->map->lines[(int)game->player.pos_y]->\
+	content[(int)game->player.pos_x];
+	if (ray->is_door && ray->door_idx == game->door_idx && \
+		game->doors[game->door_idx].is_open)
 		*tex = doors_animation(game, game->door_idx, game->doors_frames);
-	else if (ray->is_door && ray->door_idx == game->door_idx && !game->doors[game->door_idx].is_open)
+	else if (ray->is_door && ray->door_idx == game->door_idx && \
+		!game->doors[game->door_idx].is_open)
 		*tex = doors_animation(game, game->door_idx, 0);
 	else if (ray->is_door && (game->doors[ray->door_idx].is_open || pos == 'D'))
 		*tex = &game->door[game->doors_frames - 1];
@@ -70,8 +73,8 @@ int	hit_enemy(t_ray *ray, t_game *game)
 	while (!hit)
 	{
 		move_ray(game, ray);
-		if (ray->map.y < 0 || ray->map.y >= game->map->y - 1 ||
-		ray->map.x < 0 || ray->map.x >= game->map->lines[ray->map.y]->x)
+		if (ray->map.y < 0 || ray->map.y >= game->map->y - 1 || \
+			ray->map.x < 0 || ray->map.x >= game->map->lines[ray->map.y]->x)
 			return (-1);
 		pos = game->map->lines[ray->map.y]->content[ray->map.x];
 		if (pos == 'A' || pos == '1' || pos == 'D')
@@ -80,7 +83,7 @@ int	hit_enemy(t_ray *ray, t_game *game)
 		while (++i < game->nb_enemy)
 			if ((int)game->enemy[i].x == ray->map.x && \
 				(int)game->enemy[i].y == ray->map.y)
-			return (i);
+				return (i);
 	}
 	return (-1);
 }

@@ -41,7 +41,8 @@ int	create_enemy_tab(t_game *game, char *prefix, int i)
 	enemy_tab[4] = ft_strjoin(prefix, "(4).xpm");
 	enemy_tab[5] = NULL;
 	game->enemy_frames = 5;
-	game->enemy[i].texture = ft_calloc(sizeof(t_image), (game->enemy_frames + 1));
+	game->enemy[i].texture = ft_calloc(sizeof(t_image), \
+	(game->enemy_frames + 1));
 	idx = -1;
 	while (++idx < game->enemy_frames)
 		if (!load_xpm(game, &game->enemy[i].texture[idx], enemy_tab[idx]))

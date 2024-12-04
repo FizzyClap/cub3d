@@ -23,3 +23,19 @@ void	kill_enemy(t_game *game)
 		game->enemy[target].start_animation = get_current_time();
 	}
 }
+
+void	destroy_enemy(t_game *game, int target, t_coord pos)
+{
+	int	i;
+
+	i = -1;
+	while (++i < game->enemy_frames)
+	{
+		if (game->enemy[target].texture[i].img)
+			mlx_destroy_image(game->mlx, game->enemy[target].texture[i].img);
+		game->enemy[target].texture[i].img = NULL;
+		game->enemy[target].x = -1;
+		game->enemy[target].y = -1;
+	}
+	game->map->lines[pos.y]->content[pos.x] = '0';
+}

@@ -23,7 +23,8 @@ void	draw_doors(t_game *game, t_ray *ray, t_coord loop)
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
 		color = tex->color[tex->height * tex->y + tex->x];
-		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, color);
+		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, \
+		color);
 	}
 }
 
@@ -65,7 +66,7 @@ static t_ray	*dup_ray(t_game *game, t_ray *ray)
 	{
 		if (game->doors[i].x == ray->door_x && \
 			game->doors[i].y == ray->door_y)
-				ray->door_idx = i;
+			ray->door_idx = i;
 	}
 	ft_memcpy(dest, ray, sizeof(t_ray));
 	dest->doors = NULL;

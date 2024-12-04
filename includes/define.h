@@ -4,6 +4,15 @@
 //UTILS
 # define FAILURE 0
 # define SUCCESS 1
+//180 / PI
+# define CENT_PI 57.2957795131
+# define PI 3.14159265358
+//PI * 2
+# define DD_PI 6.28318530718
+//PI / 2
+# define D_PI 1.57079632679
+//PI / 4
+# define Q_PI 0.78539816339
 # define RADIUS 0.25
 # define FOV 60
 # define SCREEN_X 1920
@@ -11,7 +20,9 @@
 # define MMW 180
 # define MMH 180
 # define TILE 20
+# define SPEED 0.01
 # define MOVE 1
+# define DELTA 2
 # define NORTH 0
 # define SOUTH 1
 # define WEST 2

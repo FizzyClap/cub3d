@@ -54,7 +54,6 @@ t_image	*enemy_animation(t_game *game, int target, t_coord pos)
 {
 	int		current_frame;
 	double	elapsed_time;
-	int		i;
 
 	elapsed_time = game->time - game->enemy[target].start_animation;
 	if (elapsed_time < 0)
@@ -68,18 +67,7 @@ t_image	*enemy_animation(t_game *game, int target, t_coord pos)
 		game->enemy[target].is_animating = false;
 	}
 	if (current_frame == game->enemy_frames - 1)
-	{
-		i = -1;
-		while (++i < game->enemy_frames)
-		{
-			if (game->enemy[target].texture[i].img)
-				mlx_destroy_image(game->mlx, game->enemy[target].texture[i].img);
-			game->enemy[target].texture[i].img = NULL;
-			game->enemy[target].x = -1;
-			game->enemy[target].y = -1;
-		}
-		game->map->lines[pos.y]->content[pos.x] = '0';
-	}
+		destroy_enemy(game, target, pos);
 	return (&game->enemy[target].texture[current_frame]);
 }
 
@@ -108,4 +96,3 @@ void	*gollum(t_game *game)
 	}
 	return (game->launcher[current_frame].img);
 }
-

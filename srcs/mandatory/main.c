@@ -18,10 +18,10 @@ int	main(int argc, char **argv)
 		ft_fprintf(STDERR_FILENO, "Error: textures can't be loaded\n");
 		close_game(game);
 	}
-	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	game->win = mlx_new_window(game->mlx, SCREEN_X, SCREEN_Y, "cub3D");
 	player_init(game);
 	minimap(game);
-	game->raycast.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	game->raycast.img = mlx_new_image(game->mlx, SCREEN_X, SCREEN_Y);
 	game->raycast.addr = mlx_get_data_addr(game->raycast.img, \
 	&game->raycast.bpp, &game->raycast.line_len, &game->raycast.endian);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, keyrelease, game);
@@ -78,7 +78,7 @@ static int	loop(t_game *game, t_ray *ray)
 	move_div(game);
 	make_actions(game, ray);
 	mouse_move(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);;
+	mlx_put_image_to_window(game->mlx, game->win, game->raycast.img, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->player.cursor.img, \
 		118, 118);
 	return (SUCCESS);

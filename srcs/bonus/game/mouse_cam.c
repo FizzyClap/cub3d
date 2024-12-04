@@ -73,4 +73,3 @@ static double	cam_sensibility(int x)
 		x *= -1;
 	return ((double)(x * 0.0005));
 }
-

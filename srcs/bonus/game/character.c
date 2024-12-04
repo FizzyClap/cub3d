@@ -11,12 +11,10 @@ void	player_init(t_game *game)
 	paint_cursor(game);
 	game->player.pos_x = (double)game->map->start_x + 0.5;
 	game->player.pos_y = (double)game->map->start_y + 0.5;
-	//player_start(game);
 	game->player.dir_x = 1;
 	game->player.dir_y = 0;
 	game->player.plane_x = 0;
 	game->player.plane_y = 0.66;
-	//printf("dir_x = %f dir_y = %f plane_x = %f plane_y = %f\n", game->player.dir_x, game->player.dir_y, game->player.plane_x, game->player.plane_y);
 	i = -1;
 	game->player.action = malloc(sizeof(int) * 4);
 	while (++i < 4)
@@ -31,33 +29,33 @@ void	player_init(t_game *game)
 }
 
 //EN THEORIE CA MARCHE
-void	player_start(t_game *game)
-{
-	game->player.dir_y = 0;
-	game->player.plane_x = 0;
-	if (game->map->orientation == 'N')
-	{
-		game->player.dir_x = -1;
-		game->player.plane_y = 0.66;
-		return ;
-	}
-	else if (game->map->orientation == 'S')
-	{
-		game->player.dir_x = 1;
-		game->player.plane_y = -0.66;
-		return ;
-	}
-	game->player.dir_x = 0;
-	game->player.plane_y = 0;
-	if (game->map->orientation == 'E')
-	{
-		game->player.dir_y = 1;
-		game->player.plane_x = 0.66;
-		return ;
-	}
-	game->player.dir_y = -1;
-	game->player.plane_x = -0.66;
-}
+//void	player_start(t_game *game)
+//{
+//	game->player.dir_y = 0;
+//	game->player.plane_x = 0;
+//	if (game->map->orientation == 'N')
+//	{
+//		game->player.dir_x = -1;
+//		game->player.plane_y = 0.66;
+//		return ;
+//	}
+//	else if (game->map->orientation == 'S')
+//	{
+//		game->player.dir_x = 1;
+//		game->player.plane_y = -0.66;
+//		return ;
+//	}
+//	game->player.dir_x = 0;
+//	game->player.plane_y = 0;
+//	if (game->map->orientation == 'E')
+//	{
+//		game->player.dir_y = 1;
+//		game->player.plane_x = 0.66;
+//		return ;
+//	}
+//	game->player.dir_y = -1;
+//	game->player.plane_x = -0.66;
+//}
 
 static void	paint_cursor(t_game *game)
 {

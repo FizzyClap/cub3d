@@ -73,8 +73,8 @@ void	perform_dda(t_game *game, t_ray *ray, bool hitDoor)
 	{
 		move_ray(game, ray);
 		pos = game->map->lines[ray->map.y]->content[ray->map.x];
-		player_pos = game->map->lines\
-		[(int)game->player.pos_y]->content[(int)game->player.pos_x];
+		player_pos = game->map->lines[(int)game->player.pos_y]->\
+		content[(int)game->player.pos_x];
 		if (pos == '1' || (pos == 'D' && hitDoor == true))
 			hit = 1;
 		else if (pos == 'D' || is_last_door || (is_first && player_pos == 'D'))
@@ -112,6 +112,7 @@ void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
 		color = tex->color[tex->height * tex->y + tex->x];
-		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, color);
+		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, \
+			color);
 	}
 }

@@ -47,8 +47,10 @@ static void	floor_calcul(t_game *game, t_data *d, t_coord loop)
 	d->p = loop.y - SCREEN_Y / 2 - game->player.z;
 	d->pos_z = 0.5 * SCREEN_Y;
 	d->row_distance = d->pos_z / d->p;
-	d->floor_step_x = d->row_distance * (d->raydir_x1 - d->raydir_x0) / SCREEN_X;
-	d->floor_step_y = d->row_distance * (d->raydir_y1 - d->raydir_y0) / SCREEN_X;
+	d->floor_step_x = d->row_distance * \
+		(d->raydir_x1 - d->raydir_x0) / SCREEN_X;
+	d->floor_step_y = d->row_distance * \
+		(d->raydir_y1 - d->raydir_y0) / SCREEN_X;
 	d->floor_x = game->player.pos_x + d->row_distance * d->raydir_x0;
 	d->floor_y = game->player.pos_y + d->row_distance * d->raydir_y0;
 }
@@ -62,8 +64,10 @@ static void	ceil_calcul(t_game *game, t_data *d, t_coord loop)
 	d->p = SCREEN_Y / 2 + game->player.z - loop.y;
 	d->pos_z = 0.5 * SCREEN_Y;
 	d->row_distance = d->pos_z / d->p;
-	d->floor_step_x = d->row_distance * (d->raydir_x1 - d->raydir_x0) / SCREEN_X;
-	d->floor_step_y = d->row_distance * (d->raydir_y1 - d->raydir_y0) / SCREEN_X;
+	d->floor_step_x = d->row_distance * \
+		(d->raydir_x1 - d->raydir_x0) / SCREEN_X;
+	d->floor_step_y = d->row_distance * \
+		(d->raydir_y1 - d->raydir_y0) / SCREEN_X;
 	d->floor_x = game->player.pos_x + d->row_distance * d->raydir_x0;
 	d->floor_y = game->player.pos_y + d->row_distance * d->raydir_y0;
 }

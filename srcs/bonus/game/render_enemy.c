@@ -3,7 +3,7 @@
 static int	calcul_sprites(t_game *game, t_data *d, int i);
 static int	render_sprites(t_game *game, t_data *d, t_image *current);
 
-void sort_enemies(t_game *game)
+void	sort_enemies(t_game *game)
 {
 	int		i;
 	int		j;
@@ -31,7 +31,7 @@ void sort_enemies(t_game *game)
 	}
 }
 
-void render_enemies(t_game *game)
+void	render_enemies(t_game *game)
 {
 	t_data		d;
 	int			i;
