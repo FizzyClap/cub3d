@@ -1,30 +1,62 @@
 #include "../includes/cub3D_bonus.h"
 
 static void	paint_cursor(t_game *game);
+void		player_start(t_game *game);
 
 void	player_init(t_game *game)
 {
 	int	i;
 
-	game->oldTime = 0;
+	game->old_time = 0;
 	paint_cursor(game);
-	game->player.posX = (double)game->map->start_x + 0.5;
-	game->player.posY = (double)game->map->start_y + 0.5;  //x and y start position
-	game->player.dirX = 1;
-	game->player.dirY = 0; //initial direction vector
-	game->player.planeX = 0;
-	game->player.planeY = 0.66; //the 2d raycaster version of camera plane
+	game->player.pos_x = (double)game->map->start_x + 0.5;
+	game->player.pos_y = (double)game->map->start_y + 0.5;
+	//player_start(game);
+	game->player.dir_x = 1;
+	game->player.dir_y = 0;
+	game->player.plane_x = 0;
+	game->player.plane_y = 0.66;
+	//printf("dir_x = %f dir_y = %f plane_x = %f plane_y = %f\n", game->player.dir_x, game->player.dir_y, game->player.plane_x, game->player.plane_y);
 	i = -1;
 	game->player.action = malloc(sizeof(int) * 4);
 	while (++i < 4)
 		game->player.action[i] = 0;
-	game->player.rotSpeed = 0.025;
-	game->player.moveSpeed = 0.05;
+	game->player.rot_speed = 0.025;
+	game->player.move_speed = 0.05;
 	game->player.z = 0;
 	game->player.h = 0;
 	game->player.jump = false;
 	game->player.crouch = false;
 	game->player.move_div = 0;
+}
+
+//EN THEORIE CA MARCHE
+void	player_start(t_game *game)
+{
+	game->player.dir_y = 0;
+	game->player.plane_x = 0;
+	if (game->map->orientation == 'N')
+	{
+		game->player.dir_x = -1;
+		game->player.plane_y = 0.66;
+		return ;
+	}
+	else if (game->map->orientation == 'S')
+	{
+		game->player.dir_x = 1;
+		game->player.plane_y = -0.66;
+		return ;
+	}
+	game->player.dir_x = 0;
+	game->player.plane_y = 0;
+	if (game->map->orientation == 'E')
+	{
+		game->player.dir_y = 1;
+		game->player.plane_x = 0.66;
+		return ;
+	}
+	game->player.dir_y = -1;
+	game->player.plane_x = -0.66;
 }
 
 static void	paint_cursor(t_game *game)

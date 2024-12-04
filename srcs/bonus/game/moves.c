@@ -7,8 +7,10 @@ void	move_up(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.posX + game->player.dirX * (game->player.moveSpeed / game->player.move_div);
-	y = game->player. posY + game->player.dirY * (game->player.moveSpeed / game->player.move_div);
+	x = game->player.pos_x + game->player.dir_x * \
+		(game->player.move_speed / game->player.move_div);
+	y = game->player. pos_y + game->player.dir_y * \
+		(game->player.move_speed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -21,8 +23,10 @@ void	move_down(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.posX - game->player.dirX * (game->player.moveSpeed / game->player.move_div);
-	y = game->player.posY - game->player.dirY * (game->player.moveSpeed / game->player.move_div);
+	x = game->player.pos_x - game->player.dir_x * \
+		(game->player.move_speed / game->player.move_div);
+	y = game->player.pos_y - game->player.dir_y * \
+		(game->player.move_speed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -35,8 +39,10 @@ void	move_left(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.posX + game->player.dirY * (game->player.moveSpeed / game->player.move_div);
-	y = game->player.posY - game->player.dirX * (game->player.moveSpeed / game->player.move_div);
+	x = game->player.pos_x + game->player.dir_y * \
+		(game->player.move_speed / game->player.move_div);
+	y = game->player.pos_y - game->player.dir_x * \
+		(game->player.move_speed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -44,14 +50,15 @@ void	move_left(t_game *game)
 		game_over(game);
 }
 
-
 void	move_right(t_game *game)
 {
 	double	x;
 	double	y;
 
-	x = game->player.posX - game->player.dirY * (game->player.moveSpeed / game->player.move_div);
-	y = game->player.posY + game->player.dirX * (game->player.moveSpeed / game->player.move_div);
+	x = game->player.pos_x - game->player.dir_y * \
+		(game->player.move_speed / game->player.move_div);
+	y = game->player.pos_y + game->player.dir_x * \
+		(game->player.move_speed / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -64,26 +71,26 @@ static void	check_collision(t_game *game, double x, double y)
 	int	py;
 	int	px;
 
-	py = (int)(game->player.posY);
-	px = (int)(game->player.posX);
-	if (x > game->player.posX && \
+	py = (int)(game->player.pos_y);
+	px = (int)(game->player.pos_x);
+	if (x > game->player.pos_x && \
 	game->map->lines[py]->content[(int)(x + RADIUS)] != '1' && \
 	(game->map->lines[py]->content[(int)(x + RADIUS)] != 'D' || \
 	is_door_open(game, (int)(x + RADIUS), py)))
-		game->player.posX = x;
-	else if (x < game->player.posX && \
+		game->player.pos_x = x;
+	else if (x < game->player.pos_x && \
 	game->map->lines[py]->content[(int)(x - RADIUS)] != '1' && \
 	(game->map->lines[py]->content[(int)(x - RADIUS)] != 'D' || \
 	is_door_open(game, (int)(x - RADIUS), py)))
-		game->player.posX = x;
-	if (y > game->player.posY && \
+		game->player.pos_x = x;
+	if (y > game->player.pos_y && \
 	game->map->lines[(int)(y + RADIUS)]->content[px] != '1' && \
 	(game->map->lines[(int)(y + RADIUS)]->content[px] != 'D' || \
 	is_door_open(game, px, (int)(y + RADIUS))))
-		game->player.posY = y;
-	else if (y < game->player.posY && \
+		game->player.pos_y = y;
+	else if (y < game->player.pos_y && \
 	game->map->lines[(int)(y - RADIUS)]->content[px] != '1' && \
 	(game->map->lines[(int)(y - RADIUS)]->content[px] != 'D' || \
 	is_door_open(game, px, (int)(y - RADIUS))))
-		game->player.posY = y;
+		game->player.pos_y = y;
 }

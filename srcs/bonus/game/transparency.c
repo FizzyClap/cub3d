@@ -11,16 +11,12 @@ void	draw_doors(t_game *game, t_ray *ray, t_coord loop)
 	int		color;
 
 	calculate_wall_distance(ray);
-	line_height = (int)(SCREEN_HEIGHT / ray->wall_dist);
-	draw_start = -line_height / 2 + SCREEN_HEIGHT / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
-	if (draw_end >= SCREEN_HEIGHT)
-		draw_end = SCREEN_HEIGHT - 1;
+	line_height = (int)(SCREEN_Y / ray->wall_dist);
+	draw_start = -line_height / 2 + SCREEN_Y / 2;
+	draw_end = line_height / 2 + SCREEN_Y / 2;
 	select_wall_texture(game, ray, &tex);
 	tex->step = 1.0 * tex->height / line_height;
-	tex->pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * tex->step;
+	tex->pos = (draw_start - SCREEN_Y / 2 + line_height / 2) * tex->step;
 	loop.y = draw_start - 1;
 	while (++loop.y < draw_end)
 	{
@@ -43,17 +39,17 @@ void	doors_transparency(t_game *game, t_list **tmp, t_ray *ray, t_coord loop)
 	ray->doors = NULL;
 }
 
-void	add_doors(t_game *game, t_ray *ray, bool *isLastDoor, bool *isFirst)
+void	add_doors(t_game *game, t_ray *ray, bool *is_last_door, bool *is_first)
 {
 	t_ray	*transparency;
 
 	transparency = dup_ray(game, ray);
-	if (*isLastDoor == true || *isFirst == true)
+	if (*is_last_door == true || *is_first == true)
 		transparency->is_door = true;
 	ft_lstadd_front(&ray->doors, ft_lstnew(transparency));
-	*isLastDoor = !*isLastDoor;
-	if (*isFirst && ray->pos_door != 'D')
-		*isLastDoor = false;
+	*is_last_door = !*is_last_door;
+	if (*is_first && ray->pos_door != 'D')
+		*is_last_door = false;
 }
 
 static t_ray	*dup_ray(t_game *game, t_ray *ray)

@@ -6,7 +6,7 @@ void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || y < 0 || x > SCREEN_WIDTH || y > SCREEN_HEIGHT)
+	if (x < 0 || y < 0 || x > SCREEN_X || y > SCREEN_Y)
 		return ;
 	if (is_color_close_to_magenta(color, 100) == FAILURE)
 		return ;

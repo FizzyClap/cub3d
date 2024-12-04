@@ -17,25 +17,25 @@ void	draw_minimap(t_game *game, t_image minimap)
 	t_coord	coord;
 	t_coord	pos;
 
-	pos.x = (int)(game->player.posX) - 6;
+	pos.x = (int)(game->player.pos_x) - 6;
 	coord.x = 0;
-	while (++pos.x < (int)(game->player.posX) + 5)
+	while (++pos.x < (int)(game->player.pos_x) + 5)
 	{
-		pos.y = (int)(game->player.posY) - 6;
+		pos.y = (int)(game->player.pos_y) - 6;
 		coord.y = 0;
-		while (++pos.y < (int)(game->player.posY) + 5)
+		while (++pos.y < (int)(game->player.pos_y) + 5)
 		{
 			draw_tile(coord, minimap, get_max(game, coord), \
 			minimap_color(game, pos));
 			if (coord.y == 0)
-				coord.y += TILE - (int)((game->player.posY - \
-				(int)(game->player.posY)) * TILE);
+				coord.y += TILE - (int)((game->player.pos_y - \
+				(int)(game->player.pos_y)) * TILE);
 			else
 				coord.y += TILE;
 		}
 		if (coord.x == 0)
-			coord.x += TILE - (int)((game->player.posX - \
-			(int)(game->player.posX)) * TILE);
+			coord.x += TILE - (int)((game->player.pos_x - \
+			(int)(game->player.pos_x)) * TILE);
 		else
 			coord.x += TILE;
 	}
@@ -97,11 +97,11 @@ static t_coord	get_max(t_game *game, t_coord coord)
 	t_coord	result;
 
 	if (coord.x == 0)
-		result.x = TILE - (int)(game->player.posX - (int)(game->player.posX)) * TILE;
+		result.x = TILE - (int)(game->player.pos_x - (int)(game->player.pos_x)) * TILE;
 	else
 		result.x = TILE;
 	if (coord.y == 0)
-		result.y = TILE - (int)(game->player.posY - (int)(game->player.posY)) * TILE;
+		result.y = TILE - (int)(game->player.pos_y - (int)(game->player.pos_y)) * TILE;
 	else
 		result.y = TILE;
 	return (result);
