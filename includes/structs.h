@@ -93,13 +93,13 @@ typedef struct s_texture
 
 typedef struct s_ray
 {
+	double	projected_dist;
 	double	pos_x;
 	double	pos_y;
 	double	plane_x;
 	double	plane_y;
 	double	dir_x;
 	double	dir_y;
-	double	projected_dist;
 	int		step_x;
 	int		step_y;
 	double	delta_x;
@@ -109,7 +109,6 @@ typedef struct s_ray
 	int		side;
 	double	wall_dist;
 	double	angle;
-	int		end;
 	bool	is_door;
 	int		door_idx;
 	char	pos_door;
@@ -121,31 +120,25 @@ typedef struct s_ray
 
 typedef struct s_player
 {
+	double	x;
+	double	y;
+	double	angle;
 	bool	jump;
 	bool	crouch;
 	int		*action;
 	int		move_div;
 	int		z;
 	int		h;
-	double	x;
-	double	y;
-	double	d_x;
-	double	d_y;
-	double	plane_x;
-	double	plane_y;
-	double	speed;
-	double	angle;
 	t_ray	*cross_ray;
 	t_image	cursor;
-	// new wave
-	double	dirX;
-	double	dirY;
-	double	planeX;
-	double	planeY;
-	double	posX;
-	double	posY;
-	double	rotSpeed;
-	double	moveSpeed;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	pos_x;
+	double	pos_y;
+	double	rot_speed;
+	double	move_speed;
 }	t_player;
 
 typedef struct s_color
@@ -167,7 +160,6 @@ typedef struct s_music
 	Mix_Chunk	*step;
 	Mix_Chunk	*weapon;
 	Mix_Chunk	*hit;
-	Mix_Chunk	*fire;
 	Mix_Chunk	*gollum;
 }	t_music;
 
@@ -201,12 +193,10 @@ typedef struct s_data
 	int		color;
 	int		draw_start;
 	int		draw_end;
-	int		h_line;
-	int		h_correct;
-	double	rayDirX0;
-	double	rayDirY0;
-	double	rayDirX1;
-	double	rayDirY1;
+	double	raydir_x0;
+	double	raydir_y0;
+	double	raydir_x1;
+	double	raydir_y1;
 	int		p;
 	double	pos_z;
 	double	row_distance;
@@ -218,10 +208,9 @@ typedef struct s_data
 	int		cell_y;
 }	t_data;
 
-
 typedef struct s_game
 {
-	int			oldTime;
+	int			old_time;
 	void		*mlx;
 	void		*win;
 	char		*file;
@@ -243,7 +232,7 @@ typedef struct s_game
 	int			nb_enemy;
 	int			target;
 	double		time;
-	double		z_buffer[SCREEN_WIDTH];
+	double		z_buffer[SCREEN_X];
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;

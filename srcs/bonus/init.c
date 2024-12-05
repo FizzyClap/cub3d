@@ -53,23 +53,17 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	game->floor.a = rgb_to_int(game->floor.r, game->floor.g, game->floor.b);
 }
 
-//void	init_ray(t_ray *ray, t_game *game, double angle)
-//{
-//	ray->pos_x = game->player.x;
-//	ray->pos_y = game->player.y;
-//	ray->dir_x = cos(deg_to_rad(angle));
-//	ray->dir_y = sin(deg_to_rad(angle));
-//	ray->plane_x = -ray->dir_y * FOV;
-//	ray->plane_y = ray->dir_x * FOV;
-//	ray->delta_x = fabs(1 / ray->dir_x);
-//	ray->delta_y = fabs(1 / ray->dir_y);
-//	ray->side_dist_x = 0;
-//	ray->side_dist_y = 0;
-//	ray->angle = angle;
-//	ray->is_door = false;
-//}
-
-double	deg_to_rad(double degrees)
+void	init_ray(t_game *game, t_ray *ray, int x)
 {
-	return (degrees * PI / 180);
+	ray->pos_x = 2 * x / (double)SCREEN_X - 1;
+	ray->dir_x = game->player.dir_x + game->player.plane_x * ray->pos_x;
+	ray->dir_y = game->player.dir_y + game->player.plane_y * ray->pos_x;
+	if (ray->dir_x == 0)
+		ray->delta_x = INT_MAX;
+	else
+		ray->delta_x = fabs(1 / ray->dir_x);
+	if (ray->dir_y == 0)
+		ray->delta_y = INT_MAX;
+	else
+		ray->delta_y = fabs(1 / ray->dir_y);
 }

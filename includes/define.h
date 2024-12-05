@@ -15,8 +15,8 @@
 # define Q_PI 0.78539816339
 # define RADIUS 0.25
 # define FOV 60
-# define SCREEN_WIDTH 1920
-# define SCREEN_HEIGHT 1080
+# define SCREEN_X 1920
+# define SCREEN_Y 1080
 # define MMW 180
 # define MMH 180
 # define TILE 20
@@ -27,7 +27,7 @@
 # define SOUTH 1
 # define WEST 2
 # define EAST 3
-# define MINIMAP_RADIUS (MMW / 2)
+# define MINIMAP_RADIUS 90
 # define ERR_ARG "Error: there is 1 argument more than expected\n"
 # define ERR_PLAYERS "Error: there is too much start position\n"
 # define ERR_EMPTY "Error: line is empty\n"

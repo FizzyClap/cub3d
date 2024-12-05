@@ -81,35 +81,3 @@ void	init_struct_game_sound(t_game *game)
 	game->nb_gollum = 0;
 	game->gollum_time = DBL_MAX;
 }
-
-void	free_sound(t_game *game)
-{
-	Mix_HaltChannel(-1);
-	Mix_HaltMusic();
-	if (game->music->launcher)
-		Mix_FreeMusic(game->music->launcher);
-	if (game->music->gollum_song)
-		Mix_FreeMusic(game->music->gollum_song);
-	if (game->music->gollum)
-		Mix_FreeChunk(game->music->gollum);
-	if (game->music->moria)
-		Mix_FreeMusic(game->music->moria);
-	if (game->music->morgul)
-		Mix_FreeMusic(game->music->morgul);
-	if (game->music->door)
-		Mix_FreeChunk(game->music->door);
-	if (game->music->step)
-		Mix_FreeChunk(game->music->step);
-	if (game->music->weapon)
-		Mix_FreeChunk(game->music->weapon);
-	if (game->music->hit)
-		Mix_FreeChunk(game->music->hit);
-	if (game->music->game_over)
-		Mix_FreeMusic(game->music->game_over);
-	if (game->music)
-		free(game->music);
-	Mix_CloseAudio();
-	Mix_Quit();
-	SDL_QuitSubSystem(SDL_INIT_AUDIO);
-	SDL_Quit();
-}

@@ -34,36 +34,36 @@ static void	cam_z(t_game *game, int y)
 
 void	left_cam(t_game *game, int x)
 {
-	double	oldDirX;
-	double oldPlaneX;
+	double	olddir_x;
+	double	oldplane_x;
 
-	oldDirX = game->player.dirX;
-	game->player.dirX = game->player.dirX * cos(-(cam_sensibility(x))) \
-	- game->player.dirY * sin(-(cam_sensibility(x)));
-	game->player.dirY = oldDirX * sin(-(cam_sensibility(x))) \
-	+ game->player.dirY * cos(-(cam_sensibility(x)));
-	oldPlaneX = game->player.planeX;
-	game->player.planeX = game->player.planeX * cos(-(cam_sensibility(x))) \
-	- game->player.planeY * sin(-(cam_sensibility(x)));
-	game->player.planeY = oldPlaneX * sin(-(cam_sensibility(x))) \
-	+ game->player.planeY * cos(-(cam_sensibility(x)));
+	olddir_x = game->player.dir_x;
+	game->player.dir_x = game->player.dir_x * cos(-(cam_sensibility(x))) \
+	- game->player.dir_y * sin(-(cam_sensibility(x)));
+	game->player.dir_y = olddir_x * sin(-(cam_sensibility(x))) \
+	+ game->player.dir_y * cos(-(cam_sensibility(x)));
+	oldplane_x = game->player.plane_x;
+	game->player.plane_x = game->player.plane_x * cos(-(cam_sensibility(x))) \
+	- game->player.plane_y * sin(-(cam_sensibility(x)));
+	game->player.plane_y = oldplane_x * sin(-(cam_sensibility(x))) \
+	+ game->player.plane_y * cos(-(cam_sensibility(x)));
 }
 
 void	right_cam(t_game *game, int x)
 {
-	double	oldDirX;
-	double oldPlaneX;
+	double	olddir_x;
+	double	oldplane_x;
 
-	oldDirX = game->player.dirX;
-	game->player.dirX = game->player.dirX * cos(cam_sensibility(x)) \
-	- game->player.dirY * sin(cam_sensibility(x));
-	game->player.dirY = oldDirX * sin(cam_sensibility(x)) \
-	+ game->player.dirY * cos(cam_sensibility(x));
-	oldPlaneX = game->player.planeX;
-	game->player.planeX = game->player.planeX * cos(cam_sensibility(x)) \
-	- game->player.planeY * sin(cam_sensibility(x));
-	game->player.planeY = oldPlaneX * sin(cam_sensibility(x)) \
-	+ game->player.planeY * cos(cam_sensibility(x));
+	olddir_x = game->player.dir_x;
+	game->player.dir_x = game->player.dir_x * cos(cam_sensibility(x)) \
+	- game->player.dir_y * sin(cam_sensibility(x));
+	game->player.dir_y = olddir_x * sin(cam_sensibility(x)) \
+	+ game->player.dir_y * cos(cam_sensibility(x));
+	oldplane_x = game->player.plane_x;
+	game->player.plane_x = game->player.plane_x * cos(cam_sensibility(x)) \
+	- game->player.plane_y * sin(cam_sensibility(x));
+	game->player.plane_y = oldplane_x * sin(cam_sensibility(x)) \
+	+ game->player.plane_y * cos(cam_sensibility(x));
 }
 
 static double	cam_sensibility(int x)
@@ -73,4 +73,3 @@ static double	cam_sensibility(int x)
 		x *= -1;
 	return ((double)(x * 0.0005));
 }
-

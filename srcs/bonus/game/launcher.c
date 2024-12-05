@@ -13,7 +13,7 @@ int	open_launcher(t_game *game)
 	game->launcher_is_running = true;
 	init_struct_game_sound(game);
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "Cub3D Launcher");
+	game->win = mlx_new_window(game->mlx, SCREEN_X, SCREEN_Y, "Cub3D Launcher");
 	if (!create_launcher_images(game, "textures/launcher/launcher"))
 		return (FAILURE);
 	if (game->launcher_is_running == true)

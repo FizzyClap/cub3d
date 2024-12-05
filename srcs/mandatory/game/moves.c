@@ -7,12 +7,11 @@ void	move_up(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.x + (game->player.d_x * \
-	(game->player.speed / game->player.move_div));
-	y = game->player.y + (game->player.d_y * \
-	(game->player.speed / game->player.move_div));
+	x = game->player.x + (game->player.dir_x * \
+	(game->player.move_speed / game->player.move_div));
+	y = game->player.y + (game->player.dir_y * \
+	(game->player.move_speed / game->player.move_div));
 	check_collision(game, x, y);
-
 }
 
 void	move_down(t_game *game)
@@ -20,10 +19,10 @@ void	move_down(t_game *game)
 	double	x;
 	double	y;
 
-	x = game->player.x - (game->player.d_x * \
-	(game->player.speed / game->player.move_div));
-	y = game->player.y - (game->player.d_y * \
-	(game->player.speed / game->player.move_div));
+	x = game->player.x - (game->player.dir_x * \
+	(game->player.move_speed / game->player.move_div));
+	y = game->player.y - (game->player.dir_y * \
+	(game->player.move_speed / game->player.move_div));
 	check_collision(game, x, y);
 }
 
@@ -35,10 +34,10 @@ void	move_left(t_game *game)
 	game->player.angle -= D_PI;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	x = game->player.x + (game->player.d_x * \
-	(game->player.speed / game->player.move_div));
-	y = game->player.y + (game->player.d_y * \
-	(game->player.speed / game->player.move_div));
+	x = game->player.x + (game->player.dir_x * \
+	(game->player.move_speed / game->player.move_div));
+	y = game->player.y + (game->player.dir_y * \
+	(game->player.move_speed / game->player.move_div));
 	check_collision(game, x, y);
 	game->player.angle += D_PI;
 	correct_angle(game);
@@ -53,10 +52,10 @@ void	move_right(t_game *game)
 	game->player.angle += D_PI;
 	correct_angle(game);
 	refresh_position(game, DELTA, 0);
-	x = game->player.x + (game->player.d_x * \
-	(game->player.speed / game->player.move_div));
-	y = game->player.y + (game->player.d_y * \
-	(game->player.speed / game->player.move_div));
+	x = game->player.x + (game->player.dir_x * \
+	(game->player.move_speed / game->player.move_div));
+	y = game->player.y + (game->player.dir_y * \
+	(game->player.move_speed / game->player.move_div));
 	check_collision(game, x, y);
 	game->player.angle -= D_PI;
 	correct_angle(game);

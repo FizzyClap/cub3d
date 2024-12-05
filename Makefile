@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 -O2 #-fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -O2 -fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -47,10 +47,10 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/free/free_game.c\
 				srcs/bonus/free/free_texture.c\
 				srcs/bonus/free/free_map.c\
+				srcs/bonus/game/animation_utils.c\
 				srcs/bonus/game/animation.c\
 				srcs/bonus/game/character.c\
 				srcs/bonus/game/colors.c\
-				srcs/bonus/game/controls_utils.c\
 				srcs/bonus/game/controls.c\
 				srcs/bonus/game/doors.c\
 				srcs/bonus/game/enemy.c\
@@ -64,6 +64,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/moves.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
+				srcs/bonus/game/render_enemy.c\
 				srcs/bonus/game/sound.c\
 				srcs/bonus/game/tab_images.c\
 				srcs/bonus/game/transparency.c\
@@ -73,7 +74,6 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/parsing/check_map.c\
 				srcs/bonus/parsing/check_walls.c\
 				srcs/bonus/parsing/parsing_utils.c\
-				srcs/bonus/game/test.c\
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)

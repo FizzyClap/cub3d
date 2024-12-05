@@ -1,15 +1,5 @@
 #include "../includes/cub3D_bonus.h"
 
-static void	kill_enemy(t_game *game);
-
-double	get_current_time(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return (time.tv_sec + time.tv_usec / 1000000.0);
-}
-
 t_image	*doors_animation(t_game *game, int idx, int start)
 {
 	int		current_frame;
@@ -64,7 +54,6 @@ t_image	*enemy_animation(t_game *game, int target, t_coord pos)
 {
 	int		current_frame;
 	double	elapsed_time;
-	int		i;
 
 	elapsed_time = game->time - game->enemy[target].start_animation;
 	if (elapsed_time < 0)
@@ -78,35 +67,8 @@ t_image	*enemy_animation(t_game *game, int target, t_coord pos)
 		game->enemy[target].is_animating = false;
 	}
 	if (current_frame == game->enemy_frames - 1)
-	{
-		i = -1;
-		while (++i < game->enemy_frames)
-		{
-			if (game->enemy[target].texture[i].img)
-				mlx_destroy_image(game->mlx, game->enemy[target].texture[i].img);
-			game->enemy[target].texture[i].img = NULL;
-			game->enemy[target].x = -1;
-			game->enemy[target].y = -1;
-		}
-		game->map->lines[pos.y]->content[pos.x] = '0';
-	}
+		destroy_enemy(game, target, pos);
 	return (&game->enemy[target].texture[current_frame]);
-}
-
-static void	kill_enemy(t_game *game)
-{
-	t_coord	pos;
-	int		target;
-
-	target = game->target;
-	if (target != -1)
-	{
-		pos.y = (int)game->enemy[target].y;
-		pos.x = (int)game->enemy[target].x;
-		Mix_PlayChannel(-1, game->music->hit, 0);
-		game->enemy[target].is_animating = true;
-		game->enemy[target].start_animation = get_current_time();
-	}
 }
 
 void	*gollum(t_game *game)
@@ -134,4 +96,3 @@ void	*gollum(t_game *game)
 	}
 	return (game->launcher[current_frame].img);
 }
-
