@@ -77,17 +77,17 @@ static int	minimap_color(t_game *game, t_coord pos)
 	pos.x < game->map->lines[pos.y]->x)
 	{
 		if (game->map->lines[pos.y]->content[pos.x] == '1')
-			return (*game->texture->image[NORTH].color);
+			return (*game->door[game->doors_frames + 1].color);
 		else if (game->map->lines[pos.y]->content[pos.x] == 'D')
 		{
 			while (++i < game->nb_doors)
 				if (game->doors[i].y == pos.y && game->doors[i].x == pos.x && \
 				game->doors[i].is_open == false)
-					return (*game->texture->image[NORTH].color);
-			return (game->floor.a);
+					return (*game->door[game->doors_frames + 1].color);
+			return (*game->door[game->doors_frames].color);
 		}
 		else
-			return (game->floor.a);
+			return (*game->door[game->doors_frames].color);
 	}
 	else
 		return (game->ceiling.a);

@@ -60,6 +60,7 @@ void	make_actions(t_game *game);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
+int		mouse_game(int button, int x, int y, t_game *game);
 //GAME/DOORS
 void	init_doors(t_game *game);
 void	toggle_door(t_game *game, int y, int x);

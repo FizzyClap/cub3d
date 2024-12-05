@@ -13,7 +13,10 @@ void	kill_enemy(t_game *game)
 	t_coord	pos;
 	int		target;
 
-	target = game->target;
+	if (game->player.z > -600 && game->player.z < 220)
+		target = game->target;
+	else
+		target = -1;
 	if (target != -1)
 	{
 		pos.y = (int)game->enemy[target].y;

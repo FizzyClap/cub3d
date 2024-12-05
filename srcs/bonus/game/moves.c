@@ -24,9 +24,9 @@ void	move_down(t_game *game)
 	double	y;
 
 	x = game->player.pos_x - game->player.dir_x * \
-		(game->player.move_speed / game->player.move_div);
+		((game->player.move_speed * 0.5) / game->player.move_div);
 	y = game->player.pos_y - game->player.dir_y * \
-		(game->player.move_speed / game->player.move_div);
+		((game->player.move_speed * 0.5) / game->player.move_div);
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -40,9 +40,9 @@ void	move_left(t_game *game)
 	double	y;
 
 	x = game->player.pos_x + game->player.dir_y * \
-		(game->player.move_speed / game->player.move_div);
+		((game->player.move_speed * 0.5));
 	y = game->player.pos_y - game->player.dir_x * \
-		(game->player.move_speed / game->player.move_div);
+		((game->player.move_speed * 0.5));
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
@@ -56,9 +56,9 @@ void	move_right(t_game *game)
 	double	y;
 
 	x = game->player.pos_x - game->player.dir_y * \
-		(game->player.move_speed / game->player.move_div);
+		((game->player.move_speed * 0.5));
 	y = game->player.pos_y + game->player.dir_x * \
-		(game->player.move_speed / game->player.move_div);
+		((game->player.move_speed * 0.5));
 	check_collision(game, x, y);
 	if (!Mix_Playing(-1))
 		Mix_PlayChannel(-1, game->music->step, 0);
