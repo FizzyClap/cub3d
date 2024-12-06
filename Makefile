@@ -134,25 +134,9 @@ mlx:
 	@echo "│$(GREEN) Compilation of mlx completed ✓ $(NC)	       │"
 	@echo "└──────────────────────────────────────────────┘"
 
-sdl2:
+sdl:
 	@cd sound && git clone https://github.com/FizzyClap/sdl.git
 	@cd sound && cd sdl && mv * ../ && rm -rf ../sdl
-
-sdl:
-	@cd sound && wget https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-2.28.5.tar.gz > /dev/null 2>&1
-	@cd sound && tar -xvf SDL2-2.28.5.tar.gz > /dev/null 2>&1 && rm -rf SDL2-2.28.5.tar.gz
-	@cd sound && mv SDL2-2.28.5 SDL2
-	@echo "$(BLUE)Compiling SDL2 in progress..."
-	@cd sound/SDL2 && ./configure > /dev/null 2>&1 && make -s > /dev/null 2>&1 || \
-	{ echo "$(RED)Compiling SDL2 failed, FF."; exit 1; }
-	@echo "$(GREEN)Compilation of SDL2 completed!"
-	@cd sound && wget https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.8.0/SDL2_mixer-2.8.0.tar.gz > /dev/null 2>&1
-	@cd sound && tar -xvf SDL2_mixer-2.8.0.tar.gz > /dev/null 2>&1 && rm -rf SDL2_mixer-2.8.0.tar.gz
-	@cd sound && mv SDL2_mixer-2.8.0 SDL2_mixer
-	@echo "$(BLUE)Compiling SDL2 Mixer in progress..."
-	@cd sound/SDL2_mixer && ./configure > /dev/null 2>&1 && make -s > /dev/null 2>&1 || \
-	{ echo "$(RED)Compiling SDL2 Mixer failed, FF."; exit 1; }
-	@echo "$(GREEN)Compilation of SDL2 Mixer completed!"
 
 clean:
 	@echo "$(NC)┌─────clean $(NAME)──────────────────────────────┐"
@@ -188,4 +172,4 @@ norme:
 	fi
 	@$(RM) norme.tmp
 
-.PHONY: all bonus mlx sdl path clean fclean re rebonus norme
+.PHONY: all bonus mlx sdl clean fclean re rebonus norme
