@@ -1,7 +1,7 @@
 #include "../includes/cub3D_bonus.h"
 
 static void	paint_cursor(t_game *game);
-void		player_start(t_game *game);
+static void	set_player_orientation(t_game *game);
 
 void	player_init(t_game *game)
 {
@@ -26,36 +26,8 @@ void	player_init(t_game *game)
 	game->player.jump = false;
 	game->player.crouch = false;
 	game->player.move_div = 0;
+	set_player_orientation(game);
 }
-
-//EN THEORIE CA MARCHE
-//void	player_start(t_game *game)
-//{
-//	game->player.dir_y = 0;
-//	game->player.plane_x = 0;
-//	if (game->map->orientation == 'N')
-//	{
-//		game->player.dir_x = -1;
-//		game->player.plane_y = 0.66;
-//		return ;
-//	}
-//	else if (game->map->orientation == 'S')
-//	{
-//		game->player.dir_x = 1;
-//		game->player.plane_y = -0.66;
-//		return ;
-//	}
-//	game->player.dir_x = 0;
-//	game->player.plane_y = 0;
-//	if (game->map->orientation == 'E')
-//	{
-//		game->player.dir_y = 1;
-//		game->player.plane_x = 0.66;
-//		return ;
-//	}
-//	game->player.dir_y = -1;
-//	game->player.plane_x = -0.66;
-//}
 
 static void	paint_cursor(t_game *game)
 {
@@ -71,5 +43,24 @@ static void	paint_cursor(t_game *game)
 		paint.y = -1;
 		while (++paint.y < 5)
 			my_mlx_pixel_put(&game->player.cursor, paint.x, paint.y, RED);
+	}
+}
+
+static void	set_player_orientation(t_game *game)
+{
+	if (game->map->orientation == 'N')
+	{
+		while (game->player.dir_x > 0 && game->player.dir_y > -1)
+			left_cam(game, 959);
+	}
+	else if (game->map->orientation == 'W')
+	{
+		while (game->player.dir_x > -1)
+			left_cam(game, 959);
+	}
+	else if (game->map->orientation == 'S')
+	{
+		while (game->player.dir_x > 0 && game->player.dir_y < 1)
+			right_cam(game, 961);
 	}
 }

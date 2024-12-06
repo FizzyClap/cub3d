@@ -13,7 +13,7 @@
 # define D_PI 1.57079632679
 //PI / 4
 # define Q_PI 0.78539816339
-# define RADIUS 0.25
+# define RADIUS 0.40
 # define FOV 60
 # define SCREEN_X 1920
 # define SCREEN_Y 1080

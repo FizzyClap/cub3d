@@ -2,14 +2,25 @@
 
 void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
 
+void	floor_and_ceiling(t_game *game)
+{
+	if (game->texture->f_textured)
+		floor_raycast(game);
+	else
+		draw_floor(game, game->floor.a);
+	if (game->texture->c_textured)
+		ceil_raycast(game);
+	else
+		draw_ceiling(game, game->ceiling.a);
+}
+
 void	raycasting(t_game *game)
 {
 	t_coord	loop;
 	t_ray	*ray;
 	t_list	*tmp;
 
-	floor_raycast(game);
-	ceil_raycast(game);
+	floor_and_ceiling(game);
 	ray = ft_calloc(sizeof(t_ray), 1);
 	if (!ray)
 		return ;

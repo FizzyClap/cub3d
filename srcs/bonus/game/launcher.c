@@ -12,6 +12,7 @@ int	open_launcher(t_game *game)
 	game->launcher_animation = false;
 	game->launcher_is_running = true;
 	init_struct_game_sound(game);
+	game->launcher_start_animation = 0;
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, SCREEN_X, SCREEN_Y, "Cub3D Launcher");
 	if (!create_launcher_images(game, "textures/launcher/launcher"))

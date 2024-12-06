@@ -1,7 +1,7 @@
 #include "../includes/cub3D_bonus.h"
 
 static void		draw_tile(t_coord coord, t_image image, t_coord max, int color);
-static int		minimap_color(t_game *game, t_coord pos);
+static int		minimap_color(t_game *game, t_coord pos, int f_color, int c_color);
 static t_coord	get_max(t_game *game, t_coord coord);
 
 void	minimap(t_game *game)
@@ -9,10 +9,17 @@ void	minimap(t_game *game)
 	game->minimap.img = mlx_new_image(game->mlx, MMW, MMH);
 	game->minimap.addr = mlx_get_data_addr(game->minimap.img, \
 	&game->minimap.bpp, &game->minimap.line_len, &game->minimap.endian);
-	draw_minimap(game, game->minimap);
+	if (game->texture->f_textured && game->texture->c_textured)
+		draw_minimap(game, game->minimap, *game->floor_txt.color, *game->ceil_txt.color);
+	else if (game->texture->f_textured)
+		draw_minimap(game, game->minimap, *game->floor_txt.color, game->ceiling.a);
+	else if (game->texture->c_textured)
+		draw_minimap(game, game->minimap, game->floor.a, *game->ceil_txt.color);
+	else
+		draw_minimap(game, game->minimap, game->floor.a, game->ceiling.a);
 }
 
-void	draw_minimap(t_game *game, t_image minimap)
+void	draw_minimap(t_game *game, t_image minimap, int f_color, int c_color)
 {
 	t_coord	coord;
 	t_coord	pos;
@@ -26,7 +33,7 @@ void	draw_minimap(t_game *game, t_image minimap)
 		while (++pos.y < (int)(game->player.pos_y) + 5)
 		{
 			draw_tile(coord, minimap, get_max(game, coord), \
-			minimap_color(game, pos));
+			minimap_color(game, pos, f_color, c_color));
 			if (coord.y == 0)
 				coord.y += TILE - (int)((game->player.pos_y - \
 				(int)(game->player.pos_y)) * TILE);
@@ -68,7 +75,7 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 	}
 }
 
-static int	minimap_color(t_game *game, t_coord pos)
+static int	minimap_color(t_game *game, t_coord pos, int f_color, int c_color)
 {
 	int	i;
 
@@ -84,13 +91,13 @@ static int	minimap_color(t_game *game, t_coord pos)
 				if (game->doors[i].y == pos.y && game->doors[i].x == pos.x && \
 				game->doors[i].is_open == false)
 					return (*game->texture->image[NORTH].color);
-			return (game->floor.a);
+			return (f_color);
 		}
 		else
-			return (game->floor.a);
+			return (f_color);
 	}
 	else
-		return (game->ceiling.a);
+		return (c_color);
 }
 
 static t_coord	get_max(t_game *game, t_coord coord)

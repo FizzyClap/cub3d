@@ -87,6 +87,8 @@ typedef struct s_texture
 	char	*east_path;
 	char	*floor_color;
 	char	*ceiling_color;
+	bool	f_textured;
+	bool	c_textured;
 	t_order	order;
 	t_image	image[4];
 }	t_texture;

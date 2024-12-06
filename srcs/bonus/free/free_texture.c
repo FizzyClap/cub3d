@@ -33,6 +33,10 @@ void	free_image(t_game *game)
 		mlx_destroy_image(game->mlx, game->ring.img);
 	if (game->game_over.img)
 		mlx_destroy_image(game->mlx, game->game_over.img);
+	if (game->floor_txt.img)
+		mlx_destroy_image(game->mlx, game->floor_txt.img);
+	if (game->ceil_txt.img)
+		mlx_destroy_image(game->mlx, game->ceil_txt.img);
 	free_images_in_tab(game);
 }
 
@@ -50,7 +54,7 @@ static void	free_images_in_tab(t_game *game)
 		if (game->weapon[i].img)
 			mlx_destroy_image(game->mlx, game->weapon[i].img);
 	i = -1;
-	while (++i < game->doors_frames + 2)
+	while (++i < game->doors_frames)
 		if (game->door[i].img)
 			mlx_destroy_image(game->mlx, game->door[i].img);
 	i = -1;
@@ -72,5 +76,6 @@ void	free_launcher_image(t_game *game)
 	while (++i < game->launcher_frames)
 		if (game->launcher[i].img)
 			mlx_destroy_image(game->mlx, game->launcher[i].img);
-	free(game->launcher);
+	if (game->launcher)
+		free(game->launcher);
 }

@@ -1,5 +1,7 @@
 #include "../includes/cub3D_bonus.h"
 
+static void	init_colors(t_game *game, t_texture *texture);
+
 void	init_map(t_map *map, char *file)
 {
 	map->file = ft_strdup(file);
@@ -22,6 +24,8 @@ void	init_texture(t_texture *texture)
 	texture->east_path = NULL;
 	texture->floor_color = NULL;
 	texture->ceiling_color = NULL;
+	texture->f_textured = false;
+	texture->c_textured = false;
 }
 
 void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
@@ -31,6 +35,8 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	if (launcher == false)
 	{
 		game->launcher_is_running = false;
+		game->launcher_frames = 0;
+		game->launcher = NULL;
 		game->texture = texture;
 		game->map = map;
 		init_struct_game_sound(game);
@@ -46,11 +52,24 @@ void	init_game(t_game *game, t_texture *texture, t_map *map, bool launcher)
 	i = -1;
 	while (++i < 4)
 		game->texture->image[i].img = NULL;
-	get_color(&game->floor, game->texture->floor_color);
-	get_color(&game->ceiling, game->texture->ceiling_color);
-	game->ceiling.a = rgb_to_int(game->ceiling.r, game->ceiling.g, \
-	game->ceiling.b);
-	game->floor.a = rgb_to_int(game->floor.r, game->floor.g, game->floor.b);
+	game->floor_txt.img = NULL;
+	game->ceil_txt.img = NULL;
+	init_colors(game, texture);
+}
+
+static void	init_colors(t_game *game, t_texture *texture)
+{
+	if (!texture->f_textured)
+	{
+		get_color(&game->floor, game->texture->floor_color);
+		game->floor.a = rgb_to_int(game->floor.r, game->floor.g, game->floor.b);
+	}
+	if (!texture->c_textured)
+	{
+		get_color(&game->ceiling, game->texture->ceiling_color);
+		game->ceiling.a = rgb_to_int(game->ceiling.r, game->ceiling.g, \
+		game->ceiling.b);
+	}
 }
 
 void	init_ray(t_game *game, t_ray *ray, int x)

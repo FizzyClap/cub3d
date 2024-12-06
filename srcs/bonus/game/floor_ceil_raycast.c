@@ -10,7 +10,7 @@ void	floor_raycast(t_game *game)
 	t_coord	loop;
 	t_image	floor_texture;
 
-	floor_texture = game->door[game->doors_frames + 1];
+	floor_texture = game->floor_txt;
 	loop.y = SCREEN_Y / 2 + game->player.z - 1;
 	while (++loop.y < SCREEN_Y)
 	{
@@ -27,7 +27,7 @@ void	ceil_raycast(t_game *game)
 	t_coord	loop;
 	t_image	ceil_texture;
 
-	ceil_texture = game->door[game->doors_frames];
+	ceil_texture = game->ceil_txt;
 	loop.y = -1;
 	while (++loop.y < SCREEN_Y / 2 + game->player.z)
 	{
@@ -82,6 +82,9 @@ static void	render(t_game *game, t_data *d, t_coord loop, t_image texture)
 		(texture.height - 1);
 	d->floor_x += d->floor_step_x;
 	d->floor_y += d->floor_step_y;
+	if (d->tex_x < 0 || d->tex_x >= texture.width ||
+		d->tex_y < 0 || d->tex_y >= texture.height)
+		return ;
 	d->color = texture.color[texture.width * d->tex_y + d->tex_x];
 	my_mlx_pixel_put(&game->raycast, loop.x, loop.y, d->color);
 }

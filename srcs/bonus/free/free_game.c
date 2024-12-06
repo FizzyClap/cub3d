@@ -14,9 +14,9 @@ int	close_game(t_game *game)
 		free(game->mlx);
 	}
 	free_texture(game->texture);
-	free(game->player.action);
 	free_map(game->map);
 	free_sound(game);
+	free(game->player.action);
 	free(game->enemy);
 	free(game->doors);
 	free(game->weapon);

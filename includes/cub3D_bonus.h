@@ -53,6 +53,8 @@ void	*gollum(t_game *game);
 //GAME/CHARACTER
 void	player_init(t_game *game);
 //GAME/COLORS
+void	draw_floor(t_game *game, int floor_color);
+void	draw_ceiling(t_game *game, int ceiling_color);
 void	get_color(t_color *type, char *path);
 int		rgb_to_int(int r, int g, int b);
 //GAME/CONTROLS
@@ -60,6 +62,7 @@ void	make_actions(t_game *game);
 int		keyrelease(int keycode, t_game *game);
 int		keycode(int keycode, t_game *game);
 void	move_div(t_game *game);
+int		mouse_game(int button, int x, int y, t_game *game);
 //GAME/DOORS
 void	init_doors(t_game *game);
 void	toggle_door(t_game *game, int y, int x);
@@ -78,7 +81,7 @@ void	get_map_type(t_game *game);
 void	game_over(t_game *game);
 //GAME/MINIMAP
 void	minimap(t_game *game);
-void	draw_minimap(t_game *game, t_image minimap);
+void	draw_minimap(t_game *game, t_image minimap, int f_color, int c_color);
 //GAME/MLX_FUNCTIONS
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
 void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset);

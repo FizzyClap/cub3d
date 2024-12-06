@@ -3,8 +3,8 @@ SO             textures/wall_moria.xpm
 WE 				textures/wall_moria.xpm
 EA    textures/wall_morgul.xpm
 
-F 			12, 255, 255
-   C		34, 23                  , 35
+F 			textures/morgul_floor.xpm
+   C		textures/morgul_ceil.xpm
 
 1111111111111111111111111
 1000000000110000000000001

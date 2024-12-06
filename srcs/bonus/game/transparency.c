@@ -11,20 +11,23 @@ void	draw_doors(t_game *game, t_ray *ray, t_coord loop)
 	int		color;
 
 	calculate_wall_distance(ray);
-	line_height = (int)(SCREEN_Y / ray->wall_dist);
-	draw_start = -line_height / 2 + SCREEN_Y / 2;
-	draw_end = line_height / 2 + SCREEN_Y / 2;
-	select_wall_texture(game, ray, &tex);
-	tex->step = 1.0 * tex->height / line_height;
-	tex->pos = (draw_start - SCREEN_Y / 2 + line_height / 2) * tex->step;
-	loop.y = draw_start - 1;
-	while (++loop.y < draw_end)
+	if (ray->wall_dist > RADIUS / 2)
 	{
-		tex->y = (int)tex->pos % (tex->height - 1);
-		tex->pos += tex->step;
-		color = tex->color[tex->height * tex->y + tex->x];
-		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, \
-		color);
+		line_height = (int)(SCREEN_Y / ray->wall_dist);
+		draw_start = -line_height / 2 + SCREEN_Y / 2;
+		draw_end = line_height / 2 + SCREEN_Y / 2;
+		select_wall_texture(game, ray, &tex);
+		tex->step = 1.0 * tex->height / line_height;
+		tex->pos = (draw_start - SCREEN_Y / 2 + line_height / 2) * tex->step;
+		loop.y = draw_start - 1;
+		while (++loop.y < draw_end)
+		{
+			tex->y = (int)tex->pos % (tex->height - 1);
+			tex->pos += tex->step;
+			color = tex->color[tex->height * tex->y + tex->x];
+			my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, \
+			color);
+		}
 	}
 }
 
