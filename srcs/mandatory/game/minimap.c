@@ -62,7 +62,8 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 			dist.y = (y + coord.y) - center.y;
 			if (pow(dist.x, 2) + pow(dist.y, 2) <= pow(MINIMAP_RADIUS, 2) && \
 			color != rgb_to_int(135, 206, 235))
-				my_mlx_pixel_put(&image, x + 20 + coord.x, y + 20 + coord.y, color);
+				my_mlx_pixel_put(&image, x + 20 + coord.x, y + 20 + \
+				coord.y, color);
 		}
 	}
 }

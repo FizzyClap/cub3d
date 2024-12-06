@@ -18,9 +18,9 @@ void	player_init(t_game *game)
 		game->player.angle = 0;
 	game->player.plane_x = -0.66 * sin(game->player.angle);
 	game->player.plane_y = 0.66 * cos(game->player.angle);
-	game->player.d_x = cos(game->player.angle);
-	game->player.d_y = sin(game->player.angle);
-	game->player.speed = 0.05;
+	game->player.dir_x = cos(game->player.angle);
+	game->player.dir_y = sin(game->player.angle);
+	game->player.move_speed = 0.05;
 	game->player.z = 0;
 	game->player.h = 0;
 	game->player.jump = false;

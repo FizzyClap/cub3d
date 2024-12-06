@@ -4,7 +4,7 @@ char	**create_moria_tab(t_game *game)
 {
 	char	**tab_moria;
 
-	tab_moria = malloc(sizeof(char *) * 14);
+	tab_moria = malloc(sizeof(char *) * 12);
 	if (!tab_moria)
 		return (NULL);
 	tab_moria[0] = "textures/doors/moria.xpm";
@@ -18,16 +18,14 @@ char	**create_moria_tab(t_game *game)
 	tab_moria[8] = "textures/doors/moria(8).xpm";
 	tab_moria[9] = "textures/doors/moria(9).xpm";
 	tab_moria[10] = "textures/doors/moria_open.xpm";
-	tab_moria[11] = "textures/moria_ceil.xpm";
-	tab_moria[12] = "textures/moria_floor.xpm";
-	tab_moria[13] = NULL;
+	tab_moria[11] = NULL;
 	game->doors_frames = 11;
 	return (tab_moria);
 }
 
 char	**create_morgul_tab(t_game *game)
 {
-	game->morgul = malloc(sizeof(char *) * 20);
+	game->morgul = malloc(sizeof(char *) * 18);
 	if (!game->morgul)
 		return (NULL);
 	game->morgul[0] = "textures/doors/morgul.xpm";
@@ -47,9 +45,7 @@ char	**create_morgul_tab(t_game *game)
 	game->morgul[14] = "textures/doors/morgul(14).xpm";
 	game->morgul[15] = "textures/doors/morgul(15).xpm";
 	game->morgul[16] = "textures/doors/morgul_open.xpm";
-	game->morgul[17] = "textures/morgul_ceil.xpm";
-	game->morgul[18] = "textures/morgul_floor.xpm";
-	game->morgul[19] = NULL;
+	game->morgul[17] = NULL;
 	game->doors_frames = 17;
 	return (game->morgul);
 }

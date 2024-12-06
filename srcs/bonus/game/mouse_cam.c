@@ -1,7 +1,7 @@
 #include "../includes/cub3D_bonus.h"
 
-static double	cam_sensibility(int x);
 static void		cam_z(t_game *game, int y);
+static double	cam_sensibility(int x);
 
 void	mouse_move(t_game *game)
 {
@@ -18,10 +18,6 @@ void	mouse_move(t_game *game)
 	if (y != 540)
 		cam_z(game, y);
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
-	game->player.plane_x = -0.66 * sin(game->player.angle);
-	game->player.plane_y = 0.66 * cos(game->player.angle);
-	game->player.d_x = cos(game->player.angle);
-	game->player.d_y = sin(game->player.angle);
 }
 
 static void	cam_z(t_game *game, int y)
@@ -38,18 +34,36 @@ static void	cam_z(t_game *game, int y)
 
 void	left_cam(t_game *game, int x)
 {
-	game->player.angle -= cam_sensibility(x);
-	if (game->player.angle < 0)
-		game->player.angle += DD_PI;
-	refresh_position(game, DELTA, 0);
+	double	olddir_x;
+	double	oldplane_x;
+
+	olddir_x = game->player.dir_x;
+	game->player.dir_x = game->player.dir_x * cos(-(cam_sensibility(x))) \
+	- game->player.dir_y * sin(-(cam_sensibility(x)));
+	game->player.dir_y = olddir_x * sin(-(cam_sensibility(x))) \
+	+ game->player.dir_y * cos(-(cam_sensibility(x)));
+	oldplane_x = game->player.plane_x;
+	game->player.plane_x = game->player.plane_x * cos(-(cam_sensibility(x))) \
+	- game->player.plane_y * sin(-(cam_sensibility(x)));
+	game->player.plane_y = oldplane_x * sin(-(cam_sensibility(x))) \
+	+ game->player.plane_y * cos(-(cam_sensibility(x)));
 }
 
 void	right_cam(t_game *game, int x)
 {
-	game->player.angle += cam_sensibility(x);
-	if (game->player.angle > DD_PI)
-		game->player.angle -= DD_PI;
-	refresh_position(game, DELTA, 0);
+	double	olddir_x;
+	double	oldplane_x;
+
+	olddir_x = game->player.dir_x;
+	game->player.dir_x = game->player.dir_x * cos(cam_sensibility(x)) \
+	- game->player.dir_y * sin(cam_sensibility(x));
+	game->player.dir_y = olddir_x * sin(cam_sensibility(x)) \
+	+ game->player.dir_y * cos(cam_sensibility(x));
+	oldplane_x = game->player.plane_x;
+	game->player.plane_x = game->player.plane_x * cos(cam_sensibility(x)) \
+	- game->player.plane_y * sin(cam_sensibility(x));
+	game->player.plane_y = oldplane_x * sin(cam_sensibility(x)) \
+	+ game->player.plane_y * cos(cam_sensibility(x));
 }
 
 static double	cam_sensibility(int x)
@@ -57,5 +71,5 @@ static double	cam_sensibility(int x)
 	x -= 960;
 	if (x < 0)
 		x *= -1;
-	return ((double)(x * 0.001));
+	return ((double)(x * 0.0005));
 }

@@ -46,6 +46,12 @@ static int	load_walls(t_game *game)
 	while (++i < 4)
 		if (load_xpm(game, &game->texture->image[i], file[i]) == FAILURE)
 			return (FAILURE);
+	if (game->texture->f_textured == true)
+		if (!load_xpm(game, &game->floor_txt, game->texture->floor_color))
+			return (FAILURE);
+	if (game->texture->c_textured == true)
+		if (!load_xpm(game, &game->ceil_txt, game->texture->ceiling_color))
+			return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -53,11 +59,11 @@ static int	load_doors(t_game *game, char **map)
 {
 	int	i;
 
-	game->door = ft_calloc(sizeof(t_image), (game->doors_frames + 2));
+	game->door = ft_calloc(sizeof(t_image), game->doors_frames);
 	if (!game->door)
 		return (FAILURE);
 	i = -1;
-	while (++i < game->doors_frames + 2)
+	while (++i < game->doors_frames)
 		if (load_xpm(game, &game->door[i], map[i]) == FAILURE)
 			return (FAILURE);
 	free(map);

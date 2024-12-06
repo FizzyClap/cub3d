@@ -1,29 +1,36 @@
 #include "../includes/cub3D_bonus.h"
 
-static void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
+void	draw_wall(t_game *game, t_ray *ray, t_coord loop);
 
-void	raycasting(t_ray *ray, t_game *game)
+void	floor_and_ceiling(t_game *game)
+{
+	if (game->texture->f_textured)
+		floor_raycast(game);
+	else
+		draw_floor(game, game->floor.a);
+	if (game->texture->c_textured)
+		ceil_raycast(game);
+	else
+		draw_ceiling(game, game->ceiling.a);
+}
+
+void	raycasting(t_game *game)
 {
 	t_coord	loop;
-	double	ray_angle;
+	t_ray	*ray;
 	t_list	*tmp;
 
-	floor_raycast(game);
-	ceil_raycast(game);
-	//draw_floor_ceiling(game, game->floor.a, game->ceiling.a);
-	ray = ft_calloc(1, sizeof(t_ray));
+	floor_and_ceiling(game);
+	ray = ft_calloc(sizeof(t_ray), 1);
 	if (!ray)
 		return ;
 	loop.x = -1;
-	while (++loop.x < SCREEN_WIDTH)
+	while (++loop.x < SCREEN_X)
 	{
-		ray_angle = ((game->player.angle) * 180 / PI) - FOV / 2 + \
-		FOV * (loop.x / (double)SCREEN_WIDTH);
-		init_ray(ray, game, ray_angle);
-		calculate_steps(ray);
-		perform_dda(ray, game, false);
+		init_ray(game, ray, loop.x);
+		calculate_steps(game, ray);
+		perform_dda(game, ray, false);
 		calculate_wall_distance(ray);
-		camera_angle_distortion(game, ray);
 		draw_wall(game, ray, loop);
 		doors_transparency(game, &tmp, ray, loop);
 	}
@@ -32,84 +39,91 @@ void	raycasting(t_ray *ray, t_game *game)
 	free(ray);
 }
 
-void	calculate_steps(t_ray *ray)
+void	calculate_steps(t_game *game, t_ray *ray)
 {
+	t_coord	pos;
+
+	pos.x = (int)game->player.pos_x;
+	pos.y = (int)game->player.pos_y;
 	if (ray->dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (ray->pos_x - floor(ray->pos_x)) * ray->delta_x;
+		ray->side_dist_x = (game->player.pos_x - pos.x) * ray->delta_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (floor(ray->pos_x + 1) - ray->pos_x) * ray->delta_x;
+		ray->side_dist_x = (pos.x + 1.0 - game->player.pos_x) * ray->delta_x;
 	}
 	if (ray->dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (ray->pos_y - floor(ray->pos_y)) * ray->delta_y;
+		ray->side_dist_y = (game->player.pos_y - pos.y) * ray->delta_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (floor(ray->pos_y + 1) - ray->pos_y) * ray->delta_y;
+		ray->side_dist_y = (pos.y + 1.0 - game->player.pos_y) * ray->delta_y;
 	}
 }
 
-void	perform_dda(t_ray *ray, t_game *game, bool hitDoor)
+void	perform_dda(t_game *game, t_ray *ray, bool hitDoor)
 {
-	bool	hit;
-	bool	isLastDoor;
-	bool	isFirst;
+	int		hit;
+	bool	is_last_door;
+	bool	is_first;
 	char	pos;
+	char	player_pos;
 
-	hit = false;
-	isLastDoor = false;
-	isFirst = true;
-	while (hit == false)
+	hit = 0;
+	is_last_door = false;
+	is_first = true;
+	ray->map.x = (int)game->player.pos_x;
+	ray->map.y = (int)game->player.pos_y;
+	while (!hit)
 	{
-		move_ray(ray);
-		pos = game->map->lines[(int)ray->pos_y]->content[(int)ray->pos_x];
+		move_ray(game, ray);
+		pos = game->map->lines[ray->map.y]->content[ray->map.x];
+		player_pos = game->map->lines[(int)game->player.pos_y]->\
+		content[(int)game->player.pos_x];
 		if (pos == '1' || (pos == 'D' && hitDoor == true))
-			hit = true;
-		else if (pos == 'D' || isLastDoor || (isFirst && game->map->lines\
-		[(int)game->player.y]->content[(int)game->player.x] == 'D'))
-			add_doors(game, ray, &isLastDoor, &isFirst);
-		isFirst = false;
+			hit = 1;
+		else if (pos == 'D' || is_last_door || (is_first && player_pos == 'D'))
+			add_doors(game, ray, &is_last_door, &is_first);
+		is_first = false;
 	}
 }
 
 void	calculate_wall_distance(t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->wall_dist = ray->side_dist_x - ray->delta_x;
+		ray->wall_dist = (ray->side_dist_x - ray->delta_x);
 	else
-		ray->wall_dist = ray->side_dist_y - ray->delta_y;
+		ray->wall_dist = (ray->side_dist_y - ray->delta_y);
 }
 
-static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
+void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 {
-	t_draw	d;
 	t_image	*tex;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		color;
 
-	d.h_correct = game->player.h / ray->projected_dist;
-	d.h_line = (int)(SCREEN_HEIGHT / ray->projected_dist);
-	d.draw_start = (SCREEN_HEIGHT - d.h_line + d.h_correct) / 2;
-	d.draw_end = (SCREEN_HEIGHT + d.h_line + d.h_correct) / 2;
+	line_height = (int)(SCREEN_Y / ray->wall_dist);
+	draw_start = -line_height / 2 + SCREEN_Y / 2;
+	draw_end = line_height / 2 + SCREEN_Y / 2;
 	select_wall_texture(game, ray, &tex);
-	tex->step = (double)tex->height / d.h_line;
-	tex->pos = (d.draw_start - 540 + (d.h_line - d.h_correct) / 2) * tex->step;
-	loop.y = d.draw_start - 1;
+	tex->step = 1.0 * tex->height / line_height;
+	tex->pos = (draw_start - SCREEN_Y / 2 + line_height / 2) * tex->step;
+	loop.y = draw_start - 1;
 	game->z_buffer[loop.x] = ray->wall_dist;
-	d.color = 0;
-	while (++loop.y < d.draw_end)
+	while (++loop.y < draw_end)
 	{
 		tex->y = (int)tex->pos % (tex->height - 1);
 		tex->pos += tex->step;
-
-		if (tex->x >= 0 && tex->x < tex->width && \
-			tex->y >= 0 && tex->y < tex->height)
-			d.color = tex->color[tex->width * tex->y + tex->x];
-		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, d.color);
+		color = tex->color[tex->height * tex->y + tex->x];
+		my_mlx_pixel_put(&game->raycast, loop.x, loop.y + game->player.z, \
+			color);
 	}
 }

@@ -13,10 +13,10 @@ void	raycasting(t_ray *ray, t_game *game)
 	draw_floor_ceiling(game, game->floor.a, game->ceiling.a);
 	ray = malloc(sizeof(t_ray));
 	loop.x = -1;
-	while (++loop.x < SCREEN_WIDTH)
+	while (++loop.x < SCREEN_X)
 	{
 		ray_angle = (game->player.angle * 180 / PI) - FOV / 2 + \
-		FOV * (loop.x / (double)SCREEN_WIDTH);
+		FOV * (loop.x / (double)SCREEN_X);
 		init_ray(ray, game, ray_angle);
 		calculate_steps(ray);
 		perform_dda(ray, game);
@@ -89,25 +89,25 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	int		draw_start;
 	int		draw_end;
 	int		color;
-	t_image	*tex;
+	t_image	*t;
 
-	line_height = (int)(SCREEN_HEIGHT / ray->projected_dist);
-	draw_start = (SCREEN_HEIGHT - line_height) / 2;
+	line_height = (int)(SCREEN_Y / ray->projected_dist);
+	draw_start = (SCREEN_Y - line_height) / 2;
 	if (draw_start < 0)
 		draw_start = 0;
-	draw_end = (SCREEN_HEIGHT + line_height) / 2;
-	if (draw_end >= SCREEN_HEIGHT)
-		draw_end = SCREEN_HEIGHT - 1;
-	select_wall_texture(game, ray, &tex);
-	tex->step = 1.0 * tex->height / line_height;
-	tex->pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * tex->step;
+	draw_end = (SCREEN_Y + line_height) / 2;
+	if (draw_end >= SCREEN_Y)
+		draw_end = SCREEN_Y - 1;
+	select_wall_texture(game, ray, &t);
+	t->step = 1.0 * t->height / line_height;
+	t->pos = (draw_start - SCREEN_Y / 2 + line_height / 2) * t->step;
 	loop.y = draw_start - 1;
 	while (++loop.y < draw_end)
 	{
-		tex->y = (int)tex->pos % (tex->height - 1);
-		tex->pos += tex->step;
-		if (tex->x >= 0 && tex->x < tex->width && tex->y >= 0 && tex->y < tex->height)
-			color = tex->color[tex->width * tex->y + tex->x];
+		t->y = (int)t->pos % (t->height - 1);
+		t->pos += t->step;
+		if (t->x >= 0 && t->x < t->width && t->y >= 0 && t->y < t->height)
+			color = t->color[t->width * t->y + t->x];
 		draw_vertical_line(game, loop.x, loop.y, color);
 	}
 }

@@ -87,19 +87,21 @@ typedef struct s_texture
 	char	*east_path;
 	char	*floor_color;
 	char	*ceiling_color;
+	bool	f_textured;
+	bool	c_textured;
 	t_order	order;
 	t_image	image[4];
 }	t_texture;
 
 typedef struct s_ray
 {
+	double	projected_dist;
 	double	pos_x;
 	double	pos_y;
 	double	plane_x;
 	double	plane_y;
 	double	dir_x;
 	double	dir_y;
-	double	projected_dist;
 	int		step_x;
 	int		step_y;
 	double	delta_x;
@@ -109,30 +111,36 @@ typedef struct s_ray
 	int		side;
 	double	wall_dist;
 	double	angle;
-	int		end;
 	bool	is_door;
 	int		door_idx;
+	char	pos_door;
+	int		door_y;
+	int		door_x;
+	t_coord	map;
 	t_list	*doors;
 }	t_ray;
 
 typedef struct s_player
 {
+	double	x;
+	double	y;
+	double	angle;
 	bool	jump;
 	bool	crouch;
 	int		*action;
 	int		move_div;
 	int		z;
 	int		h;
-	double	x;
-	double	y;
-	double	d_x;
-	double	d_y;
-	double	plane_x;
-	double	plane_y;
-	double	speed;
-	double	angle;
 	t_ray	*cross_ray;
 	t_image	cursor;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	pos_x;
+	double	pos_y;
+	double	rot_speed;
+	double	move_speed;
 }	t_player;
 
 typedef struct s_color
@@ -149,11 +157,11 @@ typedef struct s_music
 	Mix_Music	*moria;
 	Mix_Music	*morgul;
 	Mix_Music	*game_over;
+	Mix_Music	*gollum_song;
 	Mix_Chunk	*door;
 	Mix_Chunk	*step;
 	Mix_Chunk	*weapon;
 	Mix_Chunk	*hit;
-	Mix_Chunk	*fire;
 	Mix_Chunk	*gollum;
 }	t_music;
 
@@ -167,7 +175,7 @@ typedef struct s_enemy
 	double	start_animation;
 }	t_enemy;
 
-typedef struct s_render
+typedef struct s_data
 {
 	double	sprite_x;
 	double	sprite_y;
@@ -185,24 +193,34 @@ typedef struct s_render
 	int		tex_x;
 	int		tex_y;
 	int		color;
-}	t_render;
-
-typedef struct s_draw
-{
-	int	color;
-	int	draw_start;
-	int	draw_end;
-	int	h_line;
-	int	h_correct;
-}	t_draw;
+	int		draw_start;
+	int		draw_end;
+	double	raydir_x0;
+	double	raydir_y0;
+	double	raydir_x1;
+	double	raydir_y1;
+	int		p;
+	double	pos_z;
+	double	row_distance;
+	double	floor_step_x;
+	double	floor_step_y;
+	double	floor_x;
+	double	floor_y;
+	int		cell_x;
+	int		cell_y;
+}	t_data;
 
 typedef struct s_game
 {
+	int			old_time;
 	void		*mlx;
 	void		*win;
 	char		*file;
 	char		*map_type;
 	bool		show_gollum;
+	int			nb_gollum;
+	double		gollum_time;
+	bool		restart_music;
 	int			nb_doors;
 	int			door_idx;
 	char		**morgul;
@@ -216,7 +234,7 @@ typedef struct s_game
 	int			nb_enemy;
 	int			target;
 	double		time;
-	double		z_buffer[SCREEN_WIDTH];
+	double		z_buffer[SCREEN_X];
 	t_image		minimap;
 	t_image		raycast;
 	t_image		ring;
@@ -225,7 +243,7 @@ typedef struct s_game
 	t_enemy		*enemy;
 	t_image		*door;
 	t_image		game_over;
-	t_image		ceil;
+	t_image		ceil_txt;
 	t_image		floor_txt;
 	t_image		*launcher;
 	t_map		*map;

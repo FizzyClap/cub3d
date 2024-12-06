@@ -20,8 +20,8 @@ void	mouse_move(t_game *game)
 	mlx_mouse_move(game->mlx, game->win, 960, 540);
 	game->player.plane_x = -0.66 * sin(game->player.angle);
 	game->player.plane_y = 0.66 * cos(game->player.angle);
-	game->player.d_x = cos(game->player.angle);
-	game->player.d_y = sin(game->player.angle);
+	game->player.dir_x = cos(game->player.angle);
+	game->player.dir_y = sin(game->player.angle);
 }
 
 static void	cam_z(t_game *game, int y)

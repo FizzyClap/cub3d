@@ -1,22 +1,30 @@
 #include "../includes/cub3D_bonus.h"
 
-void	draw_floor_ceiling(t_game *game, int floor_color, int ceiling_color)
+void	draw_floor(t_game *game, int floor_color)
+{
+	int	x;
+	int	y;
+
+	y = SCREEN_Y / 2 + game->player.z - 1;
+	while (++y < SCREEN_Y)
+	{
+		x = -1;
+		while (++x < SCREEN_X)
+			my_mlx_pixel_put(&game->raycast, x, y, floor_color);
+	}
+}
+
+void	draw_ceiling(t_game *game, int ceiling_color)
 {
 	int	x;
 	int	y;
 
 	y = -1;
-	while (++y < (540) + game->player.z)
+	while (++y < SCREEN_Y / 2 + game->player.z)
 	{
 		x = -1;
-		while (++x < SCREEN_WIDTH)
+		while (++x < SCREEN_X)
 			my_mlx_pixel_put(&game->raycast, x, y, ceiling_color);
-	}
-	while (++y < SCREEN_HEIGHT)
-	{
-		x = -1;
-		while (++x < SCREEN_WIDTH)
-			my_mlx_pixel_put(&game->raycast, x, y, floor_color);
 	}
 }
 

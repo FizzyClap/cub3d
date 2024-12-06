@@ -1,7 +1,7 @@
 #include "../includes/cub3D_bonus.h"
 
 static void		draw_tile(t_coord coord, t_image image, t_coord max, int color);
-static int		minimap_color(t_game *game, t_coord pos);
+static int		minimap_color(t_game *game, t_coord pos, int f_color, int c_color);
 static t_coord	get_max(t_game *game, t_coord coord);
 
 void	minimap(t_game *game)
@@ -9,33 +9,40 @@ void	minimap(t_game *game)
 	game->minimap.img = mlx_new_image(game->mlx, MMW, MMH);
 	game->minimap.addr = mlx_get_data_addr(game->minimap.img, \
 	&game->minimap.bpp, &game->minimap.line_len, &game->minimap.endian);
-	draw_minimap(game, game->minimap);
+	if (game->texture->f_textured && game->texture->c_textured)
+		draw_minimap(game, game->minimap, *game->floor_txt.color, *game->ceil_txt.color);
+	else if (game->texture->f_textured)
+		draw_minimap(game, game->minimap, *game->floor_txt.color, game->ceiling.a);
+	else if (game->texture->c_textured)
+		draw_minimap(game, game->minimap, game->floor.a, *game->ceil_txt.color);
+	else
+		draw_minimap(game, game->minimap, game->floor.a, game->ceiling.a);
 }
 
-void	draw_minimap(t_game *game, t_image minimap)
+void	draw_minimap(t_game *game, t_image minimap, int f_color, int c_color)
 {
 	t_coord	coord;
 	t_coord	pos;
 
-	pos.x = (int)(game->player.x) - 6;
+	pos.x = (int)(game->player.pos_x) - 6;
 	coord.x = 0;
-	while (++pos.x < (int)(game->player.x) + 5)
+	while (++pos.x < (int)(game->player.pos_x) + 5)
 	{
-		pos.y = (int)(game->player.y) - 6;
+		pos.y = (int)(game->player.pos_y) - 6;
 		coord.y = 0;
-		while (++pos.y < (int)(game->player.y) + 5)
+		while (++pos.y < (int)(game->player.pos_y) + 5)
 		{
 			draw_tile(coord, minimap, get_max(game, coord), \
-			minimap_color(game, pos));
+			minimap_color(game, pos, f_color, c_color));
 			if (coord.y == 0)
-				coord.y += TILE - (int)((game->player.y - \
-				(int)(game->player.y)) * TILE);
+				coord.y += TILE - (int)((game->player.pos_y - \
+				(int)(game->player.pos_y)) * TILE);
 			else
 				coord.y += TILE;
 		}
 		if (coord.x == 0)
-			coord.x += TILE - (int)((game->player.x - \
-			(int)(game->player.x)) * TILE);
+			coord.x += TILE - (int)((game->player.pos_x - \
+			(int)(game->player.pos_x)) * TILE);
 		else
 			coord.x += TILE;
 	}
@@ -62,12 +69,13 @@ static void	draw_tile(t_coord coord, t_image image, t_coord max, int color)
 			dist.y = (y + coord.y) - center.y;
 			if (pow(dist.x, 2) + pow(dist.y, 2) <= pow(MINIMAP_RADIUS, 2) && \
 			color != rgb_to_int(135, 206, 235))
-				my_mlx_pixel_put(&image, x + 20 + coord.x, y + 20 + coord.y, color);
+				my_mlx_pixel_put(&image, x + 20 + coord.x, y + 20 + coord.y, \
+				color);
 		}
 	}
 }
 
-static int	minimap_color(t_game *game, t_coord pos)
+static int	minimap_color(t_game *game, t_coord pos, int f_color, int c_color)
 {
 	int	i;
 
@@ -83,13 +91,13 @@ static int	minimap_color(t_game *game, t_coord pos)
 				if (game->doors[i].y == pos.y && game->doors[i].x == pos.x && \
 				game->doors[i].is_open == false)
 					return (*game->texture->image[NORTH].color);
-			return (game->floor.a);
+			return (f_color);
 		}
 		else
-			return (game->floor.a);
+			return (f_color);
 	}
 	else
-		return (game->ceiling.a);
+		return (c_color);
 }
 
 static t_coord	get_max(t_game *game, t_coord coord)
@@ -97,11 +105,13 @@ static t_coord	get_max(t_game *game, t_coord coord)
 	t_coord	result;
 
 	if (coord.x == 0)
-		result.x = TILE - (int)(game->player.x - (int)(game->player.x)) * TILE;
+		result.x = TILE - (int)(game->player.pos_x - \
+		(int)(game->player.pos_x)) * TILE;
 	else
 		result.x = TILE;
 	if (coord.y == 0)
-		result.y = TILE - (int)(game->player.y - (int)(game->player.y)) * TILE;
+		result.y = TILE - (int)(game->player.pos_y - \
+		(int)(game->player.pos_y)) * TILE;
 	else
 		result.y = TILE;
 	return (result);

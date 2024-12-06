@@ -4,6 +4,7 @@ static int	get_texture(t_texture *texture, char *line);
 static int	right_order(t_texture *texture);
 static int	path_texture(t_texture *texture, char *line);
 static int	fill_path(t_texture *texture, char *line);
+void	is_textured(t_texture *texture, char *line);
 
 int	read_textures(t_texture *texture, char *file)
 {
@@ -44,6 +45,7 @@ static int	get_texture(t_texture *texture, char *line)
 	texture->id = ft_strndup(line, i);
 	if (right_order(texture) == FAILURE)
 		return (FAILURE);
+	is_textured(texture, line + i);
 	if (path_texture(texture, line) == FAILURE)
 		return (FAILURE);
 	line += i + ft_iswhitespace(line + i);
@@ -52,6 +54,23 @@ static int	get_texture(t_texture *texture, char *line)
 	free(texture->id);
 	texture->id = NULL;
 	return (SUCCESS);
+}
+
+void	is_textured(t_texture *texture, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (ft_iswhitespace(line + i))
+		i++;
+	line += i;
+	if (!ft_isdigit(line[0]))
+	{
+		if (ft_strcmp(texture->id, "F") == 0)
+			texture->f_textured = true;
+		if (ft_strcmp(texture->id, "C") == 0)
+			texture->c_textured = true;
+	}
 }
 
 static int	right_order(t_texture *texture)
@@ -86,7 +105,9 @@ static int	path_texture(t_texture *texture, char *line)
 		line[len] = '\0';
 		len--;
 	}
-	if (texture->order != C_ORDER && texture->order != DONE)
+	if ((texture->order != C_ORDER && texture->order != DONE) || \
+		(texture->order == C_ORDER && texture->f_textured == true) || \
+		(texture->order == DONE && texture->c_textured == true))
 	{
 		len -= ft_iswhitespace(line + 2);
 		if (check_len(len, 2, line) == FAILURE)
@@ -114,13 +135,13 @@ static int	fill_path(t_texture *texture, char *line)
 		texture->east_path = ft_strdup(line);
 	else if (ft_strcmp(texture->id, "F") == 0)
 	{
-		if (color_format(texture->id, line) == FAILURE)
+		if (!texture->f_textured && color_format(texture->id, line) == FAILURE)
 			return (FAILURE);
 		texture->floor_color = ft_strdup(line);
 	}
 	else if (ft_strcmp(texture->id, "C") == 0)
 	{
-		if (color_format(texture->id, line) == FAILURE)
+		if (!texture->c_textured && color_format(texture->id, line) == FAILURE)
 			return (FAILURE);
 		texture->ceiling_color = ft_strdup(line);
 	}
