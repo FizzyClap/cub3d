@@ -6,7 +6,7 @@
 /*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 12:05:37 by roespici          #+#    #+#             */
-/*   Updated: 2024/12/06 12:05:41 by roespici         ###   ########.fr       */
+/*   Updated: 2024/12/21 12:08:03 by roespici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	kill_enemy(t_game *game)
 	if (game->player.z > -600 && game->player.z < 220)
 		target = game->target;
 	else
+	{
+		(void)pos;
 		target = -1;
+	}
 	if (target != -1)
 	{
 		pos.y = (int)game->enemy[target].y;
