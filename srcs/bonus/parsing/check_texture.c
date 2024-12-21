@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_texture.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:10:30 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:17:25 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D_bonus.h"
 
 static int	get_texture(t_texture *texture, char *line);
 static int	right_order(t_texture *texture);
 static int	path_texture(t_texture *texture, char *line);
 static int	fill_path(t_texture *texture, char *line);
-void	is_textured(t_texture *texture, char *line);
 
 int	read_textures(t_texture *texture, char *file)
 {
@@ -54,23 +65,6 @@ static int	get_texture(t_texture *texture, char *line)
 	free(texture->id);
 	texture->id = NULL;
 	return (SUCCESS);
-}
-
-void	is_textured(t_texture *texture, char *line)
-{
-	int	i;
-
-	i = 0;
-	while (ft_iswhitespace(line + i))
-		i++;
-	line += i;
-	if (!ft_isdigit(line[0]))
-	{
-		if (ft_strcmp(texture->id, "F") == 0)
-			texture->f_textured = true;
-		if (ft_strcmp(texture->id, "C") == 0)
-			texture->c_textured = true;
-	}
 }
 
 static int	right_order(t_texture *texture)

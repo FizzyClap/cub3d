@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   floor_ceil_raycast.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:07:26 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:14:25 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D_bonus.h"
 
 static void	floor_calcul(t_game *game, t_data *d, t_coord loop);
@@ -82,7 +94,7 @@ static void	render(t_game *game, t_data *d, t_coord loop, t_image texture)
 		(texture.height - 1);
 	d->floor_x += d->floor_step_x;
 	d->floor_y += d->floor_step_y;
-	if (d->tex_x < 0 || d->tex_x >= texture.width ||
+	if (d->tex_x < 0 || d->tex_x >= texture.width || \
 		d->tex_y < 0 || d->tex_y >= texture.height)
 		return ;
 	d->color = texture.color[texture.width * d->tex_y + d->tex_x];

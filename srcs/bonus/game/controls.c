@@ -1,15 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   controls.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:07:08 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:15:48 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D_bonus.h"
 
 void	make_actions(t_game *game)
 {
-	if (game->texture->f_textured && game->texture->c_textured)
-		draw_minimap(game, game->raycast, *game->floor_txt.color, *game->ceil_txt.color);
-	else if (game->texture->f_textured)
-		draw_minimap(game, game->raycast, *game->floor_txt.color, game->ceiling.a);
-	else if (game->texture->c_textured)
-		draw_minimap(game, game->raycast, game->floor.a, *game->ceil_txt.color);
-	else
-		draw_minimap(game, game->raycast, game->floor.a, game->ceiling.a);
+	draw_minimap(game, game->raycast);
 	if (game->player.action[MOVEUP] == 1)
 		move_up(game);
 	if (game->player.action[MOVEBACK] == 1)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:08:10 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:08:12 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D_bonus.h"
 
 static void	calculate_tex_x_pos(t_game *game, t_ray *ray, t_image **tex);

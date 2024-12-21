@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:12:58 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/21 12:07:27 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D.h"
 
 static void	calculate_steps(t_ray *ray);
@@ -101,13 +113,13 @@ static void	draw_wall(t_game *game, t_ray *ray, t_coord loop)
 	select_wall_texture(game, ray, &t);
 	t->step = 1.0 * t->height / line_height;
 	t->pos = (draw_start - SCREEN_Y / 2 + line_height / 2) * t->step;
-	loop.y = draw_start - 1;
-	while (++loop.y < draw_end)
+	color = 0;
+	while (++draw_start - 1 < draw_end)
 	{
 		t->y = (int)t->pos % (t->height - 1);
 		t->pos += t->step;
 		if (t->x >= 0 && t->x < t->width && t->y >= 0 && t->y < t->height)
 			color = t->color[t->width * t->y + t->x];
-		draw_vertical_line(game, loop.x, loop.y, color);
+		draw_vertical_line(game, loop.x, draw_start - 1, color);
 	}
 }

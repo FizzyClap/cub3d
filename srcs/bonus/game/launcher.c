@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   launcher.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:07:38 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:07:39 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D_bonus.h"
 
 static int	keycode_launcher(int keycode, t_game *game);
@@ -107,7 +119,15 @@ void	get_map_type(t_game *game)
 {
 	if (ft_strcmp(game->file, "maps/moria_bonus.cub") == 0 || \
 		ft_strcmp(game->file, "maps/moria.cub") == 0)
+	{
 		game->map_type = "moria";
+		game->minimap_floor.a = 0x808080;
+		game->minimap_wall.a = 0x000001;
+	}
 	else
+	{
 		game->map_type = "morgul";
+		game->minimap_floor.a = 0x000001;
+		game->minimap_wall.a = 0x5FCBB1;
+	}
 }

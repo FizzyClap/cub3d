@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:18:57 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:18:59 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -249,6 +261,8 @@ typedef struct s_game
 	t_map		*map;
 	t_texture	*texture;
 	t_player	player;
+	t_color		minimap_wall;
+	t_color		minimap_floor;
 	t_color		floor;
 	t_color		ceiling;
 	t_doors		*doors;

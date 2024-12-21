@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_arg.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:10:22 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:18:11 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D_bonus.h"
 
 static void	file_format(char *file);
@@ -59,5 +71,31 @@ int	open_map(char *file)
 	}
 	close(fd);
 	fd = open(file, O_RDONLY);
+	return (fd);
+}
+
+int	path_exist(char *file)
+{
+	int	len_file;
+	int	fd;
+
+	len_file = ft_strlen(file);
+	if (ft_strcmp(file + len_file - 4, ".xpm") != 0)
+	{
+		ft_fprintf(2, "Error: %s is not a \".xpm\" extension\n", file);
+		return (FAILURE);
+	}
+	else if (len_file < 5)
+	{
+		ft_fprintf(STDERR_FILENO, "Error: %s has no name\n", file);
+		return (FAILURE);
+	}
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_fprintf(STDERR_FILENO, "Error: %s : ", file);
+		perror("");
+		return (FAILURE);
+	}
 	return (fd);
 }

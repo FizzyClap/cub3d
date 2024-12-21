@@ -1,30 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:10:40 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:18:06 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D_bonus.h"
-
-int	path_exist(char *file)
-{
-	int	len_file;
-	int	fd;
-
-	len_file = ft_strlen(file);
-	if (ft_strcmp(file + len_file - 4, ".xpm") != 0)
-	{
-		ft_fprintf(2, "Error: %s is not a \".xpm\" extension\n", file);
-		return (FAILURE);
-	}
-	else if (len_file < 5)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: %s has no name\n", file);
-		return (FAILURE);
-	}
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_fprintf(STDERR_FILENO, "Error: %s : ", file);
-		perror("");
-		return (FAILURE);
-	}
-	return (fd);
-}
 
 int	color_format(char *id, char *line)
 {
@@ -92,4 +78,21 @@ int	check_len(int len, int min, char *line)
 		return (FAILURE);
 	}
 	return (SUCCESS);
+}
+
+void	is_textured(t_texture *texture, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (ft_iswhitespace(line + i))
+		i++;
+	line += i;
+	if (!ft_isdigit(line[0]))
+	{
+		if (ft_strcmp(texture->id, "F") == 0)
+			texture->f_textured = true;
+		if (ft_strcmp(texture->id, "C") == 0)
+			texture->c_textured = true;
+	}
 }

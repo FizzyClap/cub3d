@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: roespici <roespici@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/06 12:18:38 by roespici          #+#    #+#             */
+/*   Updated: 2024/12/06 12:20:20 by roespici         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_BONUS_H
 # define CUB3D_BONUS_H
 
@@ -81,7 +93,7 @@ void	get_map_type(t_game *game);
 void	game_over(t_game *game);
 //GAME/MINIMAP
 void	minimap(t_game *game);
-void	draw_minimap(t_game *game, t_image minimap, int f_color, int c_color);
+void	draw_minimap(t_game *game, t_image minimap);
 //GAME/MLX_FUNCTIONS
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
 void	my_put_image(t_game *game, t_image *img, int x_offset, int y_offset);
@@ -91,8 +103,6 @@ int		mouse_click(int button, int x, int y, t_game *game);
 void	mouse_move(t_game *game);
 void	left_cam(t_game *game, int x);
 void	right_cam(t_game *game, int x);
-//GAME/MOVEMENT_SECURITY
-int		enemy_collision(t_game *game, double x, double y);
 //GAME/MOVES
 void	move_up(t_game *game);
 void	move_down(t_game *game);
@@ -127,11 +137,15 @@ void	draw_doors(t_game *game, t_ray *ray, t_coord loop);
 void	doors_transparency(t_game *game, t_list **tmp, t_ray *ray, \
 	t_coord loop);
 void	add_doors(t_game *game, t_ray *ray, bool *is_last_door, bool *is_first);
+//GAME/UTILS
+int		enemy_collision(t_game *game, double x, double y);
+void	floor_and_ceiling(t_game *game);
 //GAME/WEAPON
 int		init_weapon(t_game *game);
 //PARSING/CHECK_ARG
 int		check_arg(int argc, char **argv);
 int		open_map(char *file);
+int		path_exist(char *file);
 //PARSING/CHECK_MAP
 int		read_map(t_map *map, int fd);
 //PARSING/CHECK_TEXTURE
@@ -139,10 +153,10 @@ int		read_textures(t_texture *texture, char *file);
 //PARSING/CHECK_WALLS
 int		check_walls(t_map *map, int y, int x);
 //PARSING/PARSING_UTILS
-int		path_exist(char *file);
 int		color_format(char *id, char *line);
 int		nb_start_pos(t_map *map, int y, int x);
 int		char_is_valid(char c);
 int		check_len(int len, int min, char *line);
+void	is_textured(t_texture *texture, char *line);
 
 #endif
