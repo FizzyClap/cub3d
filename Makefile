@@ -1,7 +1,7 @@
 NAME = cub3D
 NAME_BONUS = cub3D_bonus
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g3 -O2 #-fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g3 -O2 -fsanitize=address
 LIBFT = libft/libft.a
 LIBFT_PATH = ./libft
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
@@ -60,7 +60,6 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/minimap.c\
 				srcs/bonus/game/mlx_functions.c\
 				srcs/bonus/game/mouse_cam.c\
-				srcs/bonus/game/movement_security.c\
 				srcs/bonus/game/moves.c\
 				srcs/bonus/game/raycasting_utils.c\
 				srcs/bonus/game/raycasting.c\
@@ -68,6 +67,7 @@ SRCS_BONUS =	srcs/bonus/main.c\
 				srcs/bonus/game/sound.c\
 				srcs/bonus/game/tab_images.c\
 				srcs/bonus/game/transparency.c\
+				srcs/bonus/game/utils.c\
 				srcs/bonus/game/weapon.c\
 				srcs/bonus/parsing/check_arg.c\
 				srcs/bonus/parsing/check_texture.c\
@@ -135,20 +135,8 @@ mlx:
 	@echo "└──────────────────────────────────────────────┘"
 
 sdl:
-	@cd sound && wget https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-2.28.5.tar.gz > /dev/null 2>&1
-	@cd sound && tar -xvf SDL2-2.28.5.tar.gz > /dev/null 2>&1 && rm -rf SDL2-2.28.5.tar.gz
-	@cd sound && mv SDL2-2.28.5 SDL2
-	@echo "$(BLUE)Compiling SDL2 in progress..."
-	@cd sound/SDL2 && ./configure > /dev/null 2>&1 && make -s > /dev/null 2>&1 || \
-	{ echo "$(RED)Compiling SDL2 failed, FF."; exit 1; }
-	@echo "$(GREEN)Compilation of SDL2 completed!"
-	@cd sound && wget https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.8.0/SDL2_mixer-2.8.0.tar.gz > /dev/null 2>&1
-	@cd sound && tar -xvf SDL2_mixer-2.8.0.tar.gz > /dev/null 2>&1 && rm -rf SDL2_mixer-2.8.0.tar.gz
-	@cd sound && mv SDL2_mixer-2.8.0 SDL2_mixer
-	@echo "$(BLUE)Compiling SDL2 Mixer in progress..."
-	@cd sound/SDL2_mixer && ./configure > /dev/null 2>&1 && make -s > /dev/null 2>&1 || \
-	{ echo "$(RED)Compiling SDL2 Mixer failed, FF."; exit 1; }
-	@echo "$(GREEN)Compilation of SDL2 Mixer completed!"
+	@cd sound && git clone https://github.com/FizzyClap/sdl.git
+	@cd sound && cd sdl && mv * ../ && rm -rf ../sdl
 
 clean:
 	@echo "$(NC)┌─────clean $(NAME)──────────────────────────────┐"
@@ -169,7 +157,7 @@ fclean: clean
 	@$(RM) $(NAME) $(NAME_BONUS)
 	@echo "│$(GREEN) Cleaning of $(NAME) completed ✓ $(NC)	       │"
 	@echo "└──────────────────────────────────────────────┘"
-#	@make -s -C $(LIBFT_PATH) fclean
+	@make -s -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
@@ -184,4 +172,4 @@ norme:
 	fi
 	@$(RM) norme.tmp
 
-.PHONY: all bonus mlx sdl path clean fclean re rebonus norme
+.PHONY: all bonus mlx sdl clean fclean re rebonus norme
